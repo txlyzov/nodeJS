@@ -3,14 +3,25 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "model-generation": "npx sequelize-cli model:generate --name User --attributes firstName:string,lastName:string,email:string",
+    "migrate": "npx sequelize-cli db:migrate",
+    "down": "npx sequelize-cli db:migrate:undo",
+    "seed gen": "npx sequelize-cli seed:generate --name demo-user",
+    "seed run": "npx sequelize-cli db:seed:all",
+    "seed down": "npx sequelize-cli db:seed:undo:all",
+    "start": "node ./bin/www",
+    "db gen": "node ./migrations/database.js"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
-    "jade": "~1.11.0",
-    "morgan": "~1.9.1"
+    "jade": "^0.29.0",
+    "morgan": "~1.9.1",
+    "pg": "^8.7.1",
+    "pg-hstore": "^2.3.4",
+    "pgtools": "^0.1.1",
+    "sequelize": "^7.0.0-alpha.2"
   }
 }
