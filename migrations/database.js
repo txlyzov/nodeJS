@@ -10,9 +10,6 @@ const config = {
 
 
 module.exports.createDb = function() {
-    if(!config.password){
-        console.log();
-    }
     if(config.password){
         exec(`createdbjs ${config.dbName} --user=${config.user} --password=${config.password}`, (error, stdout) => {
             if (error) {
@@ -22,15 +19,11 @@ module.exports.createDb = function() {
             console.log(`stdout: ${stdout}`);
         });   
     } else
-    console.log("Fill your DB password in config file.");
-    
+    console.log("Fill your DB password in config file (migrations/database.js).");
 }
 
 
 module.exports.dropDb = function(){
-    if(!config.password){
-        console.log();
-    }
     if(config.password){
         exec(`dropdbjs ${config.dbName} --user=${config.user} --password=${config.password}`, (error, stdout) => {
             if (error) {
@@ -40,7 +33,7 @@ module.exports.dropDb = function(){
             console.log(`stdout: ${stdout}`);
         });   
     } else
-    console.log("Fill your DB password in config file.");
+    console.log("Fill your DB password in config file (migrations/database.js).");
 }
 
 
