@@ -10,7 +10,8 @@
     "seed run": "npx sequelize-cli db:seed:all",
     "seed down": "npx sequelize-cli db:seed:undo:all",
     "start": "node ./bin/www",
-    "db gen": "node ./migrations/database.js"
+    "createDb": "node -e 'require(\"./migrations/database.js\").createDb()'",
+    "dropDb": "node -e 'require(\"./migrations/database.js\").dropDb()'"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
