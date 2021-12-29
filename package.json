@@ -5,13 +5,13 @@
   "scripts": {
     "model-generation": "npx sequelize-cli model:generate --name User --attributes firstName:string,lastName:string,email:string",
     "migrate": "npx sequelize-cli db:migrate",
-    "down": "npx sequelize-cli db:migrate:undo",
-    "seed gen": "npx sequelize-cli seed:generate --name demo-user",
-    "seed run": "npx sequelize-cli db:seed:all",
-    "seed down": "npx sequelize-cli db:seed:undo:all",
+    "down": "npx sequelize-cli db:migrate:undo:all",
+    "seed-gen": "npx sequelize-cli seed:generate --name demo-user",
+    "seed-run": "npx sequelize-cli db:seed:all",
+    "seed-down": "npx sequelize-cli db:seed:undo:all",
     "start": "node ./bin/www",
-    "createDb": "node -e 'require(\"./migrations/database.js\").createDb()'",
-    "dropDb": "node -e 'require(\"./migrations/database.js\").dropDb()'"
+    "createDb": "node -e 'require(\"./utils/database.js\").createDb()'",
+    "dropDb": "node -e 'require(\"./utils/database.js\").dropDb()'"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",

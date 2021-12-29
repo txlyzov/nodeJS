@@ -1,17 +1,9 @@
 const { exec } = require("child_process");
-
-const config = {
-  user: 'postgres',
-  password: null,
-  port: 5432,
-  host: 'localhost',
-  dbName: 'db_gallery_website'
-}
-
+const config = require('../config/config.json');
 
 module.exports.createDb = function() {
-    if(config.password){
-        exec(`createdbjs ${config.dbName} --user=${config.user} --password=${config.password}`, (error, stdout) => {
+    if(config.database.password){
+        exec(`createdbjs ${config.database.name} --user=${config.database.user} --password=${config.database.password}`, (error, stdout) => {
             if (error) {
                 console.log(`error: ${error.message}`);
                 return;
@@ -19,13 +11,13 @@ module.exports.createDb = function() {
             console.log(`stdout: ${stdout}`);
         });   
     } else
-    console.log("Fill your DB password in config file (migrations/database.js).");
+    console.log("Fill your DB password in config file.");
 }
 
 
 module.exports.dropDb = function(){
-    if(config.password){
-        exec(`dropdbjs ${config.dbName} --user=${config.user} --password=${config.password}`, (error, stdout) => {
+    if(config.database.password){
+        exec(`dropdbjs ${config.database.name} --user=${config.database.user} --password=${config.database.password}`, (error, stdout) => {
             if (error) {
                 console.log(`error: ${error.message}`);
                 return;
@@ -33,7 +25,7 @@ module.exports.dropDb = function(){
             console.log(`stdout: ${stdout}`);
         });   
     } else
-    console.log("Fill your DB password in config file (migrations/database.js).");
+    console.log("Fill your DB password in config file.");
 }
 
 
