@@ -11,5 +11,8 @@ Database options:
 ``npm install --save -g pgtools``
 P.s. ``-g`` flag is important.
 
-- If you already have database created,you can create and drop tables with Sequelize migrations. But first you need to install them with this command:
-``npm install --save sequelize``
+- Migration commands:
+``npm run createDb - create database for project``(pgtools require)
+``npm run dropDb - drop projects database``(pgtools require)
+``npm run migrate - setting up database``
+``npm run drop - drop all changes made by migrations``
