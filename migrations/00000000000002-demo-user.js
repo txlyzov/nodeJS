@@ -6,28 +6,28 @@ module.exports = {
       'users',
       [
         {
-          id: 1,
+          user_id: 1,
           login: 'user1',
           email: 'sdggfhggfsd@dhg.sa',
           password: '12354324s',
-          createdAt: new Date(),
-          updatedAt: new Date()
+          created_at: new Date(),
+          updated_at: new Date()
         },
         {
-          id: 2,
+          user_id: 2,
           login: 'user2',
           email: '4nh342@dhg.sa',
           password: '65jhsdf',
-          createdAt: new Date(),
-          updatedAt: new Date()
+          created_at: new Date(),
+          updated_at: new Date()
         },
         {
-          id: 3,
+          user_id: 3,
           login: 'user3',
           email: 'myuidsf@34.dfs',
           password: 'jhgdfg',
-          createdAt: new Date(),
-          updatedAt: new Date()
+          created_at: new Date(),
+          updated_at: new Date()
         }
       ],
       {}

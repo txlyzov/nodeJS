@@ -6,14 +6,18 @@
     "model-generation": "npx sequelize-cli model:generate --name User --attributes firstName:string,lastName:string,email:string",
     "migrate": "npx sequelize-cli db:migrate",
     "drop": "npx sequelize-cli db:migrate:undo:all",
-    "start": "node ./bin/www",
-    "createDb": "node -e 'require(\"./utils/database.js\").createDb()'",
-    "dropDb": "node -e 'require(\"./utils/database.js\").dropDb()'"
+    "createDb": "node -e 'require(\"./utils/db-init.js\").createDb()'",
+    "dropDb": "node -e 'require(\"./utils/db-init.js\").dropDb()'",
+    "start-o": "node ./bin/www",
+    "start": "node index.js",
+    "start-dev": "nodemon index.js"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
+    "dotenv": "^10.0.0",
     "express": "~4.16.1",
+    "helmet": "^4.6.0",
     "http-errors": "~1.6.3",
     "jade": "^0.29.0",
     "morgan": "~1.9.1",
