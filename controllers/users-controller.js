@@ -13,16 +13,17 @@ const Users = require('../models/Users');
 
 module.exports ={
     async createUser(req,res){
-        const {login,email,password} = req.body;
-        // const newUser = await db.query('INSERT INTO users (login, email, password, created_at, updated_at) values ($1,$2,$3,$4,$5) RETURNING *',[login,email,password,new Date(),new Date()]);
-        // res.json(newUser.rows[0])
+        
         try{
-            let newUser=await Users.create({
-                login,
-                email,
-                password,
-            })
-            return res.send(newUser);
+            const {login,email,password} = req.body;
+            const newUser = await db.query('INSERT INTO users (login, email, password, created_at, updated_at) values ($1,$2,$3,$4,$5) RETURNING *',[login,email,password,new Date(),new Date()]);
+       
+            // let newUser=await Users.create({
+            //     login,
+            //     email,
+            //     password,
+            // })
+            return res.json(newUser.rows[0])
         } catch (err){
             return res.status(500).send({
                 message:`error: ${err.message}`
