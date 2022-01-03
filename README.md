@@ -5,7 +5,7 @@ http://localhost:3000/
 
 Database options:
 
-- Program needs info from .env file. 
+- Program needs info from ./config/config.js file. 
 
 - You able to run scripts for database creations/dpors. But first you need to install pgtools module with this command:
 ``npm install --save -g pgtools``
