@@ -2,7 +2,7 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('images', {
-      image_id: {
+      id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
@@ -20,23 +20,23 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true   
       },
-      is_private: {
+      isPrivate: {
         type: Sequelize.BOOLEAN ,
         allowNull: false   
       },
-      user_id: {
+      userId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references:{
           model: 'users',
-          key: 'user_id'
+          key: 'id'
         }   
       },
-      created_at: {
+      createdAt: {
         allowNull: false,
         type: Sequelize.DATE
       },
-      updated_at: {
+      updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
       }

@@ -1,41 +1,58 @@
 const db = require('../utils/db-pool');
+const imagesModel = require('../models').images;
 
 
-
-module.exports ={
-    async createImage(req,res){       
-        try{
-            const {url,name,description,is_private,user_id} = req.body;
-            const image = await db.query('INSERT INTO images (url, name, description, is_private, user_id, created_at, updated_at) values ($1,$2,$3,$4,$5,$6,$7) RETURNING *',
-            [url,name,description,is_private,user_id,new Date(),new Date()]);
-            return res.json(image.rows[0])
-        } catch (err){
-            return res.status(500).send({
-                message:`error: ${err.message}`
-            })
-        }
+module.exports = {
+    async createImage(req, res) {
+        const { url, name, description, isPrivate, userId } = req.body;
+        let image = await imagesModel.create({
+            url,
+            name,
+            description,
+            isPrivate,
+            userId
+        })
+        return res.json(image)
     },
-    async getImages(req,res){
-        const images = await db.query('SELECT * FROM images');
-        res.json(images.rows)
+    async getImages(req, res) {
+        let images = await imagesModel.findAll();
+        return res.send(images)
     },
-    async getOneImage(req,res){
+    async getOneImage(req, res) {
         const id = req.params.id;
-        const images = await db.query('SELECT * FROM images where image_id=$1',
-        [id]);
-        return res.json(images.rows[0])
+        let image = await imagesModel.findAll({
+            where: {
+                id: id
+            }
+        });
+        return res.json(image)
     },
-    async updateImage(req,res){
+    async updateImage(req, res) {
         const id = req.params.id;
-        const {url,name,description,is_private,user_id} = req.body;
-        const image = await db.query('UPDATE images set url = $1, name = $2, description = $3, is_private = $4, user_id = $5, updated_at = $6 WHERE image_id = $7 RETURNING *',
-        [url,name,description,is_private,user_id,new Date(),id]);
-        return res.json(image.rows[0])
+        const { url, name, description, isPrivate, userId } = req.body;
+        let image = await imagesModel.update(
+            {
+                url: url,
+                name: name,
+                description: description,
+                isPrivate: isPrivate,
+                userId: userId
+            },
+            {
+                where: {
+                    id: id
+                }
+            }
+        );
+        return res.json(image)
     },
-    async deleteImage(req,res){
+    async deleteImage(req, res) {
         const id = req.params.id;
-        await db.query('DELETE FROM images where image_id = $1',
-        [id]);
-        return res.status(200).send('done');
+        let image = await imagesModel.destroy({ 
+                where: {
+                    id: id
+                }
+            });
+        return res.sendStatus(200);
     }
 }

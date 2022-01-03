@@ -5,9 +5,10 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class Images extends Model {
     static associate(models) {
-      Images.hasOne(models.User,{
-        foreignKey: 'user_id',
-        as: 'user_id',
+      Images.hasOne(models.users,{
+        foreignKey: 'id',
+        as: 'UserId',
+        onDelete: 'CASCADE'
       })
     }
   };
