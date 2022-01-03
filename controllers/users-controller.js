@@ -1,6 +1,6 @@
 const db = require('../utils/db-pool');
-// const User = require('../models').Users;
-const Users = require('../models/Users');
+const Users = require('../models').Users;
+//const Users = require('../models/database/Users');
 
 // var sequelize = require('sequelize');
 
@@ -16,14 +16,15 @@ module.exports ={
         
         try{
             const {login,email,password} = req.body;
-            const newUser = await db.query('INSERT INTO users (login, email, password, created_at, updated_at) values ($1,$2,$3,$4,$5) RETURNING *',[login,email,password,new Date(),new Date()]);
+            const user = await db.query('INSERT INTO users (login, email, password, created_at, updated_at) values ($1,$2,$3,$4,$5) RETURNING *',
+            [login,email,password,new Date(),new Date()]);
        
             // let newUser=await Users.create({
             //     login,
             //     email,
             //     password,
             // })
-            return res.json(newUser.rows[0])
+            return res.json(user.rows[0])
         } catch (err){
             return res.status(500).send({
                 message:`error: ${err.message}`
@@ -35,8 +36,11 @@ module.exports ={
         res.json(users.rows)
     },
     async getOneUser(req,res){
-        const users = await db.query('SELECT * FROM users');
-        res.json(users.rows)
+        const id = req.params.id;
+        const user = await db.query('SELECT * FROM users where user_id=$1',
+        [id]);
+        return res.json(user.rows[0])
+        //res.json(users.rows)
         // console.log(43534433);
         // console.log(res.send);
         // res.send({
@@ -44,7 +48,7 @@ module.exports ={
         // })
         // const {id} =req.params;
 
-        // const user=await User.findOne({
+        // const user=await Users.findOne({
         //     where:{
         //         id,
         //     },
@@ -59,10 +63,17 @@ module.exports ={
         // return res.send(user)
     },
     async updateUser(req,res){
-        
+        const id = req.params.id;
+        const {login,email,password} = req.body;
+        const user = await db.query('UPDATE users set login = $1, email = $2, password = $3, updated_at = $4 WHERE user_id = $5 RETURNING *',
+        [login,email,password,new Date(),id]);
+        return res.json(user.rows[0])
     },
     async deleteUser(req,res){
-        
+        const id = req.params.id;
+        await db.query('DELETE FROM users where user_id = $1',
+        [id]);
+        return res.status(200).send('done');;
     }
 }
 
