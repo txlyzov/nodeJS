@@ -2,18 +2,18 @@ const service = require('./services/users-servises');
 
 module.exports = {
     async createUser(req, res) {
-        return service.create(req.body, res);
+        return res.json(await service.create(req.body));
     },
     async getUsers(req, res) { 
-        return service.get(res);
+        return res.json(await service.get());
     },
     async getOneUser(req, res) {
-        return service.getOne(req.params.id, res);
+        return res.json(await service.getOne(req.params.id));
     },
     async updateUser(req, res) {
-        return service.update(req.params.id, req.body, res);
+        return res.sendStatus(await service.update(req.params.id, req.body));
     },
     async deleteUser(req, res) {
-        return service.delete(req.params.id, res);
+        return res.sendStatus(await service.delete(req.params.id));
     }
 }

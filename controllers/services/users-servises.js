@@ -10,14 +10,13 @@ const HSC = require('http-status-codes')
 
 
 module.exports = {
+
     /**
      * Creates User object record in Users table.
      * @param {Body} body Entitry for getting login, email, password from request.
-     * @param {Responce} res Empty entity for responce.
      * @returns {Object} Returns the responce with new created User object.
      **/
-    async create(body, res) {
-
+    async create(body) {
         const { login, email, password } = body;
         const user = await usersModel.create({
             login,
@@ -25,46 +24,43 @@ module.exports = {
             password,
         })
 
-        return res.json(user);
+        return user;
     },
+
      /**
      * Gets all User object records in the Users table.
-     * @param {Responce} res Empty entity for responce.
-     * @returns {Object} Returns the responce with all User objects from the Users table.
+     * @returns {Array|Object} Returns the responce with all User objects from the Users table.
      **/
-    async get(res) {
-
+    async get() {
         const users = await usersModel.findAll();
 
-        return res.send(users);
+        return users;
     },
+
      /**
      * Gets one User object record by id in Users table.
      * @param {Integer} id User id from request.
-     * @param {Responce} res Empty entity for responce.
      * @returns {Object} Returns the responce with one User object from the Users table.
      **/
-    async getOne(id, res) {
-
-        const user = await usersModel.findAll({
+    async getOne(id) {
+        const user = await usersModel.findOne({
             where: {
                 id
             }
         });
 
-        return res.json(user);
+        return user;
     },
+
     /**
      * Update User object record in the Users table.
      * @param {Integer} id User id from request.
      * @param {Body} body Entitry for getting login, email, password from request.
-     * @param {Responce} res Empty entity for responce.
-     * @returns {Object} Returns the responce with updated User object from the Users table.
+     * @returns {Number} Returns the responce with updated User object from the Users table.
      **/
-    async update(id, body, res) {
-
+    async update(id, body) {
         const { login, email, password } = body;
-        const user = await usersModel.update(
+        await usersModel.update(
             {
                 login,
                 email,
@@ -77,22 +73,21 @@ module.exports = {
             }
         );
 
-        return res.json(user);
+        return HSC.OK;
     },
+
     /**
      * Delete User object record by Id in the Users table.
      * @param {Integer} id User id from request.
-     * @param {Responce} res Empty entity for responce.
-     * @returns {Object} Returns the responce with code 200.
+     * @returns {Number} Returns the responce with code 200.
      **/
-    async delete(id, res) {
-
+    async delete(id) {
         await usersModel.destroy({
             where: {
                 id
             }
         });
 
-        return res.sendStatus(HSC.OK);
+        return HSC.OK;
     }
 }
