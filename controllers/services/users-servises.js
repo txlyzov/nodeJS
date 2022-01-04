@@ -1,5 +1,5 @@
-const usersModel = require('../../models').users;
 const HSC = require('http-status-codes');
+const usersModel = require('../../models').users;
 
 // catch (err) {
 //     return res.status(HSC.INTERNAL_SERVER_ERROR).send({

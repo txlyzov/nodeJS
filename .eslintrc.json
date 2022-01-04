@@ -57,7 +57,7 @@
             }
           ],
           "no-console": [
-            "warn",
+            "off",
             {
               "allow": [
                 "info",

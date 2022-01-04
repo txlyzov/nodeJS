@@ -1,4 +1,4 @@
-database = {
+const database = {
   username: 'postgres',
   password: 123,
   database: 'db_gallery_website',
@@ -7,7 +7,7 @@ database = {
   dialect: 'postgres',
 };
 
-connection = {
+const connection = {
   host: '127.0.0.1',
   port: '3000',
 };
