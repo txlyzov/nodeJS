@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const usersController = require('../controllers/users-controller')
+const usersController = require('../controllers/index').usersController;
 
 router.post('/users/create', async (req,res)=>{
     await usersController.createUser(req,res);

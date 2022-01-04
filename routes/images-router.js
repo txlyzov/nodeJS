@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const imagesController = require('../controllers/images-controller')
+const imagesController = require('../controllers/index').imagesController;
 
 router.post('/images/create', async (req,res)=>{
     await imagesController.createImage(req,res);

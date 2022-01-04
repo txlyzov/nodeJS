@@ -13,11 +13,14 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Images.init({
+    id: {type: DataTypes.INTEGER,primaryKey: true},
     url: DataTypes.STRING,
     name: DataTypes.STRING,
     description: DataTypes.STRING,
     isPrivate: DataTypes.BOOLEAN,
-    userId: DataTypes.INTEGER
+    userId: DataTypes.INTEGER,
+    createdAt: DataTypes.DATE,
+    updatedAt: DataTypes.DATE
   }, {
     sequelize,
     modelName: 'images',

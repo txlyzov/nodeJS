@@ -1,19 +1,23 @@
-const servise = require('./services/images-service');
+const service = require('./services/images-service');
 
 module.exports = {
     async createImage(req, res) {
-        return servise.create(req, res)
+        return service.create(req.body, res);
     },
-    async getImages(req, res) {
-        return servise.get(req, res)
+    async getImages(req,res) {
+        //return res.json(service.get(req, res));
+        //let qwe = service.get();
+        //console.log(qwe); 
+        //return res.send(qwe);
+        return service.get(res);
     },
     async getOneImage(req, res) {
-        return servise.getOne(req, res)
+        return service.getOne(req.params.id,res);
     },
     async updateImage(req, res) {
-        return servise.update(req, res)
+        return service.update(req.params.id, req.body, res);
     },
     async deleteImage(req, res) {
-        return servise.delete(req, res)
+        return service.delete(req.params.id, res);
     }
 }

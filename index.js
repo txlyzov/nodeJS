@@ -3,7 +3,7 @@ const routers = require('./routes')
 const helmet = require('helmet');
 const morgan = require('morgan');
 const HSC = require('http-status-codes');
-const config = require('./config/config').development;
+const config = require('./config/index').development;
 
 const app = express();
 

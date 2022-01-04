@@ -12,17 +12,4 @@ connection = {
   port: '3000'
 };
 
-development = { database, connection };
-test = { database, connection };
-production = { database, connection };
-
-
-
-module.exports = {
-  database,
-  connection,
-
-  development,
-  test,
-  production
-}
+module.exports.development = { database, connection };
