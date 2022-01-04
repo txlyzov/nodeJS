@@ -3,5 +3,5 @@ const imagesRouter = require('./images-router');
 
 module.exports = {
   usersRouter,
-  imagesRouter
-}
+  imagesRouter,
+};
