@@ -14,14 +14,18 @@ module.exports = {
    * @returns {Object} Returns the responce with new created User object.
    **/
   async create(body) {
-    const { login, email, password } = body;
-    const user = await usersModel.create({
-      login,
-      email,
-      password,
-    });
+    try {
+      const { login, email, password } = body;
+      const user = await usersModel.create({
+        login,
+        email,
+        password,
+      });
 
-    return user;
+      return user;
+    } catch (e) {
+      //next(e);
+    }
   },
 
   /**
