@@ -6,7 +6,6 @@ module.exports = {
       'images',
       [
         {
-          id: 1,
           url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
           name: 'image1',
           description: '12354324s',
@@ -16,7 +15,6 @@ module.exports = {
           updatedAt: new Date()
         },
         {
-          id: 2,
           url: 'https://cdn.pixabay.com/photo/2021/08/25/20/42/field-6574455__340.jpg',
           name: 'image2',
           description: 'dfssfsdfsfdsfsd',
@@ -26,8 +24,7 @@ module.exports = {
           updatedAt: new Date()
         },
         {
-          id: 3,
-          url: 'https://helpx.adobe.com/content/dam/help/en/photoshop/using/convert-color-image-black-white/jcr_content/main-pars/before_and_after/image-before/Landscape-Color.jpg',
+          url: 'https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
           name: 'image3',
           description: null,
           isPrivate: false,

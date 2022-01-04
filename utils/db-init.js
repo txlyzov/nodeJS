@@ -11,7 +11,7 @@ module.exports.createDb = function() {
             console.log(`stdout: ${stdout}`);
         });   
     } else
-    console.log("Fill your DB password in config file.");
+    console.log("Fill your DB password in .env file.");
 }
 
 
@@ -25,5 +25,5 @@ module.exports.dropDb = function(){
             console.log(`stdout: ${stdout}`);
         });   
     } else
-    console.log("Fill your DB password in config file.");
+    console.log("Fill your DB password in .env file.");
 }

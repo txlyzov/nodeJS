@@ -4,8 +4,8 @@ const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
-const env = process.env.NODE_ENV || 'development';
-const config = require(__dirname + '/../config/config.json')[env];
+const env = ['development','database'];
+const config = require(__dirname + '/../config/index.js')[env[0]][env[1]];
 const db = {};
 
 let sequelize;
@@ -15,6 +15,17 @@ if (config.use_env_variable) {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
+
+
+sequelize
+  .authenticate()
+  .then(() => {
+
+    console.log('Connection has been established successfully.');
+  })
+  .catch(err => {
+    console.error('Unable to connect to the database:', err);
+  });
 fs
   .readdirSync(__dirname)
   .filter(file => {
