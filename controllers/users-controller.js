@@ -12,15 +12,13 @@ module.exports = {
     return res.json(await service.getOne(req.params.id, next));
   },
   async updateUser(req, res) {
-    if ((await service.update(req.params.id, req.body)) === 1)
-      return res.sendStatus(HSC.OK);
-    if ((await service.update(req.params.id, req.body)) === 0)
-      return res.sendStatus(HSC.NOT_FOUND);
+    const result = await service.update(req.params.id, req.body);
+    if (result === 1) return res.sendStatus(HSC.OK);
+    if (result === 0) return res.sendStatus(HSC.NOT_FOUND);
   },
   async deleteUser(req, res) {
-    if ((await service.delete(req.params.id)) === 1)
-      return res.sendStatus(HSC.OK);
-    if ((await service.delete(req.params.id)) === 0)
-      return res.sendStatus(HSC.NOT_FOUND);
+    const result = await service.delete(req.params.id);
+    if (result === 1) return res.sendStatus(HSC.OK);
+    if (result === 0) return res.sendStatus(HSC.NOT_FOUND);
   },
 };
