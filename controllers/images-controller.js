@@ -1,3 +1,4 @@
+const HSC = require('http-status-codes');
 const service = require('./services/images-service');
 
 module.exports = {
@@ -11,9 +12,15 @@ module.exports = {
     return res.json(await service.getOne(req.params.id, next));
   },
   async updateImage(req, res) {
-    return res.sendStatus(await service.update(req.params.id, req.body));
+    const result = await service.update(req.params.id, req.body);
+    if (result === 1) return res.sendStatus(HSC.OK);
+
+    return res.sendStatus(HSC.BAD_REQUEST);
   },
   async deleteImage(req, res) {
-    return res.sendStatus(await service.delete(req.params.id));
+    const result = await service.delete(req.params.id);
+    if (result === 1) return res.sendStatus(HSC.OK);
+
+    return res.sendStatus(HSC.BAD_REQUEST);
   },
 };
