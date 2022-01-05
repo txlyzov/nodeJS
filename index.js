@@ -22,7 +22,7 @@ app.use('/', routers.imagesRouter);
 /* eslint-disable no-unused-vars */
 //errors
 app.use((req, res) => {
-  res.status(HSC.NOT_FOUND).send('404: No content found.');
+  res.status(HSC.NOT_FOUND).send('No content found.');
 });
 app.use((err, req, res, next) => {
   console.error('Error:', err.stack);

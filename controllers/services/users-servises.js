@@ -1,4 +1,3 @@
-const HSC = require('http-status-codes');
 const usersModel = require('../../models').users;
 
 module.exports = {
@@ -25,7 +24,9 @@ module.exports = {
    **/
   async get(next) {
     const users = await usersModel.findAll();
-    if (!users) return next();
+    if (users.length === 0) return next();
+
+    return users;
   },
 
   /**
@@ -53,7 +54,7 @@ module.exports = {
    **/
   async update(id, body) {
     const { login, email, password } = body;
-    await usersModel.update(
+    const result = await usersModel.update(
       {
         login,
         email,
@@ -66,7 +67,7 @@ module.exports = {
       },
     );
 
-    return HSC.OK;
+    return result;
   },
 
   /**
@@ -75,12 +76,12 @@ module.exports = {
    * @returns {Number} Returns the responce with code 200.
    **/
   async delete(id) {
-    await usersModel.destroy({
+    const result = await usersModel.destroy({
       where: {
         id,
       },
     });
 
-    return HSC.OK;
+    return result;
   },
 };

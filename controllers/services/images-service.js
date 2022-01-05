@@ -1,4 +1,3 @@
-const HSC = require('http-status-codes');
 const imagesModel = require('../../models').images;
 
 module.exports = {
@@ -27,7 +26,7 @@ module.exports = {
    **/
   async get(next) {
     const images = await imagesModel.findAll();
-    if (!images) return next();
+    if (images.length === 0) return next();
 
     return images;
   },
@@ -57,7 +56,7 @@ module.exports = {
    **/
   async update(id, body) {
     const { url, name, description, isPrivate, userId } = body;
-    await imagesModel.update(
+    const result = await imagesModel.update(
       {
         url,
         name,
@@ -72,7 +71,7 @@ module.exports = {
       },
     );
 
-    return HSC.OK;
+    return result;
   },
 
   /**
@@ -81,12 +80,12 @@ module.exports = {
    * @returns {Number} Returns the responce with code 200.
    **/
   async delete(id) {
-    await imagesModel.destroy({
+    const result = await imagesModel.destroy({
       where: {
         id,
       },
     });
 
-    return HSC.OK;
+    return result;
   },
 };
