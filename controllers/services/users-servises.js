@@ -8,13 +8,12 @@ module.exports = {
    **/
   async create(body) {
     const { login, email, password } = body;
-    const user = await usersModel.create({
+
+    return await usersModel.create({
       login,
       email,
       password,
     });
-
-    return user;
   },
 
   /**
@@ -24,7 +23,7 @@ module.exports = {
    **/
   async get(next) {
     const users = await usersModel.findAll();
-    if (users.length === 0) return next();
+    if (!users.length) return next();
 
     return users;
   },
@@ -54,7 +53,8 @@ module.exports = {
    **/
   async update(id, body) {
     const { login, email, password } = body;
-    const result = await usersModel.update(
+
+    return await usersModel.update(
       {
         login,
         email,
@@ -66,8 +66,6 @@ module.exports = {
         },
       },
     );
-
-    return result;
   },
 
   /**
@@ -76,12 +74,10 @@ module.exports = {
    * @returns {Number} Returns the responce with code 200.
    **/
   async delete(id) {
-    const result = await usersModel.destroy({
+    return await usersModel.destroy({
       where: {
         id,
       },
     });
-
-    return result;
   },
 };

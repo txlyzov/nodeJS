@@ -8,15 +8,14 @@ module.exports = {
    **/
   async create(body) {
     const { url, name, description, isPrivate, userId } = body;
-    const image = await imagesModel.create({
+
+    return await imagesModel.create({
       url,
       name,
       description,
       isPrivate,
       userId,
     });
-
-    return image;
   },
 
   /**
@@ -26,7 +25,7 @@ module.exports = {
    **/
   async get(next) {
     const images = await imagesModel.findAll();
-    if (images.length === 0) return next();
+    if (!images.length) return next();
 
     return images;
   },
@@ -56,7 +55,8 @@ module.exports = {
    **/
   async update(id, body) {
     const { url, name, description, isPrivate, userId } = body;
-    const result = await imagesModel.update(
+
+    return await imagesModel.update(
       {
         url,
         name,
@@ -70,8 +70,6 @@ module.exports = {
         },
       },
     );
-
-    return result;
   },
 
   /**
@@ -80,12 +78,10 @@ module.exports = {
    * @returns {Number} Returns the responce with code 200.
    **/
   async delete(id) {
-    const result = await imagesModel.destroy({
+    return await imagesModel.destroy({
       where: {
         id,
       },
     });
-
-    return result;
   },
 };

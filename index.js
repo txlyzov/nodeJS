@@ -19,15 +19,14 @@ app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 app.use('/', routers.usersRouter);
 app.use('/', routers.imagesRouter);
 
-/* eslint-disable no-unused-vars */
 //errors
 app.use((req, res) => {
   res.status(HSC.NOT_FOUND).send('No content found.');
 });
-app.use((err, req, res, next) => {
+
+app.use((err, req, res, next) => { // eslint-disable-line
   console.error('Error:', err.stack);
   res.status(HSC.INTERNAL_SERVER_ERROR).send(err.message);
 });
-/* eslint-enable no-unused-vars */
 
 app.listen(PORT, () => console.log(`API running at ${HOST}:${PORT}!`));
