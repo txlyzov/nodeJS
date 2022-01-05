@@ -1,0 +1,73 @@
+{
+    "root": true,
+    "plugins": [
+      "import"
+    ],
+    "parserOptions": {
+        "ecmaVersion": 2017
+    },
+
+    "env": {
+        "es6": true,
+        "browser": true,
+        "node": true
+    },
+    "extends": [
+      "eslint:recommended",
+      "plugin:prettier/recommended"
+    ],
+    "ignorePatterns": [
+        ".eslintrc.json"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "*.js",
+          "*.json"
+        ],
+        "rules": {
+          "max-len": [
+            "error",
+            150
+          ],
+          "indent": "off",
+          "quotes": [
+            "error",
+            "single"
+          ],
+          "linebreak-style": "off",
+          "newline-before-return": "error",
+          "import/newline-after-import": [
+            "error",
+            {
+              "count": 1
+            }
+          ],
+          "comma-dangle": "off",
+          "no-useless-return": "off",
+          "import/order": [
+            "error",
+            {
+              "groups": [
+                [
+                  "builtin",
+                  "external"
+                ]
+              ]
+            }
+          ],
+          "no-console": [
+            "off",
+            {
+              "allow": [
+                "info",
+                "error",
+                "warn"
+              ]
+            }
+          ],
+          "consistent-return": "off"
+        }
+      }
+    ]
+}

@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
+  up: async (queryInterface) => {
     await queryInterface.bulkInsert(
       'images',
       [
@@ -12,7 +12,7 @@ module.exports = {
           isPrivate: false,
           userId: 1,
           createdAt: new Date(),
-          updatedAt: new Date()
+          updatedAt: new Date(),
         },
         {
           url: 'https://cdn.pixabay.com/photo/2021/08/25/20/42/field-6574455__340.jpg',
@@ -21,7 +21,7 @@ module.exports = {
           isPrivate: false,
           userId: 2,
           createdAt: new Date(),
-          updatedAt: new Date()
+          updatedAt: new Date(),
         },
         {
           url: 'https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
@@ -30,14 +30,14 @@ module.exports = {
           isPrivate: false,
           userId: 1,
           createdAt: new Date(),
-          updatedAt: new Date()
-        }
+          updatedAt: new Date(),
+        },
       ],
-      {}
-    )
+      {},
+    );
   },
 
-  down: async (queryInterface, Sequelize) => {
+  down: async (queryInterface) => {
     return queryInterface.bulkDelete('images', null, {});
-  }
+  },
 };
