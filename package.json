@@ -6,14 +6,13 @@
     "model-generation": "npx sequelize-cli model:generate --name User --attributes firstName:string,lastName:string,email:string",
     "migrate": "npx sequelize-cli db:migrate",
     "drop": "npx sequelize-cli db:migrate:undo:all",
-    "createDb": "node -e 'require(\"./utils/db-init.js\").createDb()'",
-    "dropDb": "node -e 'require(\"./utils/db-init.js\").dropDb()'",
-    "start-o": "node ./bin/www",
+    "create-db": "node -e 'require(\"./utils/db-init.js\").createDb()'",
+    "drop-db": "node -e 'require(\"./utils/db-init.js\").dropDb()'",
     "start": "node index.js",
     "start-dev": "nodemon index.js",
     "lint": "eslint \"./**/*.js\" --quiet",
-    "lintFull": "eslint \"./**/*.js\"",
-    "lintFix": "eslint --fix './**/*.js'"
+    "lint-full": "eslint \"./**/*.js\"",
+    "lint-fix": "eslint --fix './**/*.js'"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
