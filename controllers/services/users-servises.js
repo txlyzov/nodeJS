@@ -9,7 +9,7 @@ module.exports = {
   async create(body) {
     const { login, email, password } = body;
 
-    return await usersModel.create({
+    return usersModel.create({
       login,
       email,
       password,
@@ -54,7 +54,7 @@ module.exports = {
   async update(id, body) {
     const { login, email, password } = body;
 
-    return await usersModel.update(
+    return usersModel.update(
       {
         login,
         email,
@@ -74,7 +74,7 @@ module.exports = {
    * @returns {Number} Returns the responce with code 200.
    **/
   async delete(id) {
-    return await usersModel.destroy({
+    return usersModel.destroy({
       where: {
         id,
       },

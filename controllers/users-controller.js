@@ -14,11 +14,13 @@ module.exports = {
   async updateUser(req, res) {
     const result = await service.update(req.params.id, req.body);
     if (result === 1) return res.sendStatus(HSC.OK);
-    if (result === 0) return res.sendStatus(HSC.NOT_FOUND);
+
+    return res.sendStatus(HSC.BAD_REQUEST);
   },
   async deleteUser(req, res) {
     const result = await service.delete(req.params.id);
     if (result === 1) return res.sendStatus(HSC.OK);
-    if (result === 0) return res.sendStatus(HSC.NOT_FOUND);
+
+    return res.sendStatus(HSC.BAD_REQUEST);
   },
 };

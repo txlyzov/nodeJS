@@ -9,7 +9,7 @@ module.exports = {
   async create(body) {
     const { url, name, description, isPrivate, userId } = body;
 
-    return await imagesModel.create({
+    return imagesModel.create({
       url,
       name,
       description,
@@ -56,7 +56,7 @@ module.exports = {
   async update(id, body) {
     const { url, name, description, isPrivate, userId } = body;
 
-    return await imagesModel.update(
+    return imagesModel.update(
       {
         url,
         name,
@@ -78,7 +78,7 @@ module.exports = {
    * @returns {Number} Returns the responce with code 200.
    **/
   async delete(id) {
-    return await imagesModel.destroy({
+    return imagesModel.destroy({
       where: {
         id,
       },
