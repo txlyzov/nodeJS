@@ -19,14 +19,15 @@ app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 app.use('/', routers.usersRouter);
 app.use('/', routers.imagesRouter);
 
+/* eslint-disable no-unused-vars */
 //errors
 app.use((req, res) => {
   res.status(HSC.NOT_FOUND).send('404: No page here.');
 });
-// app.use((err, req, res, next) => {
-//   console.error('Error:', err.stack);
-//   res.status(HSC.INTERNAL_SERVER_ERROR);
-//   res.render('./error', { errorMsg: 'Error' });
-// });
-
+app.use((err, req, res, next) => {
+  console.error('Error:', err.stack);
+  //console.log(HSC.INTERNAL_SERVER_ERROR);
+  res.status(HSC.INTERNAL_SERVER_ERROR).send(err.message);
+});
+/* eslint-enable no-unused-vars */
 app.listen(PORT, () => console.log(`API running at ${HOST}:${PORT}!`));
