@@ -1,10 +1,11 @@
 const { exec } = require('child_process');
-const config = require('../config/config.json');
+const config = require('../config/sequelize-config.js');
 
+const pattern = process.env.NODE_ENV || ['development'];
 module.exports.createDb = function () {
-  if (config.development.password) {
+  if (config[pattern].password) {
     exec(
-      `createdbjs ${config.development.database} --user=${config.development.username} --password=${config.development.password}`,
+      `createdbjs ${config[pattern].database} --user=${config[pattern].username} --password=${config[pattern].password}`,
       (error, stdout) => {
         if (error) {
           console.log(`error: ${error.message}`);
@@ -14,13 +15,13 @@ module.exports.createDb = function () {
         console.log(`stdout: ${stdout}`);
       },
     );
-  } else console.log('Fill your DB password in .env file.');
+  } else console.log('Fill your DB password in config folder.');
 };
 
 module.exports.dropDb = function () {
-  if (config.development.password) {
+  if (config[pattern].password) {
     exec(
-      `dropdbjs ${config.development.database} --user=${config.development.username} --password=${config.development.password}`,
+      `dropdbjs ${config[pattern].database} --user=${config[pattern].username} --password=${config[pattern].password}`,
       (error, stdout) => {
         if (error) {
           console.log(`error: ${error.message}`);
@@ -30,5 +31,5 @@ module.exports.dropDb = function () {
         console.log(`stdout: ${stdout}`);
       },
     );
-  } else console.log('Fill your DB password in .env file.');
+  } else console.log('Fill your DB password in config folder.');
 };
