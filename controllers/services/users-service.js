@@ -1,6 +1,9 @@
 const usersModel = require('../../models').users;
 
 module.exports = {
+  testf(str) {
+    return str + 'qwe';
+  },
   /**
    * Creates User object record in Users table.
    * @param {Body} body Entitry for getting login, email, password from request.
@@ -9,6 +12,13 @@ module.exports = {
   async create(body) {
     const { login, email, password } = body;
 
+    // const pr = usersModel.create({
+    //   login,
+    //   email,
+    //   password,
+    // });
+    // console.log(pr);
+    // return pr;
     return usersModel.create({
       login,
       email,
@@ -40,7 +50,7 @@ module.exports = {
         id,
       },
     });
-    if (!user) return next();
+    //if (!user) return next();
 
     return user;
   },
