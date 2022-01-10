@@ -25,7 +25,7 @@ module.exports = {
    **/
   async get(next) {
     const images = await imagesModel.findAll();
-    if (!images.length) return next();
+    //if (!images.length) return next();
 
     return images;
   },
@@ -42,7 +42,7 @@ module.exports = {
         id,
       },
     });
-    if (!image) return next();
+    //if (!image) return next();
 
     return image;
   },
@@ -55,8 +55,7 @@ module.exports = {
    **/
   async update(id, body) {
     const { url, name, description, isPrivate, userId } = body;
-
-    return imagesModel.update(
+    const result = await imagesModel.update(
       {
         url,
         name,
@@ -70,6 +69,8 @@ module.exports = {
         },
       },
     );
+
+    return result[0];
   },
 
   /**

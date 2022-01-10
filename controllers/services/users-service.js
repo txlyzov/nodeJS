@@ -56,8 +56,7 @@ module.exports = {
    **/
   async update(id, body) {
     const { login, email, password } = body;
-
-    return usersModel.update(
+    const result = await usersModel.update(
       {
         login,
         email,
@@ -69,6 +68,8 @@ module.exports = {
         },
       },
     );
+
+    return result[0];
   },
 
   /**
