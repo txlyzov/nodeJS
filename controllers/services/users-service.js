@@ -12,13 +12,6 @@ module.exports = {
   async create(body) {
     const { login, email, password } = body;
 
-    // const pr = usersModel.create({
-    //   login,
-    //   email,
-    //   password,
-    // });
-    // console.log(pr);
-    // return pr;
     return usersModel.create({
       login,
       email,
