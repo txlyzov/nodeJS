@@ -48,7 +48,6 @@ describe(testUtil.printCaptionX2('Images services tests:'), () => {
         isPrivate: result.isPrivate,
         userId: result.userId,
       };
-
       expect(formattedResult).to.deep.equals(forCreateImage);
     });
   });
@@ -133,14 +132,12 @@ describe(testUtil.printCaptionX2('Images services tests:'), () => {
       const create = await imagesModel.create(forCreateImage);
       const elementId = create.dataValues.id;
       const result = await imagesService.update(elementId, forEditImage);
-
       expect(result).to.deep.equal(1);
     });
 
     it('should not update one image object with nonexistent id', async () => {
       const nonexistentId = -1;
       const result = await imagesService.update(nonexistentId, forEditImage);
-
       expect(result).to.deep.equal(0);
     });
   });
@@ -158,14 +155,12 @@ describe(testUtil.printCaptionX2('Images services tests:'), () => {
       const create = await imagesModel.create(forCreateImage);
       const elementId = create.dataValues.id;
       const result = await imagesService.delete(elementId);
-
       expect(result).to.deep.equal(1);
     });
 
     it('should not delete one image object with nonexistent id', async () => {
       const nonexistentId = -1;
       const result = await imagesService.delete(nonexistentId);
-
       expect(result).to.deep.equal(0);
     });
   });
