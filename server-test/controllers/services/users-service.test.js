@@ -1,4 +1,8 @@
-const { expect } = require('chai');
+const chai = require('chai');
+const chaiAsPromised = require('chai-as-promised');
+
+chai.use(chaiAsPromised);
+const { expect, assert } = require('chai');
 const usersService = require('../../../controllers/services/users-service');
 const usersModel = require('../../../models').users;
 const testUtil = require('../../util.test');
@@ -29,6 +33,21 @@ describe(testUtil.printCaptionX2('Users services tests:'), () => {
 
       expect(formattedResult).to.deep.equals(forCreateUser);
     });
+
+    it('should not create one user object', async () => {
+      await usersModel.create(forCreateUser);
+
+      await expect(usersModel.create(forCreateUser)).to.be.rejectedWith(
+        'Validation error',
+      );
+      // it('should throw', function(done) {
+      //   (function(done) {
+      //     someObject.someMethod(null, '', done)
+      //   }).should.throw();
+      // });
+      // assert.throws(iThrowError, Error, 'Validation error');
+      // //expect(formattedResult).to.deep.equals(forCreateUser);
+    });
   });
 
   //-----------------------------------------------------------------------------------------------
@@ -56,6 +75,15 @@ describe(testUtil.printCaptionX2('Users services tests:'), () => {
       expect(result.length).to.equals(2);
       expect(resultValues1).to.deep.equals(createValues1);
       expect(resultValues2).to.deep.equals(createValues2);
+    });
+
+    it('should return 0 length array', async () => {
+      const nextFn = () => {
+        return 'next has been called';
+      };
+      const result = await usersService.get(nextFn);
+
+      expect(result.length).to.equals('next has been called');
     });
   });
 
