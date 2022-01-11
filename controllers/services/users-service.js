@@ -40,7 +40,7 @@ module.exports = {
         id,
       },
     });
-    if (!user) return next();
+    //if (!user) return next();
 
     return user;
   },
@@ -53,8 +53,7 @@ module.exports = {
    **/
   async update(id, body) {
     const { login, email, password } = body;
-
-    return usersModel.update(
+    const result = await usersModel.update(
       {
         login,
         email,
@@ -66,6 +65,8 @@ module.exports = {
         },
       },
     );
+
+    return result[0];
   },
 
   /**

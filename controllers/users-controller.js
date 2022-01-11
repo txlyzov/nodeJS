@@ -1,5 +1,5 @@
 const HSC = require('http-status-codes');
-const service = require('./services/users-servises');
+const service = require('./services/users-service');
 
 module.exports = {
   async createUser(req, res) {
