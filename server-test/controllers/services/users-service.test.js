@@ -26,6 +26,7 @@ describe(testUtil.printCaptionX2('Users services tests:'), () => {
         email: result.email,
         password: result.password,
       };
+
       expect(formattedResult).to.deep.equals(forCreateUser);
     });
   });
@@ -100,12 +101,14 @@ describe(testUtil.printCaptionX2('Users services tests:'), () => {
       const create = await usersModel.create(forCreateUser);
       const elementId = create.dataValues.id;
       const result = await usersService.update(elementId, forEditUser);
+
       expect(result).to.deep.equal(1);
     });
 
     it('should not update one user object with nonexistent id', async () => {
       const nonexistentId = -1;
       const result = await usersService.update(nonexistentId, forEditUser);
+
       expect(result).to.deep.equal(0);
     });
   });
@@ -121,12 +124,14 @@ describe(testUtil.printCaptionX2('Users services tests:'), () => {
       const create = await usersModel.create(forCreateUser);
       const elementId = create.dataValues.id;
       const result = await usersService.delete(elementId);
+
       expect(result).to.deep.equal(1);
     });
 
     it('should not delete one user object with nonexistent id', async () => {
       const nonexistentId = -1;
       const result = await usersService.delete(nonexistentId);
+
       expect(result).to.deep.equal(0);
     });
   });

@@ -1,9 +1,6 @@
 const usersModel = require('../../models').users;
 
 module.exports = {
-  testf(str) {
-    return str + 'qwe';
-  },
   /**
    * Creates User object record in Users table.
    * @param {Body} body Entitry for getting login, email, password from request.
