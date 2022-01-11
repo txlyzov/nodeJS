@@ -21,9 +21,8 @@ module.exports = {
    * @param {NextFunction} next Parameter for using error handler.
    * @returns {Array|Object} Returns the responce with all User objects from the Users table.
    **/
-  async get(next) {
+  async get() {
     const users = await usersModel.findAll();
-    if (!users.length) return next();
 
     return users;
   },
@@ -34,13 +33,12 @@ module.exports = {
    * @param {NextFunction} next Parameter for using error handler.
    * @returns {Object} Returns the responce with one User object from the Users table.
    **/
-  async getOne(id, next) {
+  async getOne(id) {
     const user = await usersModel.findOne({
       where: {
         id,
       },
     });
-    //if (!user) return next();
 
     return user;
   },

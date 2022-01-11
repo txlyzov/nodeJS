@@ -6,10 +6,16 @@ module.exports = {
     return res.json(await service.create(req.body));
   },
   async getUsers(req, res, next) {
-    return res.json(await service.get(next));
+    const result = await service.get();
+    if (!result.length) return next();
+
+    return res.json(result);
   },
   async getOneUser(req, res, next) {
-    return res.json(await service.getOne(req.params.id, next));
+    const result = await service.getOne(req.params.id);
+    if (!result) return next();
+
+    return res.json(result);
   },
   async updateUser(req, res) {
     const result = await service.update(req.params.id, req.body);
