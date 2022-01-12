@@ -2,6 +2,7 @@ const express = require('express');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const HSC = require('http-status-codes');
+const cors = require('cors');
 const routers = require('./routes');
 const config = require('./config/index').development;
 
@@ -10,6 +11,7 @@ const app = express();
 const HOST = config.connection.host || 'localhost';
 const PORT = config.connection.port || 3000;
 
+app.use(cors());
 app.use(helmet());
 app.use(morgan('combined'));
 app.use(express.json({ limit: '50mb' }));
