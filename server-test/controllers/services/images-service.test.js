@@ -26,11 +26,11 @@ describe(testUtil.printCaptionX2('Images services tests:'), () => {
     usersModel.create(forCreateUser1);
     usersModel.create(forCreateUser2);
   });
-  after(async () => {
-    await testUtil.cleanTable(usersModel);
+  afterEach(async () => {
     await testUtil.cleanTable(imagesModel);
   });
-  afterEach(async () => {
+  after(async () => {
+    await testUtil.cleanTable(usersModel);
     await testUtil.cleanTable(imagesModel);
   });
 
@@ -57,9 +57,9 @@ describe(testUtil.printCaptionX2('Images services tests:'), () => {
     });
 
     it('should not create one image object', async () => {
-      forCreateImage.userId = -1;
+      const forNotCreateImage = { ...forCreateImage, userId: -1 };
 
-      await expect(imagesService.create(forCreateImage)).to.be.rejectedWith(
+      await expect(imagesService.create(forNotCreateImage)).to.be.rejectedWith(
         'insert or update on table "images" violates foreign key constraint "images_userId_fkey"',
       );
     });
@@ -97,9 +97,8 @@ describe(testUtil.printCaptionX2('Images services tests:'), () => {
     });
 
     it('should return 0 length array', async () => {
-      //const next = sinon.spy();
-      //expect(next.calledOnce).to.be.true;
       const result = await imagesService.get();
+
       expect(result.length).to.equals(0);
     });
   });

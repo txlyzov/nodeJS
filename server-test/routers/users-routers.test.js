@@ -5,6 +5,7 @@ const chaiHttp = require('chai-http');
 const HSC = require('http-status-codes');
 const server = require('../../index');
 const usersModel = require('../../models').users;
+
 const testUtil = require('../util.test');
 
 chai.use(chaiAsPromised);
@@ -18,6 +19,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
   afterEach(async () => {
     await testUtil.cleanTable(usersModel);
   });
+
   //-----------------------------------------------------------------------------------------------
   describe(testUtil.printCaption('POST /users/create'), () => {
     const forCreateUser = {
@@ -25,19 +27,25 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
       email: 'email',
       password: 'password',
     };
+
     it('It should create a new user', (done) => {
       chai
         .request(server)
         .post('/users/create/')
         .send(forCreateUser)
         .end((err, res) => {
+          const reformatedBodyContent = {
+            login: res.body.login,
+            email: res.body.email,
+            password: res.body.password,
+          };
+
           res.should.have.status(HSC.OK);
-          res.body.should.have.property('login').eq(forCreateUser.login);
-          res.body.should.have.property('email').eq(forCreateUser.email);
-          res.body.should.have.property('password').eq(forCreateUser.password);
+          expect(reformatedBodyContent).to.have.deep.equal(forCreateUser);
           done();
         });
     });
+
     it('It should not create any new user', (done) => {
       usersModel.create(forCreateUser).then(
         chai
@@ -51,45 +59,50 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
       );
     });
   });
+
   //-----------------------------------------------------------------------------------------------
   describe(testUtil.printCaption('GET /users'), () => {
-    const forCreateUser1 = {
-      login: 'login1',
-      email: 'email1',
-      password: 'password1',
-    };
-    const forCreateUser2 = {
-      login: 'login2',
-      email: 'email2',
-      password: 'password2',
-    };
-    it('It should get all users', (done) => {
-      usersModel
-        .create(forCreateUser1)
-        .then(usersModel.create(forCreateUser2))
-        .then(
-          chai
-            .request(server)
-            .get('/users')
-            .end((err, res) => {
-              const reformatedBodyContent1 = {
-                login: res.body[0].login,
-                email: res.body[0].email,
-                password: res.body[0].password,
-              };
-              const reformatedBodyContent2 = {
-                login: res.body[1].login,
-                email: res.body[1].email,
-                password: res.body[1].password,
-              };
+    describe('test with presetted data', () => {
+      const forCreateUser1 = {
+        login: 'login1',
+        email: 'email1',
+        password: 'password1',
+      };
+      const forCreateUser2 = {
+        login: 'login2',
+        email: 'email2',
+        password: 'password2',
+      };
 
-              res.should.have.status(HSC.OK);
-              expect(reformatedBodyContent1).to.have.deep.equal(forCreateUser1);
-              expect(reformatedBodyContent2).to.have.deep.equal(forCreateUser2);
-              done();
-            }),
-        );
+      before(async () => {
+        await usersModel.create(forCreateUser1);
+        await usersModel.create(forCreateUser2);
+      });
+
+      it('It should get all users', (done) => {
+        chai
+          .request(server)
+          .get('/users')
+          .end((err, res) => {
+            const reformatedBodyContent1 = {
+              login: res.body[0].login,
+              email: res.body[0].email,
+              password: res.body[0].password,
+            };
+            const reformatedBodyContent2 = {
+              login: res.body[1].login,
+              email: res.body[1].email,
+              password: res.body[1].password,
+            };
+
+            res.should.have.status(HSC.OK);
+            expect(reformatedBodyContent1).to.have.deep.equal(forCreateUser1);
+            expect(reformatedBodyContent2).to.have.deep.equal(forCreateUser2);
+            done();
+          });
+      });
     });
+
     it('It should not get any users', (done) => {
       chai
         .request(server)
@@ -108,6 +121,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
       email: 'email',
       password: 'password',
     };
+
     it('It should get the user by id', (done) => {
       usersModel.create(forCreateUser).then((create) => {
         const elementId = create.dataValues.id;
@@ -127,6 +141,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
           });
       });
     });
+
     it('It should not get any user by nonexistent id', (done) => {
       const nonexistentId = -1;
 
@@ -152,6 +167,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
       email: 'email2',
       password: 'password2',
     };
+
     it('It should edit the user by id', (done) => {
       usersModel.create(forCreateUser).then((create) => {
         const elementId = create.dataValues.id;
@@ -165,6 +181,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
           });
       });
     });
+
     it('It should not edit any user with nonexistent id', (done) => {
       const nonexistentId = -1;
 
@@ -180,6 +197,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
       );
     });
   });
+
   //-----------------------------------------------------------------------------------------------
   describe(testUtil.printCaption('DELETE /users/delete/:id'), () => {
     const forCreateUser = {
@@ -187,6 +205,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
       email: 'email',
       password: 'password',
     };
+
     it('It should delete the user by id', (done) => {
       usersModel.create(forCreateUser).then((create) => {
         const elementId = create.dataValues.id;
@@ -199,6 +218,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
           });
       });
     });
+
     it('It should not delete any user by nonexistent id', (done) => {
       const nonexistentId = -1;
 

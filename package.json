@@ -14,7 +14,7 @@
     "lint-full": "eslint \"./**/*.js\"",
     "lint-fix": "eslint --fix './**/*.js'",
     "start-test": "NODE_ENV=test mocha server-test --recursive",
-    "start-test-one": "NODE_ENV=test mocha server-test/routers",
+    "start-test-one": "NODE_ENV=test mocha server-test/routers/images-router.test.js",
     "migrate-test": "NODE_ENV=test npx sequelize-cli db:migrate",
     "drop-test": "NODE_ENV=test npx sequelize-cli db:migrate:undo:all",
     "create-db-test": "NODE_ENV=test node -e 'require(\"./utils/db-init.js\").createDb()'",
@@ -38,6 +38,8 @@
     "sinon": "^12.0.1"
   },
   "devDependencies": {
+    "@babel/eslint-parser": "^7.16.5",
+    "babel-eslint": "^10.1.0",
     "chai": "^4.3.4",
     "chai-http": "^4.3.0",
     "eslint": "^8.6.0",

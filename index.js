@@ -25,7 +25,6 @@ app.use((req, res) => {
 });
 
 app.use((err, req, res, next) => { // eslint-disable-line
-  //console.error('Error:', err.stack);
   res.status(HSC.INTERNAL_SERVER_ERROR).send(err.message);
 });
 
