@@ -13,13 +13,15 @@
     "lint": "eslint \"./**/*.js\" --quiet",
     "lint-full": "eslint \"./**/*.js\"",
     "lint-fix": "eslint --fix './**/*.js'",
-    "start-test": "NODE_ENV=test mocha server-test/**/**/*.js",
+    "start-test": "NODE_ENV=test mocha server-test --recursive",
+    "start-test-one": "NODE_ENV=test mocha server-test/routers/images-router.test.js",
     "migrate-test": "NODE_ENV=test npx sequelize-cli db:migrate",
     "drop-test": "NODE_ENV=test npx sequelize-cli db:migrate:undo:all",
     "create-db-test": "NODE_ENV=test node -e 'require(\"./utils/db-init.js\").createDb()'",
     "drop-db-test": "NODE_ENV=test node -e 'require(\"./utils/db-init.js\").dropDb()'"
   },
   "dependencies": {
+    "chai-as-promised": "^7.1.1",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "dotenv": "^10.0.0",
@@ -32,9 +34,12 @@
     "pg": "^8.7.1",
     "pg-hstore": "^2.3.4",
     "pgtools": "^0.1.1",
-    "sequelize": "^7.0.0-alpha.2"
+    "sequelize": "^7.0.0-alpha.2",
+    "sinon": "^12.0.1"
   },
   "devDependencies": {
+    "@babel/eslint-parser": "^7.16.5",
+    "babel-eslint": "^10.1.0",
     "chai": "^4.3.4",
     "chai-http": "^4.3.0",
     "eslint": "^8.6.0",

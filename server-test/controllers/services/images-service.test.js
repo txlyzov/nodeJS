@@ -1,8 +1,12 @@
+const chai = require('chai');
 const { expect } = require('chai');
+const chaiAsPromised = require('chai-as-promised');
 const imagesService = require('../../../controllers/services/images-service');
 const imagesModel = require('../../../models').images;
 const usersModel = require('../../../models').users;
 const testUtil = require('../../util.test');
+
+chai.use(chaiAsPromised);
 
 describe(testUtil.printCaptionX2('Images services tests:'), () => {
   //-----------------------------------------------------------------------------------------------
@@ -22,11 +26,11 @@ describe(testUtil.printCaptionX2('Images services tests:'), () => {
     usersModel.create(forCreateUser1);
     usersModel.create(forCreateUser2);
   });
-  after(async () => {
-    await testUtil.cleanTable(usersModel);
+  afterEach(async () => {
     await testUtil.cleanTable(imagesModel);
   });
-  afterEach(async () => {
+  after(async () => {
+    await testUtil.cleanTable(usersModel);
     await testUtil.cleanTable(imagesModel);
   });
 
@@ -40,7 +44,7 @@ describe(testUtil.printCaptionX2('Images services tests:'), () => {
     };
 
     it('should create one image object', async () => {
-      const result = await imagesModel.create(forCreateImage);
+      const result = await imagesService.create(forCreateImage);
       const formattedResult = {
         url: result.url,
         name: result.name,
@@ -50,6 +54,14 @@ describe(testUtil.printCaptionX2('Images services tests:'), () => {
       };
 
       expect(formattedResult).to.deep.equals(forCreateImage);
+    });
+
+    it('should not create one image object', async () => {
+      const forNotCreateImage = { ...forCreateImage, userId: -1 };
+
+      await expect(imagesService.create(forNotCreateImage)).to.be.rejectedWith(
+        'insert or update on table "images" violates foreign key constraint "images_userId_fkey"',
+      );
     });
   });
 
@@ -82,6 +94,12 @@ describe(testUtil.printCaptionX2('Images services tests:'), () => {
       expect(result.length).to.equals(2);
       expect(resultValues1).to.deep.equals(createValues1);
       expect(resultValues2).to.deep.equals(createValues2);
+    });
+
+    it('should return 0 length array', async () => {
+      const result = await imagesService.get();
+
+      expect(result.length).to.equals(0);
     });
   });
 

@@ -1,7 +1,11 @@
+const chai = require('chai');
 const { expect } = require('chai');
+const chaiAsPromised = require('chai-as-promised');
 const usersService = require('../../../controllers/services/users-service');
 const usersModel = require('../../../models').users;
 const testUtil = require('../../util.test');
+
+chai.use(chaiAsPromised);
 
 describe(testUtil.printCaptionX2('Users services tests:'), () => {
   before(async () => {
@@ -20,7 +24,7 @@ describe(testUtil.printCaptionX2('Users services tests:'), () => {
     };
 
     it('should create one user object', async () => {
-      const result = await usersModel.create(forCreateUser);
+      const result = await usersService.create(forCreateUser);
       const formattedResult = {
         login: result.login,
         email: result.email,
@@ -28,6 +32,14 @@ describe(testUtil.printCaptionX2('Users services tests:'), () => {
       };
 
       expect(formattedResult).to.deep.equals(forCreateUser);
+    });
+
+    it('should not create one user object', async () => {
+      await usersModel.create(forCreateUser);
+
+      await expect(usersService.create(forCreateUser)).to.be.rejectedWith(
+        'Validation error',
+      );
     });
   });
 
@@ -56,6 +68,13 @@ describe(testUtil.printCaptionX2('Users services tests:'), () => {
       expect(result.length).to.equals(2);
       expect(resultValues1).to.deep.equals(createValues1);
       expect(resultValues2).to.deep.equals(createValues2);
+    });
+
+    it('should return 0 length array', async () => {
+      // const next = sinon.spy();
+      // expect(next.calledOnce).to.be.true;
+      const result = await usersService.get();
+      expect(result.length).to.equals(0);
     });
   });
 

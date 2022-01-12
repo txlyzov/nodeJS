@@ -23,9 +23,8 @@ module.exports = {
    * @param {NextFunction} next Parameter for using error handler.
    * @returns {Array|Object}} Returns the responce with all Image objects from the Images table.
    **/
-  async get(next) {
+  async get() {
     const images = await imagesModel.findAll();
-    //if (!images.length) return next();
 
     return images;
   },
@@ -36,13 +35,12 @@ module.exports = {
    * @param {NextFunction} next Parameter for using error handler.
    * @returns {Object} Returns the responce with one Image object from the Images table.
    **/
-  async getOne(id, next) {
+  async getOne(id) {
     const image = await imagesModel.findOne({
       where: {
         id,
       },
     });
-    //if (!image) return next();
 
     return image;
   },
