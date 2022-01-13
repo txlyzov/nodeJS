@@ -18,7 +18,6 @@ module.exports = {
 
   /**
    * Gets all User object records in the Users table.
-   * @param {NextFunction} next Parameter for using error handler.
    * @returns {Array|Object} Returns the responce with all User objects from the Users table.
    **/
   async get() {
@@ -30,7 +29,6 @@ module.exports = {
   /**
    * Gets one User object record by id in Users table.
    * @param {Integer} id User id from request.
-   * @param {NextFunction} next Parameter for using error handler.
    * @returns {Object} Returns the responce with one User object from the Users table.
    **/
   async getOne(id) {
