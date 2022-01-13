@@ -71,8 +71,6 @@ describe(testUtil.printCaptionX2('Users services tests:'), () => {
     });
 
     it('should return 0 length array', async () => {
-      // const next = sinon.spy();
-      // expect(next.calledOnce).to.be.true;
       const result = await usersService.get();
       expect(result.length).to.equals(0);
     });

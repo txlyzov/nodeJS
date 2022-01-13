@@ -66,38 +66,46 @@ describe(testUtil.printCaptionX2('Images services tests:'), () => {
   });
 
   //-----------------------------------------------------------------------------------------------
-  describe(testUtil.printCaption('- get()'), () => {
+  describe(testUtil.printCaption('- getPublic()'), () => {
     const forCreateImage1 = {
       url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
       name: 'image1',
       description: 'description1',
-      isPrivate: false,
+      isPrivate: true,
       userId: 1,
     };
     const forCreateImage2 = {
       url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
       name: 'image2',
       description: 'description2',
-      isPrivate: true,
+      isPrivate: false,
+      userId: 2,
+    };
+    const forCreateImage3 = {
+      url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
+      name: 'image3',
+      description: 'description3',
+      isPrivate: false,
       userId: 2,
     };
 
-    it('should return array with image objects', async () => {
-      const create1 = await imagesModel.create(forCreateImage1);
+    it('should return array with public image objects', async () => {
+      await imagesModel.create(forCreateImage1);
       const create2 = await imagesModel.create(forCreateImage2);
-      const result = await imagesService.get();
-      const createValues1 = create1.dataValues;
+      const create3 = await imagesModel.create(forCreateImage3);
+      const result = await imagesService.getPublic();
       const createValues2 = create2.dataValues;
-      const resultValues1 = result[0].dataValues;
-      const resultValues2 = result[1].dataValues;
+      const createValues3 = create3.dataValues;
+      const resultValues2 = result[0].dataValues;
+      const resultValues3 = result[1].dataValues;
 
       expect(result.length).to.equals(2);
-      expect(resultValues1).to.deep.equals(createValues1);
       expect(resultValues2).to.deep.equals(createValues2);
+      expect(resultValues3).to.deep.equals(createValues3);
     });
 
     it('should return 0 length array', async () => {
-      const result = await imagesService.get();
+      const result = await imagesService.getPublic();
 
       expect(result.length).to.equals(0);
     });
