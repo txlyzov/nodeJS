@@ -32,6 +32,15 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         },
+        {
+          url: 'https://miro.medium.com/max/1200/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg',
+          name: 'yoda1',
+          description: null,
+          isPrivate: false,
+          userId: 2,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
       ],
       {},
     );

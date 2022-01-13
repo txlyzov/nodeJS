@@ -21,7 +21,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
   });
 
   //-----------------------------------------------------------------------------------------------
-  describe(testUtil.printCaption('POST /users/create'), () => {
+  describe(testUtil.printCaption('POST /users'), () => {
     const forCreateUser = {
       login: 'login',
       email: 'email',
@@ -31,7 +31,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
     it('It should create a new user', (done) => {
       chai
         .request(server)
-        .post('/users/create/')
+        .post('/users/')
         .send(forCreateUser)
         .end((err, res) => {
           const reformatedBodyContent = {
@@ -50,7 +50,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
       usersModel.create(forCreateUser).then(
         chai
           .request(server)
-          .post('/users/create/')
+          .post('/users/')
           .send(forCreateUser)
           .end((err, res) => {
             res.should.have.status(HSC.INTERNAL_SERVER_ERROR);
@@ -156,7 +156,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
   });
 
   //-----------------------------------------------------------------------------------------------
-  describe(testUtil.printCaption('PUT /users/update/:id'), () => {
+  describe(testUtil.printCaption('PUT /users/:id'), () => {
     const forCreateUser = {
       login: 'login1',
       email: 'email1',
@@ -173,7 +173,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
         const elementId = create.dataValues.id;
         chai
           .request(server)
-          .put('/users/update/' + elementId)
+          .put('/users/' + elementId)
           .send(forEditUser)
           .end((err, res) => {
             res.should.have.status(HSC.OK);
@@ -188,7 +188,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
       usersModel.create(forCreateUser).then(
         chai
           .request(server)
-          .put('/users/update/' + nonexistentId)
+          .put('/users/' + nonexistentId)
           .send(forEditUser)
           .end((err, res) => {
             res.should.have.status(HSC.BAD_REQUEST);
@@ -199,7 +199,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
   });
 
   //-----------------------------------------------------------------------------------------------
-  describe(testUtil.printCaption('DELETE /users/delete/:id'), () => {
+  describe(testUtil.printCaption('DELETE /users/:id'), () => {
     const forCreateUser = {
       login: 'login',
       email: 'email',
@@ -211,7 +211,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
         const elementId = create.dataValues.id;
         chai
           .request(server)
-          .delete('/users/delete/' + elementId)
+          .delete('/users/' + elementId)
           .end((err, res) => {
             res.should.have.status(HSC.OK);
             done();
@@ -224,7 +224,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
 
       chai
         .request(server)
-        .delete('/users/delete/' + nonexistentId)
+        .delete('/users/' + nonexistentId)
         .end((err, res) => {
           res.should.have.status(HSC.BAD_REQUEST);
           done();

@@ -6,7 +6,7 @@ module.exports = {
     return res.json(await service.create(req.body));
   },
   async getImages(req, res, next) {
-    const result = await service.get();
+    const result = await service.getPublic();
     if (!result.length) return next();
 
     return res.json(result);

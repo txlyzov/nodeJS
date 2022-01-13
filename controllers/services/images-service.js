@@ -22,8 +22,12 @@ module.exports = {
    * Gets all Image object records in the Images table.
    * @returns {Array|Object}} Returns the responce with all Image objects from the Images table.
    **/
-  async get() {
-    const images = await imagesModel.findAll();
+  async getPublic() {
+    const images = await imagesModel.findAll({
+      where: {
+        isPrivate: false,
+      },
+    });
 
     return images;
   },

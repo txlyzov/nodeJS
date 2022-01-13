@@ -39,7 +39,7 @@ describe(testUtil.printCaptionX2('Images routers tests:'), () => {
   });
 
   //-----------------------------------------------------------------------------------------------
-  describe(testUtil.printCaption('POST /images/create'), () => {
+  describe(testUtil.printCaption('POST /images'), () => {
     const forCreateImage = {
       url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
       name: 'image',
@@ -51,7 +51,7 @@ describe(testUtil.printCaptionX2('Images routers tests:'), () => {
     it('It should create a new image', (done) => {
       chai
         .request(server)
-        .post('/images/create/')
+        .post('/images/')
         .send(forCreateImage)
         .end((err, res) => {
           const reformatedBodyContent = {
@@ -72,7 +72,7 @@ describe(testUtil.printCaptionX2('Images routers tests:'), () => {
       const forNotCreateImage = { ...forCreateImage, userId: -1 };
       chai
         .request(server)
-        .post('/images/create/')
+        .post('/images/')
         .send(forNotCreateImage)
         .end((err, res) => {
           res.should.have.status(HSC.INTERNAL_SERVER_ERROR);
@@ -88,20 +88,28 @@ describe(testUtil.printCaptionX2('Images routers tests:'), () => {
         url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
         name: 'image1',
         description: 'description1',
-        isPrivate: false,
+        isPrivate: true,
         userId: 1,
       };
       const forCreateImage2 = {
         url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
         name: 'image2',
         description: 'description2',
-        isPrivate: true,
+        isPrivate: false,
+        userId: 2,
+      };
+      const forCreateImage3 = {
+        url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
+        name: 'image3',
+        description: 'description3',
+        isPrivate: false,
         userId: 2,
       };
 
       before(async () => {
         await imagesModel.create(forCreateImage1);
         await imagesModel.create(forCreateImage2);
+        await imagesModel.create(forCreateImage3);
       });
 
       it('It should get all images', (done) => {
@@ -109,14 +117,14 @@ describe(testUtil.printCaptionX2('Images routers tests:'), () => {
           .request(server)
           .get('/images')
           .end((err, res) => {
-            const reformatedBodyContent1 = {
+            const reformatedBodyContent2 = {
               url: res.body[0].url,
               name: res.body[0].name,
               description: res.body[0].description,
               isPrivate: res.body[0].isPrivate,
               userId: res.body[0].userId,
             };
-            const reformatedBodyContent2 = {
+            const reformatedBodyContent3 = {
               url: res.body[1].url,
               name: res.body[1].name,
               description: res.body[1].description,
@@ -125,8 +133,9 @@ describe(testUtil.printCaptionX2('Images routers tests:'), () => {
             };
 
             res.should.have.status(HSC.OK);
-            expect(reformatedBodyContent1).to.have.deep.equal(forCreateImage1);
+            res.body.length.should.be.eq(2);
             expect(reformatedBodyContent2).to.have.deep.equal(forCreateImage2);
+            expect(reformatedBodyContent3).to.have.deep.equal(forCreateImage3);
             done();
           });
       });
@@ -189,7 +198,7 @@ describe(testUtil.printCaptionX2('Images routers tests:'), () => {
   });
 
   //-----------------------------------------------------------------------------------------------
-  describe(testUtil.printCaption('PUT /images/update/:id'), () => {
+  describe(testUtil.printCaption('PUT /images/:id'), () => {
     const forCreateImage = {
       url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
       name: 'image',
@@ -210,7 +219,7 @@ describe(testUtil.printCaptionX2('Images routers tests:'), () => {
         const elementId = create.dataValues.id;
         chai
           .request(server)
-          .put('/images/update/' + elementId)
+          .put('/images/' + elementId)
           .send(forEditImage)
           .end((err, res) => {
             res.should.have.status(HSC.OK);
@@ -225,7 +234,7 @@ describe(testUtil.printCaptionX2('Images routers tests:'), () => {
       imagesModel.create(forCreateImage).then(
         chai
           .request(server)
-          .put('/images/update/' + nonexistentId)
+          .put('/images/' + nonexistentId)
           .send(forEditImage)
           .end((err, res) => {
             res.should.have.status(HSC.BAD_REQUEST);
@@ -236,7 +245,7 @@ describe(testUtil.printCaptionX2('Images routers tests:'), () => {
   });
 
   //-----------------------------------------------------------------------------------------------
-  describe(testUtil.printCaption('DELETE /images/delete/:id'), () => {
+  describe(testUtil.printCaption('DELETE /images/:id'), () => {
     const forCreateImage = {
       url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
       name: 'image',
@@ -250,7 +259,7 @@ describe(testUtil.printCaptionX2('Images routers tests:'), () => {
         const elementId = create.dataValues.id;
         chai
           .request(server)
-          .delete('/images/delete/' + elementId)
+          .delete('/images/' + elementId)
           .end((err, res) => {
             res.should.have.status(HSC.OK);
             done();
@@ -263,7 +272,7 @@ describe(testUtil.printCaptionX2('Images routers tests:'), () => {
 
       chai
         .request(server)
-        .delete('/images/delete/' + nonexistentId)
+        .delete('/images/' + nonexistentId)
         .end((err, res) => {
           res.should.have.status(HSC.BAD_REQUEST);
           done();
