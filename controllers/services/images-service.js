@@ -20,7 +20,6 @@ module.exports = {
 
   /**
    * Gets all Image object records in the Images table.
-   * @param {NextFunction} next Parameter for using error handler.
    * @returns {Array|Object}} Returns the responce with all Image objects from the Images table.
    **/
   async get() {
@@ -32,7 +31,6 @@ module.exports = {
   /**
    * Gets one Image object record by id in the Images table.
    * @param {Integer} id Image id from request.
-   * @param {NextFunction} next Parameter for using error handler.
    * @returns {Object} Returns the responce with one Image object from the Images table.
    **/
   async getOne(id) {

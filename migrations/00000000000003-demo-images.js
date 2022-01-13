@@ -9,7 +9,7 @@ module.exports = {
           url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
           name: 'image1',
           description: '12354324s',
-          isPrivate: false,
+          isPrivate: true,
           userId: 1,
           createdAt: new Date(),
           updatedAt: new Date(),
