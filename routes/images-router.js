@@ -6,8 +6,8 @@ const asyncMiddleware = require('../utils/error-catcher').use;
 
 router.post(
   '/images',
-  asyncMiddleware(async (req, res, next) => {
-    await imagesController.createImage(req, res, next);
+  asyncMiddleware(async (req, res) => {
+    await imagesController.createImage(req, res);
   }),
 );
 router.get(
@@ -24,14 +24,14 @@ router.get(
 );
 router.put(
   '/images/:id',
-  asyncMiddleware(async (req, res, next) => {
-    await imagesController.updateImage(req, res, next);
+  asyncMiddleware(async (req, res) => {
+    await imagesController.updateImage(req, res);
   }),
 );
 router.delete(
   '/images/:id',
-  asyncMiddleware(async (req, res, next) => {
-    await imagesController.deleteImage(req, res, next);
+  asyncMiddleware(async (req, res) => {
+    await imagesController.deleteImage(req, res);
   }),
 );
 

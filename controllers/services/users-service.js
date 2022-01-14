@@ -28,13 +28,28 @@ module.exports = {
 
   /**
    * Gets one User object record by id in Users table.
-   * @param {Integer} id User id from request.
+   * @param {Integer} id User id value from request.
    * @returns {Object} Returns the responce with one User object from the Users table.
    **/
-  async getOne(id) {
+  async getOneById(id) {
     const user = await usersModel.findOne({
       where: {
         id,
+      },
+    });
+
+    return user;
+  },
+
+  /**
+   * Gets one User object record by id in Users table.
+   * @param {String} login User login value from request.
+   * @returns {Object} Returns the responce with one User object from the Users table.
+   **/
+  async getOneByLogin(login) {
+    const user = await usersModel.findOne({
+      where: {
+        login,
       },
     });
 
@@ -47,12 +62,33 @@ module.exports = {
    * @param {Body} body Entitry for getting login, email, password from request.
    * @returns {Number} Returns the responce with updated User object from the Users table.
    **/
-  async update(id, body) {
+  async updateFull(id, body) {
     const { login, email, password } = body;
     const result = await usersModel.update(
       {
         login,
         email,
+        password,
+      },
+      {
+        where: {
+          id,
+        },
+      },
+    );
+
+    return result[0];
+  },
+
+  /**
+   * Update User object record's password in the Users table.
+   * @param {Integer} id User id from request.
+   * @param {String} password New password string to set.
+   * @returns {Number} Returns the responce with updated User object from the Users table.
+   **/
+  async updatePassword(id, password) {
+    const result = await usersModel.update(
+      {
         password,
       },
       {

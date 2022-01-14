@@ -18,6 +18,7 @@ app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
 //routers
+app.use('/', routers.authorizationRouter);
 app.use('/', routers.usersRouter);
 app.use('/', routers.imagesRouter);
 
@@ -27,6 +28,7 @@ app.use((req, res) => {
 });
 
 app.use((err, req, res, next) => { // eslint-disable-line
+  //console.log(err);
   res.status(HSC.INTERNAL_SERVER_ERROR).send(err.message);
 });
 

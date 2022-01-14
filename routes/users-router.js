@@ -6,8 +6,8 @@ const asyncMiddleware = require('../utils/error-catcher').use;
 
 router.post(
   '/users',
-  asyncMiddleware(async (req, res, next) => {
-    await usersController.createUser(req, res, next);
+  asyncMiddleware(async (req, res) => {
+    await usersController.createUser(req, res);
   }),
 );
 router.get(
@@ -24,14 +24,14 @@ router.get(
 );
 router.put(
   '/users/:id',
-  asyncMiddleware(async (req, res, next) => {
-    await usersController.updateUser(req, res, next);
+  asyncMiddleware(async (req, res) => {
+    await usersController.updateUser(req, res);
   }),
 );
 router.delete(
   '/users/:id',
-  asyncMiddleware(async (req, res, next) => {
-    await usersController.deleteUser(req, res, next);
+  asyncMiddleware(async (req, res) => {
+    await usersController.deleteUser(req, res);
   }),
 );
 

@@ -12,13 +12,13 @@ module.exports = {
     return res.json(result);
   },
   async getOneUser(req, res, next) {
-    const result = await service.getOne(req.params.id);
+    const result = await service.getOneById(req.params.id);
     if (!result) return next();
 
     return res.json(result);
   },
   async updateUser(req, res) {
-    const result = await service.update(req.params.id, req.body);
+    const result = await service.updateFull(req.params.id, req.body);
     if (result === 1) return res.sendStatus(HSC.OK);
 
     return res.sendStatus(HSC.BAD_REQUEST);

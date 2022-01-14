@@ -77,7 +77,7 @@ describe(testUtil.printCaptionX2('Users services tests:'), () => {
   });
 
   //-----------------------------------------------------------------------------------------------
-  describe(testUtil.printCaption('- getOne(id)'), () => {
+  describe(testUtil.printCaption('- getOneById(id)'), () => {
     it('should return one user object', async () => {
       const forCreateUser = {
         login: 'login',
@@ -86,7 +86,7 @@ describe(testUtil.printCaptionX2('Users services tests:'), () => {
       };
       const create = await usersModel.create(forCreateUser);
       const elementId = create.dataValues.id;
-      const result = await usersService.getOne(elementId);
+      const result = await usersService.getOneById(elementId);
       const createValues = create.dataValues;
       const resultValues = result.dataValues;
 
@@ -95,14 +95,39 @@ describe(testUtil.printCaptionX2('Users services tests:'), () => {
 
     it('should not return one user object', async () => {
       const nonexistentId = -1;
-      const result = await usersService.getOne(nonexistentId);
+      const result = await usersService.getOneById(nonexistentId);
 
       expect(result).to.be.a('null');
     });
   });
 
   //-----------------------------------------------------------------------------------------------
-  describe(testUtil.printCaption('- update(id, input)'), () => {
+  describe(testUtil.printCaption('- getOneByLogin(login)'), () => {
+    it('should return one user object', async () => {
+      const forCreateUser = {
+        login: 'login',
+        email: 'email',
+        password: 'password',
+      };
+      const create = await usersModel.create(forCreateUser);
+      const elementLogin = create.dataValues.login;
+      const result = await usersService.getOneByLogin(elementLogin);
+      const createValues = create.dataValues;
+      const resultValues = result.dataValues;
+
+      expect(resultValues).to.deep.equals(createValues);
+    });
+
+    it('should not return one user object', async () => {
+      const nonexistentLogin = 'nigol';
+      const result = await usersService.getOneByLogin(nonexistentLogin);
+
+      expect(result).to.be.a('null');
+    });
+  });
+
+  //-----------------------------------------------------------------------------------------------
+  describe(testUtil.printCaption('- updateFull(id, input)'), () => {
     const forCreateUser = {
       login: 'login1',
       email: 'email1',
@@ -117,14 +142,49 @@ describe(testUtil.printCaptionX2('Users services tests:'), () => {
     it('should update one user object with id', async () => {
       const create = await usersModel.create(forCreateUser);
       const elementId = create.dataValues.id;
-      const result = await usersService.update(elementId, forEditUser);
+      const result = await usersService.updateFull(elementId, forEditUser);
 
       expect(result).to.deep.equal(1);
     });
 
     it('should not update one user object with nonexistent id', async () => {
       const nonexistentId = -1;
-      const result = await usersService.update(nonexistentId, forEditUser);
+      const result = await usersService.updateFull(nonexistentId, forEditUser);
+
+      expect(result).to.deep.equal(0);
+    });
+  });
+
+  //-----------------------------------------------------------------------------------------------
+  describe(testUtil.printCaption('- updatePassword(id, password)'), () => {
+    const forCreateUser = {
+      login: 'login1',
+      email: 'email1',
+      password: 'password1',
+    };
+    const forEditUser = {
+      login: 'login2',
+      email: 'email2',
+      password: 'password2',
+    };
+
+    it('should update one user object`s password with id', async () => {
+      const create = await usersModel.create(forCreateUser);
+      const elementId = create.dataValues.id;
+      const result = await usersService.updatePassword(
+        elementId,
+        forEditUser.password,
+      );
+
+      expect(result).to.deep.equal(1);
+    });
+
+    it('should not update one user object`s password with nonexistent id', async () => {
+      const nonexistentId = -1;
+      const result = await usersService.updatePassword(
+        nonexistentId,
+        forEditUser.password,
+      );
 
       expect(result).to.deep.equal(0);
     });
