@@ -22,7 +22,7 @@ router.post(
 router.post(
   '/users/password-changing',
   asyncMiddleware(async (req, res) => {
-    await authorizationController.changePassrod(req, res);
+    await authorizationController.changePassword(req, res);
   }),
 );
 

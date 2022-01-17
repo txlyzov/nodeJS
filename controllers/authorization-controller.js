@@ -19,20 +19,24 @@ module.exports = {
   async login(req, res) {
     const { login, password: plainTextPassword } = req.body;
     const userByLogin = await service.getOneByLogin(login);
-    console.log(userByLogin);
     if (!userByLogin) {
       return res
         .status(HSC.BAD_REQUEST)
         .send(`User with login "${login}" not exists.`);
     }
+    console.log(userByLogin.password);
     if (await bcrypt.compare(plainTextPassword, userByLogin.password)) {
       const token = jwt.sign({ id: userByLogin.id, login }, JWT_SECRET);
 
-      return res.status(HSC.OK).json({ data: token });
+      return res.status(HSC.OK).json({ token, login });
     }
+
+    return res
+      .status(HSC.BAD_REQUEST)
+      .send(`Wrong password for user with login "${login}".`);
   },
 
-  async changePassrod(req, res) {
+  async changePassword(req, res) {
     const { token, password: newPlainTextPassword } = req.body;
     const user = jwt.verify(token, JWT_SECRET);
     service.updatePassword(

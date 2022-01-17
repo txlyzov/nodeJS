@@ -62,7 +62,7 @@ module.exports = {
    * @param {Body} body Entitry for getting login, email, password from request.
    * @returns {Number} Returns the responce with updated User object from the Users table.
    **/
-  async updateFull(id, body) {
+  async update(id, body) {
     const { login, email, password } = body;
     const result = await usersModel.update(
       {

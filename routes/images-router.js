@@ -13,7 +13,7 @@ router.post(
 router.get(
   '/images',
   asyncMiddleware(async (req, res, next) => {
-    await imagesController.getImages(req, res, next);
+    await imagesController.getPublicImages(req, res, next);
   }),
 );
 router.get(
