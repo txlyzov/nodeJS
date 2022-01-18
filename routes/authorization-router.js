@@ -1,6 +1,6 @@
-var express = require('express');
+const express = require('express');
 
-var router = express.Router();
+const router = express.Router();
 const authorizationController =
   require('../controllers/index').authorizationController;
 const asyncMiddleware = require('../utils/error-catcher').use;

@@ -53,7 +53,7 @@ describe(testUtil.printCaptionX2('Images services tests:'), () => {
         userId: result.userId,
       };
 
-      expect(formattedResult).to.deep.equals(forCreateImage);
+      expect(formattedResult).to.deep.eq(forCreateImage);
     });
 
     it('should not create one image object', async () => {
@@ -99,15 +99,15 @@ describe(testUtil.printCaptionX2('Images services tests:'), () => {
       const resultValues2 = result[0].dataValues;
       const resultValues3 = result[1].dataValues;
 
-      expect(result.length).to.equals(2);
-      expect(resultValues2).to.deep.equals(createValues2);
-      expect(resultValues3).to.deep.equals(createValues3);
+      expect(result.length).to.eq(2);
+      expect(resultValues2).to.deep.eq(createValues2);
+      expect(resultValues3).to.deep.eq(createValues3);
     });
 
     it('should return 0 length array', async () => {
       const result = await imagesService.getPublic();
 
-      expect(result.length).to.equals(0);
+      expect(result.length).to.eq(0);
     });
   });
 
@@ -127,7 +127,7 @@ describe(testUtil.printCaptionX2('Images services tests:'), () => {
       const createValues = create.dataValues;
       const resultValues = result.dataValues;
 
-      expect(resultValues).to.deep.equals(createValues);
+      expect(resultValues).to.deep.eq(createValues);
     });
 
     it('should not return one image object', async () => {
@@ -160,14 +160,14 @@ describe(testUtil.printCaptionX2('Images services tests:'), () => {
       const elementId = create.dataValues.id;
       const result = await imagesService.update(elementId, forEditImage);
 
-      expect(result).to.deep.equal(1);
+      expect(result).to.deep.eq(1);
     });
 
     it('should not update one image object with nonexistent id', async () => {
       const nonexistentId = -1;
       const result = await imagesService.update(nonexistentId, forEditImage);
 
-      expect(result).to.deep.equal(0);
+      expect(result).to.deep.eq(0);
     });
   });
 
@@ -185,14 +185,14 @@ describe(testUtil.printCaptionX2('Images services tests:'), () => {
       const elementId = create.dataValues.id;
       const result = await imagesService.delete(elementId);
 
-      expect(result).to.deep.equal(1);
+      expect(result).to.deep.eq(1);
     });
 
     it('should not delete one image object with nonexistent id', async () => {
       const nonexistentId = -1;
       const result = await imagesService.delete(nonexistentId);
 
-      expect(result).to.deep.equal(0);
+      expect(result).to.deep.eq(0);
     });
   });
 });
