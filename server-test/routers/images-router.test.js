@@ -63,7 +63,7 @@ describe(testUtil.printCaptionX2('Images routers tests:'), () => {
           };
 
           res.should.have.status(HSC.OK);
-          expect(reformatedBodyContent).to.have.deep.equal(forCreateImage);
+          expect(reformatedBodyContent).to.have.deep.eq(forCreateImage);
           done();
         });
     });
@@ -134,8 +134,8 @@ describe(testUtil.printCaptionX2('Images routers tests:'), () => {
 
             res.should.have.status(HSC.OK);
             res.body.length.should.be.eq(2);
-            expect(reformatedBodyContent2).to.have.deep.equal(forCreateImage2);
-            expect(reformatedBodyContent3).to.have.deep.equal(forCreateImage3);
+            expect(reformatedBodyContent2).to.have.deep.eq(forCreateImage2);
+            expect(reformatedBodyContent3).to.have.deep.eq(forCreateImage3);
             done();
           });
       });
@@ -178,7 +178,7 @@ describe(testUtil.printCaptionX2('Images routers tests:'), () => {
             };
 
             res.should.have.status(HSC.OK);
-            expect(reformatedBodyContent).to.have.deep.equal(forCreateImage);
+            expect(reformatedBodyContent).to.have.deep.eq(forCreateImage);
             done();
           });
       });

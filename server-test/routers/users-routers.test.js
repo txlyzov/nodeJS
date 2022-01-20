@@ -41,7 +41,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
           };
 
           res.should.have.status(HSC.OK);
-          expect(reformatedBodyContent).to.have.deep.equal(forCreateUser);
+          expect(reformatedBodyContent).to.have.deep.eq(forCreateUser);
           done();
         });
     });
@@ -96,8 +96,8 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
             };
 
             res.should.have.status(HSC.OK);
-            expect(reformatedBodyContent1).to.have.deep.equal(forCreateUser1);
-            expect(reformatedBodyContent2).to.have.deep.equal(forCreateUser2);
+            expect(reformatedBodyContent1).to.have.deep.eq(forCreateUser1);
+            expect(reformatedBodyContent2).to.have.deep.eq(forCreateUser2);
             done();
           });
       });
@@ -136,7 +136,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
             };
 
             res.should.have.status(HSC.OK);
-            expect(reformatedBodyContent).to.have.deep.equal(forCreateUser);
+            expect(reformatedBodyContent).to.have.deep.eq(forCreateUser);
             done();
           });
       });
