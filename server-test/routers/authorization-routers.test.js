@@ -7,10 +7,12 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const server = require('../../index');
 const usersModel = require('../../models').users;
-
 const testUtil = require('../util.test');
 
-const JWT_SECRET = 'dfjk4j:kdf%№":g3490xcin№j34w8**)(jvcx';
+require('dotenv').config();
+
+const BCRYPT_SALT = parseInt(process.env.BCRYPT_SALT);
+const JWT_SECRET = process.env.JWT_SECRET;
 
 chai.use(chaiAsPromised);
 chai.use(chaiHttp);
@@ -70,7 +72,10 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
       before(async () => {
         await usersModel.create({
           ...forCreateUser,
-          password: await bcrypt.hash(forCreateUser.originalPassword, 10),
+          password: await bcrypt.hash(
+            forCreateUser.originalPassword,
+            BCRYPT_SALT,
+          ),
         });
       });
 
@@ -95,7 +100,10 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
       before(async () => {
         await usersModel.create({
           ...forCreateUser,
-          password: await bcrypt.hash(forCreateUser.originalPassword, 10),
+          password: await bcrypt.hash(
+            forCreateUser.originalPassword,
+            BCRYPT_SALT,
+          ),
         });
       });
 
@@ -122,7 +130,10 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
       before(async () => {
         await usersModel.create({
           ...forCreateUser,
-          password: await bcrypt.hash(forCreateUser.originalPassword, 10),
+          password: await bcrypt.hash(
+            forCreateUser.originalPassword,
+            BCRYPT_SALT,
+          ),
         });
       });
 
@@ -158,7 +169,10 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
       before(async () => {
         await usersModel.create({
           ...forCreateUser,
-          password: await bcrypt.hash(forCreateUser.originalPassword, 10),
+          password: await bcrypt.hash(
+            forCreateUser.originalPassword,
+            BCRYPT_SALT,
+          ),
         });
       });
 
@@ -184,7 +198,10 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
       before(async () => {
         await usersModel.create({
           ...forCreateUser,
-          password: await bcrypt.hash(forCreateUser.originalPassword, 10),
+          password: await bcrypt.hash(
+            forCreateUser.originalPassword,
+            BCRYPT_SALT,
+          ),
         });
       });
 
@@ -208,7 +225,10 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
       before(async () => {
         await usersModel.create({
           ...forCreateUser,
-          password: await bcrypt.hash(forCreateUser.originalPassword, 10),
+          password: await bcrypt.hash(
+            forCreateUser.originalPassword,
+            BCRYPT_SALT,
+          ),
         });
       });
 
