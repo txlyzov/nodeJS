@@ -21,7 +21,7 @@ module.exports = {
     }
     if (await bcrypt.compare(plainTextPassword, userByLogin.password)) {
       const token = jwt.sign({ id: userByLogin.id, login }, JWT_SECRET, {
-        //expiresIn: '30s',
+        expiresIn: '14400s',
       });
 
       return { error: null, data: { token, login } };
