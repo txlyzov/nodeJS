@@ -24,6 +24,7 @@ app.use('/', routers.imagesRouter);
 
 //errors
 app.use((req, res) => {
+  console.log(1);
   res.status(HSC.NOT_FOUND).send('No content found.');
 });
 

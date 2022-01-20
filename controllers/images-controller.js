@@ -7,7 +7,7 @@ module.exports = {
   },
   async getPublicImages(req, res, next) {
     const result = await service.getPublic();
-
+    console.log(result.length);
     if (!result.length) return next();
 
     return res.json(result);

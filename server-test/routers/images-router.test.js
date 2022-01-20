@@ -82,7 +82,7 @@ describe(testUtil.printCaptionX2('Images routers tests:'), () => {
   });
 
   //-----------------------------------------------------------------------------------------------
-  describe(testUtil.printCaption('GET /images'), () => {
+  describe(testUtil.printCaption('GET /images/all'), () => {
     describe('test with presetted data', () => {
       const forCreateImage1 = {
         url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
@@ -115,7 +115,7 @@ describe(testUtil.printCaptionX2('Images routers tests:'), () => {
       it('It should get all images', (done) => {
         chai
           .request(server)
-          .get('/images')
+          .get('/images/all')
           .end((err, res) => {
             const reformatedBodyContent2 = {
               url: res.body[0].url,
@@ -141,11 +141,12 @@ describe(testUtil.printCaptionX2('Images routers tests:'), () => {
       });
     });
 
-    it('It should not get any images', (done) => {
+    it.only('It should not get any images', (done) => {
       chai
         .request(server)
-        .get('/images')
+        .get('/images/all')
         .end((err, res) => {
+          console.log(res.body);
           res.should.have.status(HSC.NOT_FOUND);
           done();
         });

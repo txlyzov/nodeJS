@@ -33,6 +33,21 @@ module.exports = {
   },
 
   /**
+   * Gets all Image object records in the Images table with one owner.
+   * @param {Integer} userId User id for search.
+   * @returns {Array|Object}} Returns the responce with all Image objects from the Images table.
+   **/
+  async getAllByUserId(userId) {
+    const images = await imagesModel.findAll({
+      where: {
+        userId,
+      },
+    });
+
+    return images;
+  },
+
+  /**
    * Gets one Image object record by id in the Images table.
    * @param {Integer} id Image id from request.
    * @returns {Object} Returns the responce with one Image object from the Images table.
