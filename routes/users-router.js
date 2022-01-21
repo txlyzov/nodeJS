@@ -2,34 +2,35 @@ var express = require('express');
 
 var router = express.Router();
 const usersController = require('../controllers/index').usersController;
+const routes = require('../utils/routes-values').USERS_ROUTS;
 const asyncMiddleware = require('../utils/error-catcher').use;
 
 router.post(
-  '/users',
+  routes.BASE_URL,
   asyncMiddleware(async (req, res) => {
     await usersController.createUser(req, res);
   }),
 );
 router.get(
-  '/users',
+  routes.BASE_URL,
   asyncMiddleware(async (req, res, next) => {
     await usersController.getUsers(req, res, next);
   }),
 );
 router.get(
-  '/users/:id',
+  routes.WITH_ID,
   asyncMiddleware(async (req, res, next) => {
     await usersController.getOneUser(req, res, next);
   }),
 );
 router.put(
-  '/users/:id',
+  routes.WITH_ID,
   asyncMiddleware(async (req, res) => {
     await usersController.updateUser(req, res);
   }),
 );
 router.delete(
-  '/users/:id',
+  routes.WITH_ID,
   asyncMiddleware(async (req, res) => {
     await usersController.deleteUser(req, res);
   }),

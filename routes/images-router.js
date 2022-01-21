@@ -2,41 +2,35 @@ var express = require('express');
 
 var router = express.Router();
 const imagesController = require('../controllers/index').imagesController;
-const imagesControllerP = require('../controllers/index').imagesControllerP;
+const routes = require('../utils/routes-values').IMAGES_ROUTS;
 const asyncMiddleware = require('../utils/error-catcher').use;
 
 router.post(
-  '/images',
+  routes.BASE_URL,
   asyncMiddleware(async (req, res) => {
     await imagesController.createImage(req, res);
   }),
 );
 router.get(
-  '/images/all',
+  routes.BASE_URL,
   asyncMiddleware(async (req, res, next) => {
     await imagesController.getPublicImages(req, res, next);
   }),
 );
 router.get(
-  '/images/user',
-  asyncMiddleware(async (req, res, next) => {
-    await imagesControllerP.getUserImages(req, res, next);
-  }),
-);
-router.get(
-  '/images/:id',
+  routes.WITH_ID,
   asyncMiddleware(async (req, res, next) => {
     await imagesController.getOneImage(req, res, next);
   }),
 );
 router.put(
-  '/images/:id',
+  routes.WITH_ID,
   asyncMiddleware(async (req, res) => {
     await imagesController.updateImage(req, res);
   }),
 );
 router.delete(
-  '/images/:id',
+  routes.WITH_ID,
   asyncMiddleware(async (req, res) => {
     await imagesController.deleteImage(req, res);
   }),
