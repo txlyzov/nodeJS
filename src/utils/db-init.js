@@ -1,5 +1,5 @@
 const { exec } = require('child_process');
-const config = require('../config/sequelize-config.js');
+const config = require('../../config/sequelize-config.js');
 
 const pattern = process.env.NODE_ENV || ['development'];
 

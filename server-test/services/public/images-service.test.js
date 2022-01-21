@@ -1,9 +1,9 @@
 const chai = require('chai');
 const { expect } = require('chai');
 const chaiAsPromised = require('chai-as-promised');
-const imagesService = require('../../../services').imagesService;
-const imagesModel = require('../../../models').images;
-const usersModel = require('../../../models').users;
+const imagesService = require('../../../src/services').imagesService;
+const imagesModel = require('../../../src/models').images;
+const usersModel = require('../../../src/models').users;
 const testUtil = require('../../util.test');
 
 chai.use(chaiAsPromised);

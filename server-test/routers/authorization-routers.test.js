@@ -6,8 +6,8 @@ const HSC = require('http-status-codes');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const server = require('../../index');
-const routes = require('../../utils/routes-values').AUTH_ROUTS;
-const usersModel = require('../../models').users;
+const routes = require('../../src/utils/routes-values').AUTH_ROUTS;
+const usersModel = require('../../src/models').users;
 const testUtil = require('../util.test');
 
 require('dotenv').config();

@@ -3,8 +3,9 @@ const jwt = require('jsonwebtoken');
 const chai = require('chai');
 const { expect } = require('chai');
 const chaiAsPromised = require('chai-as-promised');
-const authorizationService = require('../../../services').authorizationService;
-const usersModel = require('../../../models').users;
+const authorizationService =
+  require('../../../src/services').authorizationService;
+const usersModel = require('../../../src/models').users;
 const testUtil = require('../../util.test');
 
 require('dotenv').config();

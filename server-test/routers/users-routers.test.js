@@ -4,8 +4,8 @@ const chaiAsPromised = require('chai-as-promised');
 const chaiHttp = require('chai-http');
 const HSC = require('http-status-codes');
 const server = require('../../index');
-const routes = require('../../utils/routes-values').USERS_ROUTS;
-const usersModel = require('../../models').users;
+const routes = require('../../src/utils/routes-values').USERS_ROUTS;
+const usersModel = require('../../src/models').users;
 
 const testUtil = require('../util.test');
 

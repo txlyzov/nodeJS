@@ -4,9 +4,9 @@ const chaiAsPromised = require('chai-as-promised');
 const chaiHttp = require('chai-http');
 const HSC = require('http-status-codes');
 const server = require('../../index');
-const imagesModel = require('../../models').images;
-const usersModel = require('../../models').users;
-const routes = require('./../../utils/routes-values').USER_IMAGES_ROUTS;
+const imagesModel = require('../../src/models').images;
+const usersModel = require('../../src/models').users;
+const routes = require('./../../src/utils/routes-values').USER_IMAGES_ROUTS;
 
 const testUtil = require('../util.test');
 
