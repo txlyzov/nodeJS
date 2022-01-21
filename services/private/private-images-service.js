@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const imagesService = require('../../services/public/images-service');
+const imagesService = require('../public/images-service');
 require('dotenv').config();
 
 const JWT_SECRET = process.env.JWT_SECRET;

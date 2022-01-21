@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const chai = require('chai');
 const { expect } = require('chai');
 const chaiAsPromised = require('chai-as-promised');
-const authorizationService = require('../../../controllers/services/authorization-service');
+const authorizationService = require('../../../services').authorizationService;
 const usersModel = require('../../../models').users;
 const testUtil = require('../../util.test');
 

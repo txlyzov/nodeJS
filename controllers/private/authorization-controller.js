@@ -1,12 +1,12 @@
 const HSC = require('http-status-codes');
-const service = require('./services/authorization-service');
+const authorizationService = require('../../services').authorizationService;
 
 const WRONG_USER_ERROR = 'wrong user';
 const WRONG_PASSWORD_ERROR = 'wrong password';
 
 module.exports = {
   async signUp(req, res) {
-    const result = await service.signUp(req.body);
+    const result = await authorizationService.signUp(req.body);
 
     if (result) {
       return res.sendStatus(HSC.OK);
@@ -14,7 +14,7 @@ module.exports = {
   },
 
   async login(req, res) {
-    const result = await service.login(req.body);
+    const result = await authorizationService.login(req.body);
 
     if (result.error === WRONG_USER_ERROR) {
       return res
@@ -32,7 +32,7 @@ module.exports = {
   },
 
   async changePassword(req, res) {
-    await service.changePassword(req.body);
+    await authorizationService.changePassword(req.body);
 
     return res.status(HSC.OK).send('Password changed.');
   },

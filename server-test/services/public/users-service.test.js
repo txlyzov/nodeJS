@@ -1,7 +1,7 @@
 const chai = require('chai');
 const { expect } = require('chai');
 const chaiAsPromised = require('chai-as-promised');
-const usersService = require('../../../controllers/services/users-service');
+const usersService = require('../../../services').usersService;
 const usersModel = require('../../../models').users;
 const testUtil = require('../../util.test');
 

@@ -1,9 +1,9 @@
 var express = require('express');
 
 var router = express.Router();
-const imagesController = require('../controllers/index').imagesController;
-const routes = require('../utils/routes-values').IMAGES_ROUTS;
-const asyncMiddleware = require('../utils/error-catcher').use;
+const imagesController = require('../../controllers/index').imagesController;
+const routes = require('../../utils/routes-values').IMAGES_ROUTS;
+const asyncMiddleware = require('../../utils/error-catcher').use;
 
 router.post(
   routes.BASE_URL,

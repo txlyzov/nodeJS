@@ -1,7 +1,7 @@
-const authorizationRouter = require('./authorization-router');
-const usersRouter = require('./users-router');
-const imagesRouter = require('./images-router');
-const userImagesRouter = require('./user-images-router');
+const usersRouter = require('./public/users-router');
+const imagesRouter = require('./public/images-router');
+const authorizationRouter = require('./private/authorization-router');
+const userImagesRouter = require('./private/user-images-router');
 
 module.exports = {
   usersRouter,

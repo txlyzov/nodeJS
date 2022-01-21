@@ -1,11 +1,11 @@
-const authorizationService = require('./public/images-service');
-const usersService = require('./public/images-service');
+const usersService = require('./public/users-service');
 const imagesService = require('./public/images-service');
-const imagesPrivateService = require('./public/images-service');
+const authorizationService = require('./private/authorization-service');
+const imagesPrivateService = require('./private/private-images-service');
 
 module.exports = {
   usersService,
-  authorizationService,
   imagesService,
+  authorizationService,
   imagesPrivateService,
 };

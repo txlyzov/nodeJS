@@ -1,7 +1,7 @@
-const authorizationController = require('./authorization-controller');
-const usersController = require('./users-controller');
-const imagesController = require('./images-controller');
-const imagesPrivateController = require('./images-controller-p');
+const usersController = require('./public/users-controller');
+const imagesController = require('./public/images-controller');
+const authorizationController = require('./private/authorization-controller');
+const imagesPrivateController = require('./private/private-images-controller');
 
 module.exports = {
   usersController,

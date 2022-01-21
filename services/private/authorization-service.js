@@ -1,8 +1,8 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const usersService = require('./users-service');
+const usersService = require('./../public/users-service');
 require('dotenv').config();
-const constants = require('./../../utils/error-names').error;
+const constants = require('../../utils/error-names').error;
 
 const BCRYPT_SALT = parseInt(process.env.BCRYPT_SALT);
 const JWT_SECRET = process.env.JWT_SECRET;
