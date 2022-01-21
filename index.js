@@ -21,10 +21,10 @@ app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 app.use('/', routers.authorizationRouter);
 app.use('/', routers.usersRouter);
 app.use('/', routers.imagesRouter);
+app.use('/', routers.userImagesRouter);
 
 //errors
 app.use((req, res) => {
-  console.log(1);
   res.status(HSC.NOT_FOUND).send('No content found.');
 });
 
