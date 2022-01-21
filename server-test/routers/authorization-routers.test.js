@@ -6,6 +6,7 @@ const HSC = require('http-status-codes');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const server = require('../../index');
+const routes = require('../../utils/routes-values').AUTH_ROUTS;
 const usersModel = require('../../models').users;
 const testUtil = require('../util.test');
 
@@ -27,7 +28,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
   });
 
   //-----------------------------------------------------------------------------------------------
-  describe(testUtil.printCaption('POST /users/sign-up'), () => {
+  describe(testUtil.printCaption('POST ' + routes.SIGN_UP), () => {
     const forCreateUser = {
       login: 'login',
       email: 'email',
@@ -37,7 +38,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
     it('It should sign-up a new user', (done) => {
       chai
         .request(server)
-        .post('/users/sign-up/')
+        .post(routes.SIGN_UP)
         .send(forCreateUser)
         .end((err, res) => {
           res.should.have.status(HSC.OK);
@@ -49,7 +50,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
       usersModel.create(forCreateUser).then(
         chai
           .request(server)
-          .post('/users/sign-up/')
+          .post(routes.SIGN_UP)
           .send(forCreateUser)
           .end((err, res) => {
             res.should.have.status(HSC.INTERNAL_SERVER_ERROR);
@@ -60,7 +61,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
   });
 
   //-----------------------------------------------------------------------------------------------
-  describe(testUtil.printCaption('POST /users/login'), () => {
+  describe(testUtil.printCaption('POST ' + routes.LOGIN), () => {
     const forCreateUser = {
       login: 'login',
       email: 'email',
@@ -82,7 +83,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
       it('It should login the user', (done) => {
         chai
           .request(server)
-          .post('/users/login/')
+          .post(routes.LOGIN)
           .send({
             ...forCreateUser,
             password: forCreateUser.originalPassword,
@@ -110,7 +111,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
       it('It should not login the user because of nonexistent user login', (done) => {
         chai
           .request(server)
-          .post('/users/login/')
+          .post(routes.LOGIN)
           .send({
             ...forCreateUser,
             login: forCreateUser.login + '1',
@@ -140,7 +141,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
       it('It should not login the user of wrong user password', (done) => {
         chai
           .request(server)
-          .post('/users/login/')
+          .post(routes.LOGIN)
           .send({
             ...forCreateUser,
             password: forCreateUser.originalPassword + '1',
@@ -157,7 +158,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
   });
 
   //-----------------------------------------------------------------------------------------------
-  describe(testUtil.printCaption('POST /users/password-changing'), () => {
+  describe(testUtil.printCaption('POST ' + routes.PASSWORD_CHANGING), () => {
     const forCreateUser = {
       login: 'login',
       email: 'email',
@@ -179,7 +180,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
       it('It should change the users password', (done) => {
         chai
           .request(server)
-          .post('/users/password-changing/')
+          .post(routes.PASSWORD_CHANGING)
           .send({
             token: jwt.sign({ id: 1, login: forCreateUser.login }, JWT_SECRET),
             password: forCreateUser.originalPassword + '1',
@@ -208,7 +209,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
       it('It should not change the users password because of invalid token', (done) => {
         chai
           .request(server)
-          .post('/users/password-changing/')
+          .post(routes.PASSWORD_CHANGING)
           .send({
             token,
             password: forCreateUser.originalPassword + '1',
@@ -235,7 +236,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
       it('It should not change the users password because of invalid token signature', (done) => {
         chai
           .request(server)
-          .post('/users/password-changing/')
+          .post(routes.PASSWORD_CHANGING)
           .send({
             token:
               jwt.sign({ id: 1, login: forCreateUser.login }, JWT_SECRET) + '1',
