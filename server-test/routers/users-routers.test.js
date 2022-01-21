@@ -13,7 +13,7 @@ chai.use(chaiAsPromised);
 chai.use(chaiHttp);
 chai.should();
 
-describe.only(testUtil.printCaptionX2('Users routers tests:'), () => {
+describe(testUtil.printCaptionX2('Users routers tests:'), () => {
   before(async () => {
     await testUtil.cleanTable(usersModel);
   });
