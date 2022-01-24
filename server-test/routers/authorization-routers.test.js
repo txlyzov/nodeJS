@@ -1,25 +1,12 @@
 const chai = require('chai');
 const { expect } = require('chai');
-const chaiAsPromised = require('chai-as-promised');
-const chaiHttp = require('chai-http');
 const HSC = require('http-status-codes');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
 const server = require('../../index');
 const routes = require('../../src/utils/routes-values').AUTH_ROUTS;
 const usersModel = require('../../src/models').users;
 const testUtil = require('../util.test');
 
-require('dotenv').config();
-
-const BCRYPT_SALT = parseInt(process.env.BCRYPT_SALT);
-const JWT_SECRET = process.env.JWT_SECRET;
-
-chai.use(chaiAsPromised);
-chai.use(chaiHttp);
-chai.should();
-
-describe(testUtil.printCaptionX2('Users routers tests:'), () => {
+describe(testUtil.printCaptionX2('Authorization routers tests:'), () => {
   before(async () => {
     await testUtil.cleanTable(usersModel);
   });
@@ -73,9 +60,8 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
       before(async () => {
         await usersModel.create({
           ...forCreateUser,
-          password: await bcrypt.hash(
+          password: await testUtil.encryptPassword(
             forCreateUser.originalPassword,
-            BCRYPT_SALT,
           ),
         });
       });
@@ -101,9 +87,8 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
       before(async () => {
         await usersModel.create({
           ...forCreateUser,
-          password: await bcrypt.hash(
+          password: await testUtil.encryptPassword(
             forCreateUser.originalPassword,
-            BCRYPT_SALT,
           ),
         });
       });
@@ -131,9 +116,8 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
       before(async () => {
         await usersModel.create({
           ...forCreateUser,
-          password: await bcrypt.hash(
+          password: await testUtil.encryptPassword(
             forCreateUser.originalPassword,
-            BCRYPT_SALT,
           ),
         });
       });
@@ -167,12 +151,12 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
     };
 
     describe('test with presetted data', () => {
+      let createdUser; // eslint-disable-line
       before(async () => {
-        await usersModel.create({
+        this.createdUser = await usersModel.create({
           ...forCreateUser,
-          password: await bcrypt.hash(
+          password: await testUtil.encryptPassword(
             forCreateUser.originalPassword,
-            BCRYPT_SALT,
           ),
         });
       });
@@ -182,7 +166,10 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
           .request(server)
           .post(routes.PASSWORD_CHANGING)
           .send({
-            token: jwt.sign({ id: 1, login: forCreateUser.login }, JWT_SECRET),
+            token: testUtil.generateToken(
+              this.createdUser.dataValues.id,
+              this.createdUser.dataValues.login,
+            ),
             password: forCreateUser.originalPassword + '1',
           })
           .end((err, res) => {
@@ -193,17 +180,21 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
       });
     });
     describe('test with presetted data', () => {
-      let token = jwt.sign({ id: 1, login: forCreateUser.login }, JWT_SECRET);
-      token = token[1] + token[0] + token.substr(2);
+      let createdUser; // eslint-disable-line
+      let token; // eslint-disable-line
 
       before(async () => {
-        await usersModel.create({
+        this.createdUser = await usersModel.create({
           ...forCreateUser,
-          password: await bcrypt.hash(
+          password: await testUtil.encryptPassword(
             forCreateUser.originalPassword,
-            BCRYPT_SALT,
           ),
         });
+        this.token = testUtil.generateToken(
+          this.createdUser.dataValues.id,
+          this.createdUser.dataValues.login,
+        );
+        this.token = this.token[1] + this.token[0] + this.token.substr(2);
       });
 
       it('It should not change the users password because of invalid token', (done) => {
@@ -211,7 +202,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
           .request(server)
           .post(routes.PASSWORD_CHANGING)
           .send({
-            token,
+            token: this.token,
             password: forCreateUser.originalPassword + '1',
           })
           .end((err, res) => {
@@ -223,12 +214,13 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
     });
 
     describe('test with presetted data', () => {
+      let createdUser; // eslint-disable-line
+
       before(async () => {
         await usersModel.create({
           ...forCreateUser,
-          password: await bcrypt.hash(
+          password: await testUtil.encryptPassword(
             forCreateUser.originalPassword,
-            BCRYPT_SALT,
           ),
         });
       });
@@ -239,7 +231,10 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
           .post(routes.PASSWORD_CHANGING)
           .send({
             token:
-              jwt.sign({ id: 1, login: forCreateUser.login }, JWT_SECRET) + '1',
+              testUtil.generateToken(
+                this.createdUser.dataValues.id,
+                this.createdUser.dataValues.login,
+              ) + '1',
             password: forCreateUser.originalPassword + '1',
           })
           .end((err, res) => {

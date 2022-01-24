@@ -23,28 +23,24 @@ module.exports = {
    * @returns {Array|Object}} Returns the responce with all Image objects from the Images table.
    **/
   async getPublic() {
-    const images = await imagesModel.findAll({
+    return await imagesModel.findAll({
       where: {
         isPrivate: false,
       },
     });
-
-    return images;
   },
 
   /**
    * Gets all Image object records in the Images table with one owner.
    * @param {Integer} userId User id for search.
-   * @returns {Array|Object}} Returns the responce with all Image objects from the Images table.
+   * @returns {Array|Object} Returns the responce with all Image objects from the Images table.
    **/
   async getAllByUserId(userId) {
-    const images = await imagesModel.findAll({
+    return await imagesModel.findAll({
       where: {
         userId,
       },
     });
-
-    return images;
   },
 
   /**
@@ -53,13 +49,11 @@ module.exports = {
    * @returns {Object} Returns the responce with one Image object from the Images table.
    **/
   async getOne(id) {
-    const image = await imagesModel.findOne({
+    return await imagesModel.findOne({
       where: {
         id,
       },
     });
-
-    return image;
   },
 
   /**

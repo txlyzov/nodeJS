@@ -1,7 +1,5 @@
 const chai = require('chai');
 const { expect } = require('chai');
-const chaiAsPromised = require('chai-as-promised');
-const chaiHttp = require('chai-http');
 const HSC = require('http-status-codes');
 const server = require('../../index');
 const routes = require('../../src/utils/routes-values').IMAGES_ROUTS;
@@ -9,10 +7,6 @@ const imagesModel = require('../../src/models').images;
 const usersModel = require('../../src/models').users;
 
 const testUtil = require('../util.test');
-
-chai.use(chaiAsPromised);
-chai.use(chaiHttp);
-chai.should();
 
 describe(testUtil.printCaptionX2('Images routers tests:'), () => {
   before(async () => {

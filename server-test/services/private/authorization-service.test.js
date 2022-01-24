@@ -1,19 +1,8 @@
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const chai = require('chai');
 const { expect } = require('chai');
-const chaiAsPromised = require('chai-as-promised');
 const authorizationService =
   require('../../../src/services').authorizationService;
 const usersModel = require('../../../src/models').users;
 const testUtil = require('../../util.test');
-
-require('dotenv').config();
-
-const BCRYPT_SALT = parseInt(process.env.BCRYPT_SALT);
-const JWT_SECRET = process.env.JWT_SECRET;
-
-chai.use(chaiAsPromised);
 
 describe(testUtil.printCaptionX2('Authorization services tests:'), () => {
   before(async () => {
@@ -48,25 +37,26 @@ describe(testUtil.printCaptionX2('Authorization services tests:'), () => {
 
       expect(formattedResult).to.deep.eq(formattedInput);
       expect(
-        await bcrypt.compare(forCreateUser.originalPassword, result.password),
+        await testUtil.comparePasswords(
+          forCreateUser.originalPassword,
+          result.password,
+        ),
       ).to.be.eq(true);
     });
 
     it('should not signUp one user object', async () => {
       await usersModel.create({
         ...forCreateUser,
-        password: await bcrypt.hash(
+        password: await testUtil.encryptPassword(
           forCreateUser.originalPassword,
-          BCRYPT_SALT,
         ),
       });
 
       await expect(
         authorizationService.signUp({
           ...forCreateUser,
-          password: await bcrypt.hash(
+          password: await testUtil.encryptPassword(
             forCreateUser.originalPassword,
-            BCRYPT_SALT,
           ),
         }),
       ).to.be.rejectedWith('Validation error');
@@ -85,9 +75,8 @@ describe(testUtil.printCaptionX2('Authorization services tests:'), () => {
     it('should return array with user login and', async () => {
       await usersModel.create({
         ...forCreateUser,
-        password: await bcrypt.hash(
+        password: await testUtil.encryptPassword(
           forCreateUser.originalPassword,
-          BCRYPT_SALT,
         ),
       });
       const forCreateUserNoHash = { ...forCreateUser, password: 'password' };
@@ -101,9 +90,8 @@ describe(testUtil.printCaptionX2('Authorization services tests:'), () => {
     it('should return wrong user error', async () => {
       await usersModel.create({
         ...forCreateUser,
-        password: await bcrypt.hash(
+        password: await testUtil.encryptPassword(
           forCreateUser.originalPassword,
-          BCRYPT_SALT,
         ),
       });
       const forCreateUserNoHash = { ...forCreateUser, login: 'login1' };
@@ -116,9 +104,8 @@ describe(testUtil.printCaptionX2('Authorization services tests:'), () => {
     it('should return wrong password error', async () => {
       await usersModel.create({
         ...forCreateUser,
-        password: await bcrypt.hash(
+        password: await testUtil.encryptPassword(
           forCreateUser.originalPassword,
-          BCRYPT_SALT,
         ),
       });
       const forCreateUserNoHash = { ...forCreateUser, password: 'password1' };
@@ -141,9 +128,8 @@ describe(testUtil.printCaptionX2('Authorization services tests:'), () => {
     it('should change password for one user object', async () => {
       const createResult = await usersModel.create({
         ...forCreateUser,
-        password: await bcrypt.hash(
+        password: await testUtil.encryptPassword(
           forCreateUser.originalPassword,
-          BCRYPT_SALT,
         ),
       });
       const elementId = createResult.dataValues.id;
@@ -152,7 +138,7 @@ describe(testUtil.printCaptionX2('Authorization services tests:'), () => {
       await authorizationService.changePassword({
         ...forCreateUser,
         password: newPassword,
-        token: jwt.sign({ id: elementId, login: elementLogin }, JWT_SECRET),
+        token: testUtil.generateToken(elementId, elementLogin),
       });
       const changedResult = await usersModel.findOne({
         where: {
@@ -177,9 +163,8 @@ describe(testUtil.printCaptionX2('Authorization services tests:'), () => {
     it('should not change password for one user object because of invalid token signature', async () => {
       const createResult = await usersModel.create({
         ...forCreateUser,
-        password: await bcrypt.hash(
+        password: await testUtil.encryptPassword(
           forCreateUser.originalPassword,
-          BCRYPT_SALT,
         ),
       });
       const elementId = createResult.dataValues.id;
@@ -190,8 +175,7 @@ describe(testUtil.printCaptionX2('Authorization services tests:'), () => {
         authorizationService.changePassword({
           ...forCreateUser,
           password: newPassword,
-          token:
-            jwt.sign({ id: elementId, login: elementLogin }, JWT_SECRET) + '1',
+          token: testUtil.generateToken(elementId, elementLogin) + '1',
         }),
       ).to.be.rejectedWith('invalid signature');
     });
@@ -199,15 +183,14 @@ describe(testUtil.printCaptionX2('Authorization services tests:'), () => {
     it('should not change password for one user object because of invalid token', async () => {
       const createResult = await usersModel.create({
         ...forCreateUser,
-        password: await bcrypt.hash(
+        password: await testUtil.encryptPassword(
           forCreateUser.originalPassword,
-          BCRYPT_SALT,
         ),
       });
       const elementId = createResult.dataValues.id;
       const elementLogin = createResult.dataValues.login;
       const newPassword = 'password';
-      let token = jwt.sign({ id: elementId, login: elementLogin }, JWT_SECRET);
+      let token = testUtil.generateToken(elementId, elementLogin);
       token = token[1] + token[0] + token.substr(2);
 
       await expect(

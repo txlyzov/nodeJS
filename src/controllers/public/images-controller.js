@@ -7,12 +7,14 @@ module.exports = {
   },
   async getPublicImages(req, res, next) {
     const result = await imagesService.getPublic();
+
     if (!result.length) return next();
 
     return res.json(result);
   },
   async getOneImage(req, res, next) {
     const result = await imagesService.getOne(req.params.id);
+
     if (!result) return next();
 
     return res.json(result);

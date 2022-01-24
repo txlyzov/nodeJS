@@ -6,11 +6,9 @@ const WRONG_PASSWORD_ERROR = 'wrong password';
 
 module.exports = {
   async signUp(req, res) {
-    const result = await authorizationService.signUp(req.body);
+    await authorizationService.signUp(req.body);
 
-    if (result) {
-      return res.sendStatus(HSC.OK);
-    }
+    return res.sendStatus(HSC.OK);
   },
 
   async login(req, res) {
