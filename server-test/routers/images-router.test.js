@@ -1,17 +1,12 @@
 const chai = require('chai');
 const { expect } = require('chai');
-const chaiAsPromised = require('chai-as-promised');
-const chaiHttp = require('chai-http');
 const HSC = require('http-status-codes');
 const server = require('../../index');
-const imagesModel = require('../../models').images;
-const usersModel = require('../../models').users;
+const routes = require('../../src/utils/routes-values').IMAGES_ROUTS;
+const imagesModel = require('../../src/models').images;
+const usersModel = require('../../src/models').users;
 
 const testUtil = require('../util.test');
-
-chai.use(chaiAsPromised);
-chai.use(chaiHttp);
-chai.should();
 
 describe(testUtil.printCaptionX2('Images routers tests:'), () => {
   before(async () => {
@@ -39,7 +34,7 @@ describe(testUtil.printCaptionX2('Images routers tests:'), () => {
   });
 
   //-----------------------------------------------------------------------------------------------
-  describe(testUtil.printCaption('POST /images'), () => {
+  describe(testUtil.printCaption('POST ' + routes.BASE_URL), () => {
     const forCreateImage = {
       url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
       name: 'image',
@@ -51,7 +46,7 @@ describe(testUtil.printCaptionX2('Images routers tests:'), () => {
     it('It should create a new image', (done) => {
       chai
         .request(server)
-        .post('/images/')
+        .post(routes.BASE_URL)
         .send(forCreateImage)
         .end((err, res) => {
           const reformatedBodyContent = {
@@ -72,7 +67,7 @@ describe(testUtil.printCaptionX2('Images routers tests:'), () => {
       const forNotCreateImage = { ...forCreateImage, userId: -1 };
       chai
         .request(server)
-        .post('/images/')
+        .post(routes.BASE_URL)
         .send(forNotCreateImage)
         .end((err, res) => {
           res.should.have.status(HSC.INTERNAL_SERVER_ERROR);
@@ -82,7 +77,7 @@ describe(testUtil.printCaptionX2('Images routers tests:'), () => {
   });
 
   //-----------------------------------------------------------------------------------------------
-  describe(testUtil.printCaption('GET /images'), () => {
+  describe(testUtil.printCaption('GET ' + routes.BASE_URL), () => {
     describe('test with presetted data', () => {
       const forCreateImage1 = {
         url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
@@ -115,7 +110,7 @@ describe(testUtil.printCaptionX2('Images routers tests:'), () => {
       it('It should get all images', (done) => {
         chai
           .request(server)
-          .get('/images')
+          .get(routes.BASE_URL)
           .end((err, res) => {
             const reformatedBodyContent2 = {
               url: res.body[0].url,
@@ -144,7 +139,7 @@ describe(testUtil.printCaptionX2('Images routers tests:'), () => {
     it('It should not get any images', (done) => {
       chai
         .request(server)
-        .get('/images')
+        .get(routes.BASE_URL)
         .end((err, res) => {
           res.should.have.status(HSC.NOT_FOUND);
           done();
@@ -153,7 +148,7 @@ describe(testUtil.printCaptionX2('Images routers tests:'), () => {
   });
 
   //-----------------------------------------------------------------------------------------------
-  describe(testUtil.printCaption('GET /images/:id'), () => {
+  describe(testUtil.printCaption('GET ' + routes.WITH_ID), () => {
     const forCreateImage = {
       url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
       name: 'image',
@@ -167,7 +162,7 @@ describe(testUtil.printCaptionX2('Images routers tests:'), () => {
         const elementId = create.dataValues.id;
         chai
           .request(server)
-          .get('/images/' + elementId)
+          .get(routes.BASE_URL + elementId)
           .end((err, res) => {
             const reformatedBodyContent = {
               url: res.body.url,
@@ -189,7 +184,7 @@ describe(testUtil.printCaptionX2('Images routers tests:'), () => {
 
       chai
         .request(server)
-        .get('/images/' + nonexistentId)
+        .get(routes.BASE_URL + nonexistentId)
         .end((err, res) => {
           res.should.have.status(HSC.NOT_FOUND);
           done();
@@ -198,7 +193,7 @@ describe(testUtil.printCaptionX2('Images routers tests:'), () => {
   });
 
   //-----------------------------------------------------------------------------------------------
-  describe(testUtil.printCaption('PUT /images/:id'), () => {
+  describe(testUtil.printCaption('PUT ' + routes.WITH_ID), () => {
     const forCreateImage = {
       url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
       name: 'image',
@@ -219,7 +214,7 @@ describe(testUtil.printCaptionX2('Images routers tests:'), () => {
         const elementId = create.dataValues.id;
         chai
           .request(server)
-          .put('/images/' + elementId)
+          .put(routes.BASE_URL + elementId)
           .send(forEditImage)
           .end((err, res) => {
             res.should.have.status(HSC.OK);
@@ -234,7 +229,7 @@ describe(testUtil.printCaptionX2('Images routers tests:'), () => {
       imagesModel.create(forCreateImage).then(
         chai
           .request(server)
-          .put('/images/' + nonexistentId)
+          .put(routes.BASE_URL + nonexistentId)
           .send(forEditImage)
           .end((err, res) => {
             res.should.have.status(HSC.BAD_REQUEST);
@@ -245,7 +240,7 @@ describe(testUtil.printCaptionX2('Images routers tests:'), () => {
   });
 
   //-----------------------------------------------------------------------------------------------
-  describe(testUtil.printCaption('DELETE /images/:id'), () => {
+  describe(testUtil.printCaption('DELETE ' + routes.WITH_ID), () => {
     const forCreateImage = {
       url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
       name: 'image',
@@ -259,7 +254,7 @@ describe(testUtil.printCaptionX2('Images routers tests:'), () => {
         const elementId = create.dataValues.id;
         chai
           .request(server)
-          .delete('/images/' + elementId)
+          .delete(routes.BASE_URL + elementId)
           .end((err, res) => {
             res.should.have.status(HSC.OK);
             done();
@@ -272,7 +267,7 @@ describe(testUtil.printCaptionX2('Images routers tests:'), () => {
 
       chai
         .request(server)
-        .delete('/images/' + nonexistentId)
+        .delete(routes.BASE_URL + nonexistentId)
         .end((err, res) => {
           res.should.have.status(HSC.BAD_REQUEST);
           done();

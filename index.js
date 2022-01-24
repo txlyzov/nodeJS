@@ -3,7 +3,7 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const HSC = require('http-status-codes');
 const cors = require('cors');
-const routers = require('./routes');
+const routers = require('./src/routes');
 const config = require('./config/index').development;
 
 const app = express();
@@ -21,6 +21,7 @@ app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 app.use('/', routers.authorizationRouter);
 app.use('/', routers.usersRouter);
 app.use('/', routers.imagesRouter);
+app.use('/', routers.userImagesRouter);
 
 //errors
 app.use((req, res) => {

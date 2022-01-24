@@ -1,16 +1,11 @@
 const chai = require('chai');
 const { expect } = require('chai');
-const chaiAsPromised = require('chai-as-promised');
-const chaiHttp = require('chai-http');
 const HSC = require('http-status-codes');
 const server = require('../../index');
-const usersModel = require('../../models').users;
+const routes = require('../../src/utils/routes-values').USERS_ROUTS;
+const usersModel = require('../../src/models').users;
 
 const testUtil = require('../util.test');
-
-chai.use(chaiAsPromised);
-chai.use(chaiHttp);
-chai.should();
 
 describe(testUtil.printCaptionX2('Users routers tests:'), () => {
   before(async () => {
@@ -21,7 +16,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
   });
 
   //-----------------------------------------------------------------------------------------------
-  describe(testUtil.printCaption('POST /users'), () => {
+  describe(testUtil.printCaption('POST  ' + routes.BASE_URL), () => {
     const forCreateUser = {
       login: 'login',
       email: 'email',
@@ -31,7 +26,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
     it('It should create a new user', (done) => {
       chai
         .request(server)
-        .post('/users/')
+        .post(routes.BASE_URL)
         .send(forCreateUser)
         .end((err, res) => {
           const reformatedBodyContent = {
@@ -50,7 +45,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
       usersModel.create(forCreateUser).then(
         chai
           .request(server)
-          .post('/users/')
+          .post(routes.BASE_URL)
           .send(forCreateUser)
           .end((err, res) => {
             res.should.have.status(HSC.INTERNAL_SERVER_ERROR);
@@ -61,7 +56,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
   });
 
   //-----------------------------------------------------------------------------------------------
-  describe(testUtil.printCaption('GET /users'), () => {
+  describe(testUtil.printCaption('GET  ' + routes.BASE_URL), () => {
     describe('test with presetted data', () => {
       const forCreateUser1 = {
         login: 'login1',
@@ -82,7 +77,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
       it('It should get all users', (done) => {
         chai
           .request(server)
-          .get('/users')
+          .get(routes.BASE_URL)
           .end((err, res) => {
             const reformatedBodyContent1 = {
               login: res.body[0].login,
@@ -106,7 +101,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
     it('It should not get any users', (done) => {
       chai
         .request(server)
-        .get('/users')
+        .get(routes.BASE_URL)
         .end((err, res) => {
           res.should.have.status(HSC.NOT_FOUND);
           done();
@@ -115,7 +110,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
   });
 
   //-----------------------------------------------------------------------------------------------
-  describe(testUtil.printCaption('GET /users/:id'), () => {
+  describe(testUtil.printCaption('GET  ' + routes.WITH_ID), () => {
     const forCreateUser = {
       login: 'login',
       email: 'email',
@@ -127,7 +122,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
         const elementId = create.dataValues.id;
         chai
           .request(server)
-          .get('/users/' + elementId)
+          .get(routes.BASE_URL + elementId)
           .end((err, res) => {
             const reformatedBodyContent = {
               login: res.body.login,
@@ -147,7 +142,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
 
       chai
         .request(server)
-        .get('/users/' + nonexistentId)
+        .get(routes.BASE_URL + nonexistentId)
         .end((err, res) => {
           res.should.have.status(HSC.NOT_FOUND);
           done();
@@ -156,7 +151,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
   });
 
   //-----------------------------------------------------------------------------------------------
-  describe(testUtil.printCaption('PUT /users/:id'), () => {
+  describe(testUtil.printCaption('PUT  ' + routes.WITH_ID), () => {
     const forCreateUser = {
       login: 'login1',
       email: 'email1',
@@ -173,7 +168,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
         const elementId = create.dataValues.id;
         chai
           .request(server)
-          .put('/users/' + elementId)
+          .put(routes.BASE_URL + elementId)
           .send(forEditUser)
           .end((err, res) => {
             res.should.have.status(HSC.OK);
@@ -188,7 +183,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
       usersModel.create(forCreateUser).then(
         chai
           .request(server)
-          .put('/users/' + nonexistentId)
+          .put(routes.BASE_URL + nonexistentId)
           .send(forEditUser)
           .end((err, res) => {
             res.should.have.status(HSC.BAD_REQUEST);
@@ -199,7 +194,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
   });
 
   //-----------------------------------------------------------------------------------------------
-  describe(testUtil.printCaption('DELETE /users/:id'), () => {
+  describe(testUtil.printCaption('DELETE  ' + routes.WITH_ID), () => {
     const forCreateUser = {
       login: 'login',
       email: 'email',
@@ -211,7 +206,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
         const elementId = create.dataValues.id;
         chai
           .request(server)
-          .delete('/users/' + elementId)
+          .delete(routes.BASE_URL + elementId)
           .end((err, res) => {
             res.should.have.status(HSC.OK);
             done();
@@ -224,7 +219,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
 
       chai
         .request(server)
-        .delete('/users/' + nonexistentId)
+        .delete(routes.BASE_URL + nonexistentId)
         .end((err, res) => {
           res.should.have.status(HSC.BAD_REQUEST);
           done();
