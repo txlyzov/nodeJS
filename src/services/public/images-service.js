@@ -23,7 +23,7 @@ module.exports = {
    * @returns {Array|Object}} Returns the responce with all Image objects from the Images table.
    **/
   async getPublic() {
-    return await imagesModel.findAll({
+    return imagesModel.findAll({
       where: {
         isPrivate: false,
       },
@@ -36,7 +36,7 @@ module.exports = {
    * @returns {Array|Object} Returns the responce with all Image objects from the Images table.
    **/
   async getAllByUserId(userId) {
-    return await imagesModel.findAll({
+    return imagesModel.findAll({
       where: {
         userId,
       },
@@ -49,7 +49,7 @@ module.exports = {
    * @returns {Object} Returns the responce with one Image object from the Images table.
    **/
   async getOne(id) {
-    return await imagesModel.findOne({
+    return imagesModel.findOne({
       where: {
         id,
       },

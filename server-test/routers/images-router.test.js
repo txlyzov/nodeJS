@@ -141,7 +141,6 @@ describe(testUtil.printCaptionX2('Images routers tests:'), () => {
         .request(server)
         .get(routes.BASE_URL)
         .end((err, res) => {
-          console.log(res.body);
           res.should.have.status(HSC.NOT_FOUND);
           done();
         });

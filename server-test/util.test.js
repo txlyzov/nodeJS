@@ -42,10 +42,7 @@ module.exports = {
     );
   },
   async encryptPassword(originalPassword) {
-    return await bcrypt.hash(
-      originalPassword,
-      parseInt(process.env.BCRYPT_SALT),
-    );
+    return bcrypt.hash(originalPassword, parseInt(process.env.BCRYPT_SALT));
   },
   async comparePasswords(originalPassword, codedPassword) {
     return bcrypt.compare(originalPassword, codedPassword);

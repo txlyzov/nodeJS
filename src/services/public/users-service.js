@@ -21,7 +21,7 @@ module.exports = {
    * @returns {Array|Object} Returns the responce with all User objects from the Users table.
    **/
   async get() {
-    return await usersModel.findAll();
+    return usersModel.findAll();
   },
 
   /**
@@ -30,7 +30,7 @@ module.exports = {
    * @returns {Object} Returns the responce with one User object from the Users table.
    **/
   async getOneById(id) {
-    return await usersModel.findOne({
+    return usersModel.findOne({
       where: {
         id,
       },
@@ -43,7 +43,7 @@ module.exports = {
    * @returns {Object} Returns the responce with one User object from the Users table.
    **/
   async getOneByLogin(login) {
-    return await usersModel.findOne({
+    return usersModel.findOne({
       where: {
         login,
       },

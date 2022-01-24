@@ -78,7 +78,6 @@ describe(testUtil.printCaptionX2('User images routers tests:'), () => {
             ),
           })
           .end((err, res) => {
-            console.log();
             const reformatedBodyContent2 = {
               url: res.body[0].url,
               name: res.body[0].name,
