@@ -190,11 +190,6 @@ describe(testUtil.printCaptionX2('Authorization routers tests:'), () => {
             forCreateUser.originalPassword,
           ),
         });
-        this.token = testUtil.generateToken(
-          this.createdUser.dataValues.id,
-          this.createdUser.dataValues.login,
-        );
-        this.token = this.token[1] + this.token[0] + this.token.substr(2);
       });
 
       it('It should not change the users password because of invalid token', (done) => {
@@ -202,7 +197,10 @@ describe(testUtil.printCaptionX2('Authorization routers tests:'), () => {
           .request(server)
           .post(routes.PASSWORD_CHANGING)
           .send({
-            token: this.token,
+            token: testUtil.generateInvalidToken(
+              this.createdUser.dataValues.id,
+              this.createdUser.dataValues.login,
+            ),
             password: forCreateUser.originalPassword + '1',
           })
           .end((err, res) => {
@@ -230,11 +228,10 @@ describe(testUtil.printCaptionX2('Authorization routers tests:'), () => {
           .request(server)
           .post(routes.PASSWORD_CHANGING)
           .send({
-            token:
-              testUtil.generateToken(
-                this.createdUser.dataValues.id,
-                this.createdUser.dataValues.login,
-              ) + '1',
+            token: testUtil.generateInvalidTokenSignature(
+              this.createdUser.dataValues.id,
+              this.createdUser.dataValues.login,
+            ),
             password: forCreateUser.originalPassword + '1',
           })
           .end((err, res) => {

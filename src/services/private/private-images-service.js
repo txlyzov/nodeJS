@@ -5,6 +5,18 @@ require('dotenv').config();
 const JWT_SECRET = process.env.JWT_SECRET;
 
 module.exports = {
+  async addNewImage(req) {
+    const user = jwt.verify(req.get('AuthToken'), JWT_SECRET);
+    console.log({
+      ...req.body,
+      userId: user.id,
+    });
+
+    return imagesService.create({
+      ...req.body,
+      userId: user.id,
+    });
+  },
   async getUserImages(header) {
     const user = jwt.verify(header.get('AuthToken'), JWT_SECRET);
 

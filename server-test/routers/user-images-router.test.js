@@ -36,6 +36,62 @@ describe(testUtil.printCaptionX2('User images routers tests:'), () => {
     await testUtil.cleanTable(imagesModel);
   });
 
+  describe(testUtil.printCaption('POST ' + routes.BASE_URL), () => {
+    const forCreateImage = {
+      url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
+      name: 'image',
+      description: 'description',
+      isPrivate: false,
+    };
+
+    it('It should create a new image', (done) => {
+      chai
+        .request(server)
+        .post(routes.BASE_URL)
+        .set({
+          AuthToken: testUtil.generateToken(
+            this.createdUser1.dataValues.id,
+            this.createdUser1.dataValues.login,
+          ),
+        })
+        .send(forCreateImage)
+        .end((err, res) => {
+          const reformatedBodyContent = {
+            url: res.body.url,
+            name: res.body.name,
+            description: res.body.description,
+            isPrivate: res.body.isPrivate,
+            userId: res.body.userId,
+          };
+
+          res.should.have.status(HSC.OK);
+          expect(reformatedBodyContent).to.have.deep.eq({
+            ...forCreateImage,
+            userId: this.createdUser1.dataValues.id,
+          });
+          done();
+        });
+    });
+
+    it('It should not create any new image because of invalid token', (done) => {
+      chai
+        .request(server)
+        .post(routes.BASE_URL)
+        .set({
+          AuthToken: testUtil.generateInvalidToken(
+            this.createdUser1.dataValues.id,
+            this.createdUser1.dataValues.login,
+          ),
+        })
+        .send(forCreateImage)
+        .end((err, res) => {
+          res.should.have.status(HSC.INTERNAL_SERVER_ERROR);
+          expect(res.text).to.be.eq('invalid token');
+          done();
+        });
+    });
+  });
+
   //-----------------------------------------------------------------------------------------------
   describe(testUtil.printCaption('GET ' + routes.BASE_URL), () => {
     describe('test with presetted data', () => {

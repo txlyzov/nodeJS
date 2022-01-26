@@ -6,6 +6,13 @@ const imagesPrivateController =
 const routes = require('../../utils/routes-values').USER_IMAGES_ROUTS;
 const asyncMiddleware = require('../../utils/error-catcher').use;
 
+router.post(
+  routes.BASE_URL,
+  asyncMiddleware(async (req, res, next) => {
+    await imagesPrivateController.addNewImage(req, res, next);
+  }),
+);
+
 router.get(
   routes.BASE_URL,
   asyncMiddleware(async (req, res, next) => {

@@ -41,6 +41,28 @@ module.exports = {
       process.env.JWT_SECRET,
     );
   },
+  generateInvalidToken(id, login) {
+    const token = jwt.sign(
+      {
+        id,
+        login,
+      },
+      process.env.JWT_SECRET,
+    );
+
+    return token[1] + token[0] + token.substr(2);
+  },
+  generateInvalidTokenSignature(id, login) {
+    return (
+      jwt.sign(
+        {
+          id,
+          login,
+        },
+        process.env.JWT_SECRET,
+      ) + '1'
+    );
+  },
   async encryptPassword(originalPassword) {
     return bcrypt.hash(originalPassword, parseInt(process.env.BCRYPT_SALT));
   },
