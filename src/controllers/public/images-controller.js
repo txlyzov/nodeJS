@@ -12,13 +12,13 @@ module.exports = {
 
     return res.json(result);
   },
-  async getOneImage(req, res, next) {
-    const result = await imagesService.getOne(req.params.id);
+  // async getOneImage(req, res, next) {
+  //   const result = await imagesService.getOne(req.params.id);
 
-    if (!result) return next();
+  //   if (!result) return next();
 
-    return res.json(result);
-  },
+  //   return res.json(result);
+  // },
   async updateImage(req, res) {
     const result = await imagesService.update(req.params.id, req.body);
 

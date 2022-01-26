@@ -20,4 +20,17 @@ router.get(
   }),
 );
 
+router.get(
+  routes.WITH_ID,
+  asyncMiddleware(async (req, res, next) => {
+    await imagesPrivateController.getUserImage(req, res, next);
+  }),
+);
+router.put(
+  routes.BASE_URL,
+  asyncMiddleware(async (req, res, next) => {
+    await imagesPrivateController.updateUserImage(req, res, next);
+  }),
+);
+
 module.exports = router;

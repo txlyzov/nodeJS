@@ -22,4 +22,16 @@ module.exports = {
 
     return imagesService.getAllByUserId(user.id);
   },
+  async getUserImage(req) {
+    const imageId = req.params.id;
+    const userId = jwt.verify(req.get('AuthToken'), JWT_SECRET).id;
+
+    return imagesService.getOneByIdAndUserId(imageId, userId);
+  },
+  async updateUserImage(req) {
+    const body = req.body;
+    const userId = jwt.verify(req.get('AuthToken'), JWT_SECRET).id;
+
+    return imagesService.updateByIdAndUserId({ ...body, userId });
+  },
 };

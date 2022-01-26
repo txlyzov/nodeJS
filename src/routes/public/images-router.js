@@ -17,12 +17,12 @@ router.get(
     await imagesController.getPublicImages(req, res, next);
   }),
 );
-router.get(
-  routes.WITH_ID,
-  asyncMiddleware(async (req, res, next) => {
-    await imagesController.getOneImage(req, res, next);
-  }),
-);
+// router.get(
+//   routes.WITH_ID,
+//   asyncMiddleware(async (req, res, next) => {
+//     await imagesController.getOneImage(req, res, next);
+//   }),
+// );
 router.put(
   routes.WITH_ID,
   asyncMiddleware(async (req, res) => {

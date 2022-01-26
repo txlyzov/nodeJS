@@ -148,96 +148,96 @@ describe(testUtil.printCaptionX2('Images routers tests:'), () => {
   });
 
   //-----------------------------------------------------------------------------------------------
-  describe(testUtil.printCaption('GET ' + routes.WITH_ID), () => {
-    const forCreateImage = {
-      url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
-      name: 'image',
-      description: 'description',
-      isPrivate: false,
-      userId: 1,
-    };
+  // describe(testUtil.printCaption('GET ' + routes.WITH_ID), () => {
+  //   const forCreateImage = {
+  //     url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
+  //     name: 'image',
+  //     description: 'description',
+  //     isPrivate: false,
+  //     userId: 1,
+  //   };
 
-    it('It should get the image by id', (done) => {
-      imagesModel.create(forCreateImage).then((create) => {
-        const elementId = create.dataValues.id;
-        chai
-          .request(server)
-          .get(routes.BASE_URL + elementId)
-          .end((err, res) => {
-            const reformatedBodyContent = {
-              url: res.body.url,
-              name: res.body.name,
-              description: res.body.description,
-              isPrivate: res.body.isPrivate,
-              userId: res.body.userId,
-            };
+  //   it('It should get the image by id', (done) => {
+  //     imagesModel.create(forCreateImage).then((create) => {
+  //       const elementId = create.dataValues.id;
+  //       chai
+  //         .request(server)
+  //         .get(routes.BASE_URL + elementId)
+  //         .end((err, res) => {
+  //           const reformatedBodyContent = {
+  //             url: res.body.url,
+  //             name: res.body.name,
+  //             description: res.body.description,
+  //             isPrivate: res.body.isPrivate,
+  //             userId: res.body.userId,
+  //           };
 
-            res.should.have.status(HSC.OK);
-            expect(reformatedBodyContent).to.have.deep.eq(forCreateImage);
-            done();
-          });
-      });
-    });
+  //           res.should.have.status(HSC.OK);
+  //           expect(reformatedBodyContent).to.have.deep.eq(forCreateImage);
+  //           done();
+  //         });
+  //     });
+  //   });
 
-    it('It should not get any image by nonexistent id', (done) => {
-      const nonexistentId = -1;
+  //   it('It should not get any image by nonexistent id', (done) => {
+  //     const nonexistentId = -1;
 
-      chai
-        .request(server)
-        .get(routes.BASE_URL + nonexistentId)
-        .end((err, res) => {
-          res.should.have.status(HSC.NOT_FOUND);
-          done();
-        });
-    });
-  });
+  //     chai
+  //       .request(server)
+  //       .get(routes.BASE_URL + nonexistentId)
+  //       .end((err, res) => {
+  //         res.should.have.status(HSC.NOT_FOUND);
+  //         done();
+  //       });
+  //   });
+  // });
 
   //-----------------------------------------------------------------------------------------------
-  describe(testUtil.printCaption('PUT ' + routes.WITH_ID), () => {
-    const forCreateImage = {
-      url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
-      name: 'image',
-      description: 'description',
-      isPrivate: false,
-      userId: 1,
-    };
-    const forEditImage = {
-      url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
-      name: 'image2',
-      description: 'description2',
-      isPrivate: true,
-      userId: 2,
-    };
+  // describe(testUtil.printCaption('PUT ' + routes.WITH_ID), () => {
+  //   const forCreateImage = {
+  //     url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
+  //     name: 'image',
+  //     description: 'description',
+  //     isPrivate: false,
+  //     userId: 1,
+  //   };
+  //   const forEditImage = {
+  //     url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
+  //     name: 'image2',
+  //     description: 'description2',
+  //     isPrivate: true,
+  //     userId: 2,
+  //   };
 
-    it('It should edit the image by id', (done) => {
-      imagesModel.create(forCreateImage).then((create) => {
-        const elementId = create.dataValues.id;
-        chai
-          .request(server)
-          .put(routes.BASE_URL + elementId)
-          .send(forEditImage)
-          .end((err, res) => {
-            res.should.have.status(HSC.OK);
-            done();
-          });
-      });
-    });
+  //   it('It should edit the image by id', (done) => {
+  //     imagesModel.create(forCreateImage).then((create) => {
+  //       const elementId = create.dataValues.id;
+  //       chai
+  //         .request(server)
+  //         .put(routes.BASE_URL + elementId)
+  //         .send(forEditImage)
+  //         .end((err, res) => {
+  //           res.should.have.status(HSC.OK);
+  //           done();
+  //         });
+  //     });
+  //   });
 
-    it('It should not edit any image with nonexistent id', (done) => {
-      const nonexistentId = -1;
+  //   it('It should not edit any image with nonexistent id', (done) => {
+  //     const nonexistentId = -1;
 
-      imagesModel.create(forCreateImage).then(
-        chai
-          .request(server)
-          .put(routes.BASE_URL + nonexistentId)
-          .send(forEditImage)
-          .end((err, res) => {
-            res.should.have.status(HSC.BAD_REQUEST);
-            done();
-          }),
-      );
-    });
-  });
+  //     imagesModel.create(forCreateImage).then(
+  //       chai
+  //         .request(server)
+  //         .put(routes.BASE_URL + nonexistentId)
+  //         .send(forEditImage)
+  //         .end((err, res) => {
+  //           res.should.have.status(HSC.BAD_REQUEST);
+  //           done();
+  //         }),
+  //     );
+  //   });
+  // });
 
   //-----------------------------------------------------------------------------------------------
   describe(testUtil.printCaption('DELETE ' + routes.WITH_ID), () => {

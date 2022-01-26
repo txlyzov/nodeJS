@@ -108,64 +108,64 @@ describe(testUtil.printCaptionX2('Images services tests:'), () => {
   });
 
   //-----------------------------------------------------------------------------------------------
-  describe(testUtil.printCaption('- getOne(id)'), () => {
-    it('should return one image object', async () => {
-      const forCreateImage = {
-        url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
-        name: 'image',
-        description: 'description',
-        isPrivate: false,
-        userId: 1,
-      };
-      const create = await imagesModel.create(forCreateImage);
-      const elementId = create.dataValues.id;
-      const result = await imagesService.getOne(elementId);
-      const createValues = create.dataValues;
-      const resultValues = result.dataValues;
+  // describe(testUtil.printCaption('- getOne(id)'), () => {
+  //   it('should return one image object', async () => {
+  //     const forCreateImage = {
+  //       url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
+  //       name: 'image',
+  //       description: 'description',
+  //       isPrivate: false,
+  //       userId: 1,
+  //     };
+  //     const create = await imagesModel.create(forCreateImage);
+  //     const elementId = create.dataValues.id;
+  //     const result = await imagesService.getOne(elementId);
+  //     const createValues = create.dataValues;
+  //     const resultValues = result.dataValues;
 
-      expect(resultValues).to.deep.eq(createValues);
-    });
+  //     expect(resultValues).to.deep.eq(createValues);
+  //   });
 
-    it('should not return one image object', async () => {
-      const nonexistentId = -1;
-      const result = await imagesService.getOne(nonexistentId);
+  //   it('should not return one image object', async () => {
+  //     const nonexistentId = -1;
+  //     const result = await imagesService.getOne(nonexistentId);
 
-      expect(result).to.be.a('null');
-    });
-  });
+  //     expect(result).to.be.a('null');
+  //   });
+  // });
 
   //-----------------------------------------------------------------------------------------------
-  describe(testUtil.printCaption('- update(id, input)'), () => {
-    const forCreateImage = {
-      url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
-      name: 'image',
-      description: 'description',
-      isPrivate: false,
-      userId: 1,
-    };
-    const forEditImage = {
-      url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
-      name: 'image2',
-      description: 'description2',
-      isPrivate: true,
-      userId: 2,
-    };
+  // describe(testUtil.printCaption('- update(id, input)'), () => {
+  //   const forCreateImage = {
+  //     url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
+  //     name: 'image',
+  //     description: 'description',
+  //     isPrivate: false,
+  //     userId: 1,
+  //   };
+  //   const forEditImage = {
+  //     url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
+  //     name: 'image2',
+  //     description: 'description2',
+  //     isPrivate: true,
+  //     userId: 2,
+  //   };
 
-    it('should update one image object with id', async () => {
-      const create = await imagesModel.create(forCreateImage);
-      const elementId = create.dataValues.id;
-      const result = await imagesService.update(elementId, forEditImage);
+  //   it('should update one image object with id', async () => {
+  //     const create = await imagesModel.create(forCreateImage);
+  //     const elementId = create.dataValues.id;
+  //     const result = await imagesService.update(elementId, forEditImage);
 
-      expect(result).to.deep.eq(1);
-    });
+  //     expect(result).to.deep.eq(1);
+  //   });
 
-    it('should not update one image object with nonexistent id', async () => {
-      const nonexistentId = -1;
-      const result = await imagesService.update(nonexistentId, forEditImage);
+  //   it('should not update one image object with nonexistent id', async () => {
+  //     const nonexistentId = -1;
+  //     const result = await imagesService.update(nonexistentId, forEditImage);
 
-      expect(result).to.deep.eq(0);
-    });
-  });
+  //     expect(result).to.deep.eq(0);
+  //   });
+  // });
 
   //-----------------------------------------------------------------------------------------------
   describe(testUtil.printCaption('- delete(id)'), () => {
