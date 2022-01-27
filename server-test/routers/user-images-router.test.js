@@ -174,4 +174,234 @@ describe(testUtil.printCaptionX2('User images routers tests:'), () => {
         });
     });
   });
+
+  //-----------------------------------------------------------------------------------------------
+  describe(testUtil.printCaption('GET ' + routes.BASE_URL), () => {
+    let createdImage2; // eslint-disable-line
+    describe('test with presetted data', () => {
+      const forCreateImage1 = {
+        url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
+        name: 'image1',
+        description: 'description1',
+        isPrivate: true,
+        userId: 1,
+      };
+      const forCreateImage2 = {
+        url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
+        name: 'image2',
+        description: 'description2',
+        isPrivate: false,
+        userId: 2,
+      };
+      const forCreateImage3 = {
+        url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
+        name: 'image3',
+        description: 'description3',
+        isPrivate: false,
+        userId: 2,
+      };
+
+      before(async () => {
+        await imagesModel.create(forCreateImage1);
+        this.createdImage2 = await imagesModel.create(forCreateImage2);
+        await imagesModel.create(forCreateImage3);
+      });
+
+      it('It should get image by user id and image id', (done) => {
+        const imageId = this.createdImage2.dataValues.id;
+        chai
+          .request(server)
+          .get(routes.BASE_URL + imageId)
+          .set({
+            AuthToken: testUtil.generateToken(
+              this.createdUser2.dataValues.id,
+              this.createdUser2.dataValues.login,
+            ),
+          })
+          .end((err, res) => {
+            const reformatedBodyContent = {
+              url: res.body.url,
+              name: res.body.name,
+              description: res.body.description,
+              isPrivate: res.body.isPrivate,
+              userId: res.body.userId,
+            };
+
+            res.should.have.status(HSC.OK);
+            expect(reformatedBodyContent).to.have.deep.eq(forCreateImage2);
+            done();
+          });
+      });
+    });
+
+    describe('test with presetted data', () => {
+      const forCreateImage1 = {
+        url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
+        name: 'image1',
+        description: 'description1',
+        isPrivate: true,
+        userId: 1,
+      };
+      const forCreateImage2 = {
+        url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
+        name: 'image2',
+        description: 'description2',
+        isPrivate: false,
+        userId: 2,
+      };
+      const forCreateImage3 = {
+        url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
+        name: 'image3',
+        description: 'description3',
+        isPrivate: false,
+        userId: 2,
+      };
+
+      before(async () => {
+        await imagesModel.create(forCreateImage1);
+        this.createdImage2 = await imagesModel.create(forCreateImage2);
+        await imagesModel.create(forCreateImage3);
+      });
+
+      it('It should not get image by user id and image id because of wrong user id for image', (done) => {
+        const imageId = this.createdImage2.dataValues.id;
+        chai
+          .request(server)
+          .get(routes.BASE_URL + imageId)
+          .set({
+            AuthToken: testUtil.generateToken(
+              this.createdUser1.dataValues.id,
+              this.createdUser1.dataValues.login,
+            ),
+          })
+          .end((err, res) => {
+            res.should.have.status(HSC.NOT_FOUND);
+            done();
+          });
+      });
+    });
+
+    describe('test with presetted data', () => {
+      const forCreateImage1 = {
+        url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
+        name: 'image1',
+        description: 'description1',
+        isPrivate: true,
+        userId: 1,
+      };
+      const forCreateImage2 = {
+        url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
+        name: 'image2',
+        description: 'description2',
+        isPrivate: false,
+        userId: 2,
+      };
+      const forCreateImage3 = {
+        url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
+        name: 'image3',
+        description: 'description3',
+        isPrivate: false,
+        userId: 2,
+      };
+
+      before(async () => {
+        await imagesModel.create(forCreateImage1);
+        await imagesModel.create(forCreateImage2);
+        await imagesModel.create(forCreateImage3);
+      });
+
+      it('It should not get image by user id and image id because of nonexistent image id', (done) => {
+        const nonexistentId = -1;
+        chai
+          .request(server)
+          .get(routes.BASE_URL + nonexistentId)
+          .set({
+            AuthToken: testUtil.generateToken(
+              this.createdUser1.dataValues.id,
+              this.createdUser1.dataValues.login,
+            ),
+          })
+          .end((err, res) => {
+            res.should.have.status(HSC.NOT_FOUND);
+            done();
+          });
+      });
+    });
+  });
+
+  //-----------------------------------------------------------------------------------------------
+  describe(testUtil.printCaption('PUT ' + routes.WITH_ID), () => {
+    const forCreateImage = {
+      url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
+      name: 'image',
+      description: 'description',
+      isPrivate: false,
+      userId: 1,
+    };
+    const forEditImage = {
+      url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
+      name: 'image2',
+      description: 'description2',
+      isPrivate: true,
+      userId: 1,
+    };
+
+    it('It should edit the image by id and user id', (done) => {
+      imagesModel.create(forCreateImage).then((create) => {
+        const imageId = create.dataValues.id;
+        chai
+          .request(server)
+          .get(routes.BASE_URL)
+          .set({
+            AuthToken: testUtil.generateToken(
+              this.createdUser1.dataValues.id,
+              this.createdUser1.dataValues.login,
+            ),
+          })
+          .send({ ...forEditImage, id: imageId })
+          .end((err, res) => {
+            res.should.have.status(HSC.OK);
+            done();
+          });
+      });
+    });
+
+    it('It should not edit any image with nonexistent image id', (done) => {
+      const nonexistentId = -1;
+
+      imagesModel.create(forCreateImage).then(
+        chai
+          .request(server)
+          .get(routes.BASE_URL)
+          .set({
+            AuthToken: testUtil.generateToken(
+              this.createdUser1.dataValues.id,
+              this.createdUser1.dataValues.login,
+            ),
+          })
+          .send({ ...forEditImage, id: nonexistentId })
+          .end((err, res) => {
+            res.should.have.status(HSC.OK);
+            done();
+          }),
+      );
+    });
+
+    it('It should not edit any image with nonexistent user id', (done) => {
+      imagesModel.create(forCreateImage).then((create) => {
+        const imageId = create.dataValues.id;
+        chai
+          .request(server)
+          .get(routes.BASE_URL)
+          .set({
+            AuthToken: testUtil.generateToken(-1, -1),
+          })
+          .send({ ...forEditImage, id: imageId })
+          .end((err, res) => {
+            res.should.have.status(HSC.NOT_FOUND);
+            done();
+          });
+      });
+    });
+  });
 });

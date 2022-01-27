@@ -46,14 +46,40 @@ module.exports = {
   /**
    * Gets one Image object record by id in the Images table.
    * @param {Integer} id Image id from request.
+   * @param {Integer} userId User id from request.
    * @returns {Object} Returns the responce with one Image object from the Images table.
    **/
-  async getOne(id) {
+  async getOneByIdAndUserId(id, userId) {
     return imagesModel.findOne({
       where: {
         id,
+        userId,
       },
     });
+  },
+
+  /**
+   * Update Image object record in the Images table.
+   * @param {Body} body Entitry for getting id, url, name, description, isPrivate, userId from request.
+   * @returns {Number} Returns the responce with updated Image object from the Images table.
+   **/
+  async updateByIdAndUserId(body) {
+    const { id, name, description, isPrivate, userId } = body;
+    const result = await imagesModel.update(
+      {
+        name,
+        description,
+        isPrivate,
+        userId,
+      },
+      {
+        where: {
+          id,
+        },
+      },
+    );
+
+    return result[0];
   },
 
   /**
