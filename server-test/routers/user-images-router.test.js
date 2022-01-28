@@ -85,8 +85,8 @@ describe(testUtil.printCaptionX2('User images routers tests:'), () => {
         })
         .send(forCreateImage)
         .end((err, res) => {
-          res.should.have.status(HSC.INTERNAL_SERVER_ERROR);
-          expect(res.text).to.be.eq('invalid token');
+          res.should.have.status(HSC.FORBIDDEN);
+          expect(res.text).to.be.eq('Auth Error');
           done();
         });
     });

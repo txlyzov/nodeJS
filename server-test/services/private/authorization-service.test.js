@@ -72,7 +72,7 @@ describe(testUtil.printCaptionX2('Authorization services tests:'), () => {
       originalPassword: 'password',
     };
 
-    it('should return array with user login and', async () => {
+    it('should return array with user login and token,error should be a null', async () => {
       await usersModel.create({
         ...forCreateUser,
         password: await testUtil.encryptPassword(
