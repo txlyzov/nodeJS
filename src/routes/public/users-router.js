@@ -1,9 +1,9 @@
 var express = require('express');
 
 var router = express.Router();
-const usersController = require('../../controllers/index').usersController;
+const { usersController } = require('../../controllers/index');
 const routes = require('../../utils/routes-values').USERS_ROUTS;
-const asyncMiddleware = require('../../utils/error-catcher').asyncMiddleware;
+const { asyncMiddleware } = require('../../utils/error-catcher');
 
 router.post(
   routes.BASE_URL,

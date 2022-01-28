@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const usersService = require('./../public/users-service');
 require('dotenv').config();
-const constants = require('../../utils/error-names').error;
+const { error } = require('../../utils/consts');
 
 const BCRYPT_SALT = parseInt(process.env.BCRYPT_SALT);
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -22,7 +22,7 @@ module.exports = {
     const userByLogin = await usersService.getOneByLogin(login);
 
     if (!userByLogin) {
-      return { error: constants.WRONG_USER, data: null };
+      return { error: error.WRONG_USER, data: null };
     }
 
     if (await bcrypt.compare(plainTextPassword, userByLogin.password)) {
@@ -33,7 +33,7 @@ module.exports = {
       return { error: null, data: { token, login } };
     }
 
-    return { error: constants.WRONG_PASSWORD, data: null };
+    return { error: error.WRONG_PASSWORD, data: null };
   },
 
   async changePassword(body) {

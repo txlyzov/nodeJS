@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const HSC = require('http-status-codes');
 const createError = require('http-errors');
+const { errorTexts } = require('./consts');
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -17,7 +18,7 @@ module.exports.authMiddleware = (req, res, next) => {
     };
     next();
   } catch (e) {
-    const error = createError(HSC.FORBIDDEN, 'Auth Error');
+    const error = createError(HSC.FORBIDDEN, errorTexts.AUTH_ERROR);
     throw error;
   }
 };

@@ -5,6 +5,7 @@ const server = require('../../index');
 const imagesModel = require('../../src/models').images;
 const usersModel = require('../../src/models').users;
 const routes = require('./../../src/utils/routes-values').USER_IMAGES_ROUTS;
+const { errorTexts } = require('../../src/utils/consts');
 
 const testUtil = require('../util.test');
 
@@ -86,7 +87,7 @@ describe(testUtil.printCaptionX2('User images routers tests:'), () => {
         .send(forCreateImage)
         .end((err, res) => {
           res.should.have.status(HSC.FORBIDDEN);
-          expect(res.text).to.be.eq('Auth Error');
+          expect(res.text).to.be.eq(errorTexts.AUTH_ERROR);
           done();
         });
     });

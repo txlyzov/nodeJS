@@ -1,6 +1,5 @@
 const { expect } = require('chai');
-const authorizationService =
-  require('../../../src/services').authorizationService;
+const { authorizationService } = require('../../../src/services');
 const usersModel = require('../../../src/models').users;
 const testUtil = require('../../util.test');
 
