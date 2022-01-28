@@ -30,7 +30,11 @@ app.use((req, res) => {
 
 app.use((err, req, res, next) => { // eslint-disable-line
   //console.log(err);
-  res.status(HSC.INTERNAL_SERVER_ERROR).send(err.message);
+  if (!err.code) {
+    res.status(HSC.INTERNAL_SERVER_ERROR).send(err.message);
+  } else {
+    res.status(err.code).send(err.message);
+  }
 });
 
 app.listen(PORT, () => console.log(`API running at ${HOST}:${PORT}!`));
