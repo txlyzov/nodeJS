@@ -30,10 +30,10 @@ app.use((req, res) => {
 
 app.use((err, req, res, next) => { // eslint-disable-line
   //console.log(err);
-  if (!err.code) {
-    res.status(HSC.INTERNAL_SERVER_ERROR).send(err.message);
+  if (err.status === HSC.FORBIDDEN) {
+    res.status(err.status).send(err.message);
   } else {
-    res.status(err.code).send(err.message);
+    res.status(HSC.INTERNAL_SERVER_ERROR).send(err.message);
   }
 });
 
