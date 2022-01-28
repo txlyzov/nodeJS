@@ -1,5 +1,5 @@
 const HSC = require('http-status-codes');
-const imagesService = require('../../services/index').imagesService;
+const { imagesService } = require('../../services/index');
 
 module.exports = {
   async createImage(req, res) {

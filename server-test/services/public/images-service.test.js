@@ -1,5 +1,5 @@
 const { expect } = require('chai');
-const imagesService = require('../../../src/services').imagesService;
+const { imagesService } = require('../../../src/services');
 const imagesModel = require('../../../src/models').images;
 const usersModel = require('../../../src/models').users;
 const testUtil = require('../../util.test');

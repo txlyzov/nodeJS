@@ -3,3 +3,7 @@ module.exports.error = {
   WRONG_PASSWORD: 'wrong password',
   EMPTY: 'empty',
 };
+
+module.exports.errorTexts = {
+  AUTH_ERROR: 'Auth Error',
+};

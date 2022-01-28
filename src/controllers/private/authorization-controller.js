@@ -1,5 +1,5 @@
 const HSC = require('http-status-codes');
-const authorizationService = require('../../services').authorizationService;
+const { authorizationService } = require('../../services');
 
 const WRONG_USER_ERROR = 'wrong user';
 const WRONG_PASSWORD_ERROR = 'wrong password';

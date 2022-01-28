@@ -1,6 +1,5 @@
 const { expect } = require('chai');
-const authorizationService =
-  require('../../../src/services').authorizationService;
+const { authorizationService } = require('../../../src/services');
 const usersModel = require('../../../src/models').users;
 const testUtil = require('../../util.test');
 
@@ -72,7 +71,7 @@ describe(testUtil.printCaptionX2('Authorization services tests:'), () => {
       originalPassword: 'password',
     };
 
-    it('should return array with user login and', async () => {
+    it('should return array with user login and token,error should be a null', async () => {
       await usersModel.create({
         ...forCreateUser,
         password: await testUtil.encryptPassword(

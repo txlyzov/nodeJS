@@ -1,10 +1,9 @@
 const express = require('express');
 
 const router = express.Router();
-const authorizationController =
-  require('../../controllers/index').authorizationController;
+const { authorizationController } = require('../../controllers/index');
 const routes = require('../../utils/routes-values').AUTH_ROUTS;
-const asyncMiddleware = require('../../utils/error-catcher').use;
+const { asyncMiddleware } = require('../../utils/error-catcher');
 
 router.post(
   routes.SIGN_UP,

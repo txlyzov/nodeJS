@@ -1,28 +1,27 @@
 const HSC = require('http-status-codes');
-const imagesPrivateService =
-  require('../../services/index').imagesPrivateService;
+const userImagesService = require('../../services/index').userImagesService;
 
 module.exports = {
   async addNewImage(req, res) {
-    return res.json(await imagesPrivateService.addNewImage(req));
+    return res.json(await userImagesService.addNewImage(req));
   },
 
   async getUserImages(req, res, next) {
-    const result = await imagesPrivateService.getUserImages(req);
+    const result = await userImagesService.getUserImages(req);
 
     if (!result.length) return next();
 
     return res.json(result);
   },
   async getUserImage(req, res, next) {
-    const result = await imagesPrivateService.getUserImage(req);
+    const result = await userImagesService.getUserImage(req);
 
     if (!result) return next();
 
     return res.json(result);
   },
   async updateUserImage(req, res) {
-    const result = await imagesPrivateService.updateUserImage(req);
+    const result = await userImagesService.updateUserImage(req);
 
     if (result === 1) return res.sendStatus(HSC.OK);
 
