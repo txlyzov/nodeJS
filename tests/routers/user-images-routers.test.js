@@ -4,7 +4,7 @@ const HSC = require('http-status-codes');
 const server = require('../../index');
 const imagesModel = require('../../src/models').images;
 const usersModel = require('../../src/models').users;
-const routes = require('./../../src/utils/routes-values').USER_IMAGES_ROUTS;
+const routes = require('../../src/utils/routes-values').USER_IMAGES_ROUTS;
 const { errorTexts } = require('../../src/utils/consts');
 
 const testUtil = require('../util.test');
@@ -382,7 +382,7 @@ describe(testUtil.printCaptionX2('User images routers tests:'), () => {
           })
           .send({ ...forEditImage, id: nonexistentId })
           .end((err, res) => {
-            res.should.have.status(HSC.OK);
+            res.should.have.status(HSC.NOT_FOUND);
             done();
           }),
       );

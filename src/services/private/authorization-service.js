@@ -9,6 +9,11 @@ const JWT_SECRET = process.env.JWT_SECRET;
 const TOKEN_LIFETIME = process.env.TOKEN_LIFETIME;
 
 module.exports = {
+  /**
+   * Creates new User account.
+   * @param {Body} body Entitry for getting password from request and put data into create function.
+   * @returns {Object} Returns the responce with new created User object.
+   **/
   async signUp(body) {
     const { password: plainTextPassword } = body;
     const codedPassword = await bcrypt.hash(plainTextPassword, BCRYPT_SALT);
@@ -17,6 +22,11 @@ module.exports = {
     return usersService.create(body);
   },
 
+  /**
+   * Authorize user by login and password.
+   * @param {Body} body Entitry for getting login and password from request.
+   * @returns {Object} Returns the object with error status and responce data.
+   **/
   async login(body) {
     const { login, password: plainTextPassword } = body;
     const userByLogin = await usersService.getOneByLogin(login);
@@ -25,7 +35,11 @@ module.exports = {
       return { error: error.WRONG_USER, data: null };
     }
 
-    if (await bcrypt.compare(plainTextPassword, userByLogin.password)) {
+    const passwordCheck = await bcrypt.compare(
+      plainTextPassword,
+      userByLogin.password,
+    );
+    if (passwordCheck) {
       const token = jwt.sign({ id: userByLogin.id, login }, JWT_SECRET, {
         expiresIn: TOKEN_LIFETIME,
       });
@@ -36,6 +50,11 @@ module.exports = {
     return { error: error.WRONG_PASSWORD, data: null };
   },
 
+  /**
+   * Token check and changing password.
+   * @param {Body} body Entitry for getting token and password from request.
+   * @returns {Object} Returns the responce with updated User object from the Users table.
+   **/
   async changePassword(body) {
     const { token, password: newPlainTextPassword } = body;
     const user = jwt.verify(token, JWT_SECRET);

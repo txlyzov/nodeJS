@@ -38,5 +38,12 @@ router.put(
     await userImagesController.updateUserImage(req, res, next);
   }),
 );
+router.delete(
+  routes.WITH_ID,
+  authMiddleware,
+  asyncMiddleware(async (req, res) => {
+    await userImagesController.deleteUserImage(req, res);
+  }),
+);
 
 module.exports = router;

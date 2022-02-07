@@ -111,12 +111,27 @@ module.exports = {
   /**
    * Delete Image object record by Id in the Images table.
    * @param {Integer} id Image id from request.
-   * @returns {Number} Returns the responce with code 200.
+   * @returns {Number} Returns the responce with number 1 on success and 0 on fail.
    **/
   async delete(id) {
     return imagesModel.destroy({
       where: {
         id,
+      },
+    });
+  },
+
+  /**
+   * Delete Image object record by Id in the Images table.
+   * @param {Integer} id Image id from request.
+   * @param {Body} body Entitry for getting image id and user id from request.
+   * @returns {Number} Returns the responce with number 1 on success and 0 on fail.
+   **/
+  async deleteByIdAndUserId(id, userId) {
+    return imagesModel.destroy({
+      where: {
+        id,
+        userId,
       },
     });
   },
