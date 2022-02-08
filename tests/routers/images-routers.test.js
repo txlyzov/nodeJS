@@ -146,40 +146,4 @@ describe(testUtil.printCaptionX2('Images routers tests:'), () => {
         });
     });
   });
-
-  //-----------------------------------------------------------------------------------------------
-  describe(testUtil.printCaption('DELETE ' + routes.WITH_ID), () => {
-    const forCreateImage = {
-      url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
-      name: 'image',
-      description: 'description',
-      isPrivate: false,
-      userId: 1,
-    };
-
-    it('It should delete the image by id', (done) => {
-      imagesModel.create(forCreateImage).then((create) => {
-        const elementId = create.dataValues.id;
-        chai
-          .request(server)
-          .delete(routes.BASE_URL + elementId)
-          .end((err, res) => {
-            res.should.have.status(HSC.OK);
-            done();
-          });
-      });
-    });
-
-    it('It should not delete any image by nonexistent id', (done) => {
-      const nonexistentId = -1;
-
-      chai
-        .request(server)
-        .delete(routes.BASE_URL + nonexistentId)
-        .end((err, res) => {
-          res.should.have.status(HSC.BAD_REQUEST);
-          done();
-        });
-    });
-  });
 });

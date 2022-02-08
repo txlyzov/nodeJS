@@ -19,11 +19,4 @@ module.exports = {
 
     return res.sendStatus(HSC.BAD_REQUEST);
   },
-  async deleteImage(req, res) {
-    const result = await imagesService.delete(req.params.id);
-
-    if (result === 1) return res.sendStatus(HSC.OK);
-
-    return res.sendStatus(HSC.BAD_REQUEST);
-  },
 };

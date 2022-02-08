@@ -405,4 +405,70 @@ describe(testUtil.printCaptionX2('User images routers tests:'), () => {
       });
     });
   });
+
+  //-----------------------------------------------------------------------------------------------
+  describe(testUtil.printCaption('DELETE ' + routes.WITH_ID), () => {
+    const forCreateImage = {
+      url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
+      name: 'image',
+      description: 'description',
+      isPrivate: false,
+      userId: 1,
+    };
+
+    it('It should delete the image by id and user id', (done) => {
+      imagesModel.create(forCreateImage).then((create) => {
+        const imageId = create.dataValues.id;
+        chai
+          .request(server)
+          .delete(routes.BASE_URL + imageId)
+          .set({
+            AuthToken: testUtil.generateToken(
+              this.createdUser1.dataValues.id,
+              this.createdUser1.dataValues.login,
+            ),
+          })
+          .end((err, res) => {
+            res.should.have.status(HSC.OK);
+            done();
+          });
+      });
+    });
+
+    it('It should not delete any image with nonexistent image id', (done) => {
+      const nonexistentId = -1;
+
+      imagesModel.create(forCreateImage).then(
+        chai
+          .request(server)
+          .delete(routes.BASE_URL + nonexistentId)
+          .set({
+            AuthToken: testUtil.generateToken(
+              this.createdUser1.dataValues.id,
+              this.createdUser1.dataValues.login,
+            ),
+          })
+          .end((err, res) => {
+            res.should.have.status(HSC.BAD_REQUEST);
+            done();
+          }),
+      );
+    });
+
+    it('It should not delete any image with nonexistent user id', (done) => {
+      imagesModel.create(forCreateImage).then((create) => {
+        const imageId = create.dataValues.id;
+        chai
+          .request(server)
+          .delete(routes.BASE_URL + imageId)
+          .set({
+            AuthToken: testUtil.generateToken(-1, -1),
+          })
+          .end((err, res) => {
+            res.should.have.status(HSC.BAD_REQUEST);
+            done();
+          });
+      });
+    });
+  });
 });
