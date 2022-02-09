@@ -15,7 +15,7 @@ describe(testUtil.printCaptionX2('Authorization routers tests:'), () => {
   });
 
   //-----------------------------------------------------------------------------------------------
-  describe(testUtil.printCaption('POST ' + routes.SIGN_UP), () => {
+  describe(testUtil.printCaption(`POST ${routes.SIGN_UP}`), () => {
     const forCreateUser = {
       login: 'login',
       email: 'email',
@@ -48,7 +48,7 @@ describe(testUtil.printCaptionX2('Authorization routers tests:'), () => {
   });
 
   //-----------------------------------------------------------------------------------------------
-  describe(testUtil.printCaption('POST ' + routes.LOGIN), () => {
+  describe(testUtil.printCaption(`POST ${routes.LOGIN}`), () => {
     const forCreateUser = {
       login: 'login',
       email: 'email',
@@ -142,7 +142,7 @@ describe(testUtil.printCaptionX2('Authorization routers tests:'), () => {
   });
 
   //-----------------------------------------------------------------------------------------------
-  describe(testUtil.printCaption('POST ' + routes.PASSWORD_CHANGING), () => {
+  describe(testUtil.printCaption(`POST ${routes.PASSWORD_CHANGING}`), () => {
     const forCreateUser = {
       login: 'login',
       email: 'email',

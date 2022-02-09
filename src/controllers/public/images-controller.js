@@ -17,7 +17,10 @@ module.exports = {
 
     if (result.count === 0) return next();
 
-    return res.json({ meta: result.count, data: result.rows });
+    return res.json({
+      meta: { count: result.count },
+      data: { rows: result.rows },
+    });
   },
   async updateImage(req, res) {
     const result = await imagesService.update(req);

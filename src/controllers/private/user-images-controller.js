@@ -15,10 +15,12 @@ module.exports = {
   },
   async getUserImagesPagination(req, res, next) {
     const result = await imagesService.getAllByUserIdPagination(req);
-
     if (result.count === 0) return next();
 
-    return res.json({ meta: result.count, data: result.rows });
+    return res.json({
+      meta: { count: result.count },
+      data: { rows: result.rows },
+    });
   },
   async getUserImage(req, res, next) {
     const result = await imagesService.getOneByIdAndUserId(req);

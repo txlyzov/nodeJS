@@ -16,7 +16,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
   });
 
   //-----------------------------------------------------------------------------------------------
-  describe(testUtil.printCaption('POST  ' + routes.BASE_URL), () => {
+  describe(testUtil.printCaption(`POST ${routes.BASE_URL}`), () => {
     const forCreateUser = {
       login: 'login',
       email: 'email',
@@ -56,7 +56,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
   });
 
   //-----------------------------------------------------------------------------------------------
-  describe(testUtil.printCaption('GET  ' + routes.BASE_URL), () => {
+  describe(testUtil.printCaption(`GET ${routes.BASE_URL}`), () => {
     describe('test with presetted data', () => {
       const forCreateUser1 = {
         login: 'login1',
@@ -110,7 +110,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
   });
 
   //-----------------------------------------------------------------------------------------------
-  describe(testUtil.printCaption('GET  ' + routes.WITH_ID), () => {
+  describe(testUtil.printCaption(`GET ${routes.WITH_ID}`), () => {
     const forCreateUser = {
       login: 'login',
       email: 'email',
@@ -151,7 +151,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
   });
 
   //-----------------------------------------------------------------------------------------------
-  describe(testUtil.printCaption('PUT  ' + routes.WITH_ID), () => {
+  describe(testUtil.printCaption(`PUT ${routes.WITH_ID}`), () => {
     const forCreateUser = {
       login: 'login1',
       email: 'email1',
@@ -194,7 +194,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
   });
 
   //-----------------------------------------------------------------------------------------------
-  describe(testUtil.printCaption('DELETE  ' + routes.WITH_ID), () => {
+  describe(testUtil.printCaption(`DELETE ${routes.WITH_ID}`), () => {
     const forCreateUser = {
       login: 'login',
       email: 'email',
