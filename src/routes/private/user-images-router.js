@@ -15,12 +15,11 @@ router.post(
     await userImagesController.addNewImage(req, res, next);
   }),
 );
-
 router.get(
   routes.BASE_URL,
   authMiddleware,
   asyncMiddleware(async (req, res, next) => {
-    await userImagesController.getUserImages(req, res, next);
+    await userImagesController.getUserImagesPagination(req, res, next);
   }),
 );
 

@@ -40,7 +40,7 @@ describe(testUtil.printCaptionX2('Images services tests:'), () => {
     };
 
     it('should create one image object', async () => {
-      const result = await imagesService.create(forCreateImage);
+      const result = await imagesService.create({ body: forCreateImage });
       const formattedResult = {
         url: result.url,
         name: result.name,
@@ -55,7 +55,9 @@ describe(testUtil.printCaptionX2('Images services tests:'), () => {
     it('should not create one image object', async () => {
       const forNotCreateImage = { ...forCreateImage, userId: -1 };
 
-      await expect(imagesService.create(forNotCreateImage)).to.be.rejectedWith(
+      await expect(
+        imagesService.create({ body: forNotCreateImage }),
+      ).to.be.rejectedWith(
         'insert or update on table "images" violates foreign key constraint "images_userId_fkey"',
       );
     });

@@ -3,7 +3,7 @@ const { imagesService } = require('../../services/index');
 
 module.exports = {
   async createImage(req, res) {
-    return res.json(await imagesService.create(req.body));
+    return res.json(await imagesService.create(req));
   },
   async getPublicImages(req, res, next) {
     const result = await imagesService.getPublic();
@@ -12,8 +12,15 @@ module.exports = {
 
     return res.json(result);
   },
+  async getPublicImagesPagination(req, res, next) {
+    const result = await imagesService.getPublicPagination(req);
+
+    if (result.count === 0) return next();
+
+    return res.json({ meta: result.count, data: result.rows });
+  },
   async updateImage(req, res) {
-    const result = await imagesService.update(req.params.id, req.body);
+    const result = await imagesService.update(req);
 
     if (result === 1) return res.sendStatus(HSC.OK);
 
