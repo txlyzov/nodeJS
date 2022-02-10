@@ -5,16 +5,9 @@ module.exports = {
   async addNewImage(req, res) {
     return res.json(await imagesService.create(req));
   },
-
   async getUserImages(req, res, next) {
     const result = await imagesService.getAllByUserId(req);
 
-    if (!result.length) return next();
-
-    return res.json(result);
-  },
-  async getUserImagesPagination(req, res, next) {
-    const result = await imagesService.getAllByUserIdPagination(req);
     if (result.count === 0) return next();
 
     return res.json({

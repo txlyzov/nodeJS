@@ -128,13 +128,15 @@ describe(testUtil.printCaptionX2('User images routers tests:'), () => {
         };
 
         before(async () => {
-          await imagesModel.create(forCreateImage1);
-          await imagesModel.create(forCreateImage4);
-          await imagesModel.create(forCreateImage1);
-          await imagesModel.create(forCreateImage4);
-          await imagesModel.create(forCreateImage2);
-          await imagesModel.create(forCreateImage3);
-          await imagesModel.create(forCreateImage1);
+          await Promise.all([
+            imagesModel.create(forCreateImage1),
+            imagesModel.create(forCreateImage4),
+            imagesModel.create(forCreateImage1),
+            imagesModel.create(forCreateImage4),
+            imagesModel.create(forCreateImage2),
+            imagesModel.create(forCreateImage3),
+            imagesModel.create(forCreateImage1),
+          ]);
         });
 
         it('It should get user images by user id', (done) => {

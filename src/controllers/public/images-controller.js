@@ -6,14 +6,7 @@ module.exports = {
     return res.json(await imagesService.create(req));
   },
   async getPublicImages(req, res, next) {
-    const result = await imagesService.getPublic();
-
-    if (!result.length) return next();
-
-    return res.json(result);
-  },
-  async getPublicImagesPagination(req, res, next) {
-    const result = await imagesService.getPublicPagination(req);
+    const result = await imagesService.getPublic(req);
 
     if (result.count === 0) return next();
 

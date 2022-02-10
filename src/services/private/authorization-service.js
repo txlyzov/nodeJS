@@ -39,6 +39,7 @@ module.exports = {
       plainTextPassword,
       userByLogin.password,
     );
+
     if (passwordCheck) {
       const token = jwt.sign({ id: userByLogin.id, login }, JWT_SECRET, {
         expiresIn: TOKEN_LIFETIME,

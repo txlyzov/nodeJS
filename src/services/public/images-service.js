@@ -20,22 +20,10 @@ module.exports = {
 
   /**
    * Gets all Image object records in the Images table.
-   * @returns {Array|Object}} Returns the responce with all Image objects from the Images table and number of records.
-   **/
-  async getPublic() {
-    return imagesModel.findAll({
-      where: {
-        isPrivate: false,
-      },
-    });
-  },
-
-  /**
-   * Gets all Image object records in the Images table.
    * @param {Request} req Request entity for getting data from it.
    * @returns {Array|Object}} Returns the responce with all Image objects from the Images table and number of records.
    **/
-  async getPublicPagination(req) {
+  async getPublic(req) {
     const { page, limit } = req.query;
 
     return imagesModel.findAndCountAll({
@@ -44,7 +32,6 @@ module.exports = {
       },
       offset: (page - 1) * limit,
       limit: limit,
-      subQuery: false,
     });
   },
 
@@ -55,23 +42,6 @@ module.exports = {
    **/
   async getAllByUserId(req) {
     const userId = req.body.userId;
-
-    return imagesModel.findAll({
-      where: {
-        userId,
-      },
-    });
-  },
-
-  /**
-   * Gets all Image object records in the Images table with one owner.
-   * @param {Request} req Request entity for getting data from it.
-   * @returns {Array|Object} Returns the responce with all Image objects from the Images table.
-   **/
-  async getAllByUserIdPagination(req) {
-    //const userId = req.body.userId;
-    let userId;
-    req.body.userId ? (userId = req.body.userId) : (userId = 1);
     const { page, limit } = req.query;
 
     return imagesModel.findAndCountAll({
@@ -80,7 +50,6 @@ module.exports = {
       },
       offset: (page - 1) * limit,
       limit: limit,
-      subQuery: false,
     });
   },
 
