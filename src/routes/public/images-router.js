@@ -14,7 +14,11 @@ router.post(
 router.get(
   routes.BASE_URL,
   asyncMiddleware(async (req, res, next) => {
-    await imagesController.getPublicImages(req, res, next);
+    if (req.query.searchGoal) {
+      return imagesController.searchPublicImages(req, res, next);
+    }
+
+    return imagesController.getPublicImages(req, res, next);
   }),
 );
 router.put(

@@ -15,6 +15,16 @@ module.exports = {
       data: { rows: result.rows },
     });
   },
+  async searchUserImages(req, res, next) {
+    const result = await imagesService.searchByUserId(req);
+
+    if (result.count === 0) return next();
+
+    return res.json({
+      meta: { count: result.count },
+      data: { rows: result.rows },
+    });
+  },
   async getUserImage(req, res, next) {
     const result = await imagesService.getOneByIdAndUserId(req);
 

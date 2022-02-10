@@ -19,7 +19,11 @@ router.get(
   routes.BASE_URL,
   authMiddleware,
   asyncMiddleware(async (req, res, next) => {
-    await userImagesController.getUserImages(req, res, next);
+    if (req.query.searchGoal) {
+      return userImagesController.searchUserImages(req, res, next);
+    }
+
+    return userImagesController.getUserImages(req, res, next);
   }),
 );
 
