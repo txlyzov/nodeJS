@@ -23,11 +23,5 @@ router.put(
     await imagesController.updateImage(req, res);
   }),
 );
-router.delete(
-  routes.WITH_ID,
-  asyncMiddleware(async (req, res) => {
-    await imagesController.deleteImage(req, res);
-  }),
-);
 
 module.exports = router;

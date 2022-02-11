@@ -3,24 +3,20 @@ const { imagesService } = require('../../services/index');
 
 module.exports = {
   async createImage(req, res) {
-    return res.json(await imagesService.create(req.body));
+    return res.json(await imagesService.create(req));
   },
   async getPublicImages(req, res, next) {
-    const result = await imagesService.getPublic();
+    const result = await imagesService.getPublic(req);
 
-    if (!result.length) return next();
+    if (result.count === 0) return next();
 
-    return res.json(result);
+    return res.json({
+      meta: { count: result.count },
+      data: { rows: result.rows },
+    });
   },
   async updateImage(req, res) {
-    const result = await imagesService.update(req.params.id, req.body);
-
-    if (result === 1) return res.sendStatus(HSC.OK);
-
-    return res.sendStatus(HSC.BAD_REQUEST);
-  },
-  async deleteImage(req, res) {
-    const result = await imagesService.delete(req.params.id);
+    const result = await imagesService.update(req);
 
     if (result === 1) return res.sendStatus(HSC.OK);
 

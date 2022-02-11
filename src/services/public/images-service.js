@@ -3,11 +3,11 @@ const imagesModel = require('../../models').images;
 module.exports = {
   /**
    * Creates Image object record in Images table.
-   * @param {Body} body Entitry for getting url, name, description, isPrivate, userId from request.
+   * @param {Request} req Request entity for getting data from it.
    * @returns {Object} Returns the responce with new created Image object.
    **/
-  async create(body) {
-    const { url, name, description, isPrivate, userId } = body;
+  async create(req) {
+    const { url, name, description, isPrivate, userId } = req.body;
 
     return imagesModel.create({
       url,
@@ -20,36 +20,48 @@ module.exports = {
 
   /**
    * Gets all Image object records in the Images table.
-   * @returns {Array|Object}} Returns the responce with all Image objects from the Images table.
+   * @param {Request} req Request entity for getting data from it.
+   * @returns {Array|Object}} Returns the responce with all Image objects from the Images table and number of records.
    **/
-  async getPublic() {
-    return imagesModel.findAll({
+  async getPublic(req) {
+    const { page, limit } = req.query;
+
+    return imagesModel.findAndCountAll({
       where: {
         isPrivate: false,
       },
+      offset: (page - 1) * limit,
+      limit: limit,
     });
   },
 
   /**
    * Gets all Image object records in the Images table with one owner.
-   * @param {Integer} userId User id for search.
+   * @param {Request} req Request entity for getting data from it.
    * @returns {Array|Object} Returns the responce with all Image objects from the Images table.
    **/
-  async getAllByUserId(userId) {
-    return imagesModel.findAll({
+  async getAllByUserId(req) {
+    const userId = req.body.userId;
+    const { page, limit } = req.query;
+
+    return imagesModel.findAndCountAll({
       where: {
         userId,
       },
+      offset: (page - 1) * limit,
+      limit: limit,
     });
   },
 
   /**
    * Gets one Image object record by id in the Images table.
-   * @param {Integer} id Image id from request.
-   * @param {Integer} userId User id from request.
+   * @param {Request} req Request entity for getting data from it.
    * @returns {Object} Returns the responce with one Image object from the Images table.
    **/
-  async getOneByIdAndUserId(id, userId) {
+  async getOneByIdAndUserId(req) {
+    const id = req.params.id;
+    const userId = req.body.userId;
+
     return imagesModel.findOne({
       where: {
         id,
@@ -60,21 +72,21 @@ module.exports = {
 
   /**
    * Update Image object record in the Images table.
-   * @param {Body} body Entitry for getting id, url, name, description, isPrivate, userId from request.
+   * @param {Request} req Request entity for getting data from it.
    * @returns {Number} Returns the responce with updated Image object from the Images table.
    **/
-  async updateByIdAndUserId(body) {
-    const { id, name, description, isPrivate, userId } = body;
+  async updateByIdAndUserId(req) {
+    const { id, name, description, isPrivate, userId } = req.body;
     const result = await imagesModel.update(
       {
         name,
         description,
         isPrivate,
-        userId,
       },
       {
         where: {
           id,
+          userId,
         },
       },
     );
@@ -84,12 +96,12 @@ module.exports = {
 
   /**
    * Update Image object record in the Images table.
-   * @param {Integer} id Image id from request.
-   * @param {Body} body Entitry for getting url, name, description, isPrivate, userId from request.
-   * @returns {Number} Returns the responce with updated Image object from the Images table.
+   * @param {Request} req Request entity for getting data from it.
+   * @returns {Number} Returns the responce with number 1 on success and 0 on fail.
    **/
-  async update(id, body) {
-    const { url, name, description, isPrivate, userId } = body;
+  async update(req) {
+    const id = req.params.id;
+    const { url, name, description, isPrivate, userId } = req.body;
     const result = await imagesModel.update(
       {
         url,
@@ -110,13 +122,17 @@ module.exports = {
 
   /**
    * Delete Image object record by Id in the Images table.
-   * @param {Integer} id Image id from request.
-   * @returns {Number} Returns the responce with code 200.
+   * @param {Request} req Request entity for getting data from it.
+   * @returns {Number} Returns the responce with number 1 on success and 0 on fail.
    **/
-  async delete(id) {
+  async deleteByIdAndUserId(req) {
+    const id = req.params.id;
+    const userId = req.body.userId;
+
     return imagesModel.destroy({
       where: {
         id,
+        userId,
       },
     });
   },

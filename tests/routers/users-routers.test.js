@@ -16,7 +16,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
   });
 
   //-----------------------------------------------------------------------------------------------
-  describe(testUtil.printCaption('POST  ' + routes.BASE_URL), () => {
+  describe(testUtil.printCaption(`POST ${routes.BASE_URL}`), () => {
     const forCreateUser = {
       login: 'login',
       email: 'email',
@@ -56,7 +56,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
   });
 
   //-----------------------------------------------------------------------------------------------
-  describe(testUtil.printCaption('GET  ' + routes.BASE_URL), () => {
+  describe(testUtil.printCaption(`GET ${routes.BASE_URL}`), () => {
     describe('test with presetted data', () => {
       const forCreateUser1 = {
         login: 'login1',
@@ -110,7 +110,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
   });
 
   //-----------------------------------------------------------------------------------------------
-  describe(testUtil.printCaption('GET  ' + routes.WITH_ID), () => {
+  describe(testUtil.printCaption(`GET ${routes.WITH_ID}`), () => {
     const forCreateUser = {
       login: 'login',
       email: 'email',
@@ -122,7 +122,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
         const elementId = create.dataValues.id;
         chai
           .request(server)
-          .get(routes.BASE_URL + elementId)
+          .get(routes.BASE_URL + '/' + elementId)
           .end((err, res) => {
             const reformatedBodyContent = {
               login: res.body.login,
@@ -151,7 +151,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
   });
 
   //-----------------------------------------------------------------------------------------------
-  describe(testUtil.printCaption('PUT  ' + routes.WITH_ID), () => {
+  describe(testUtil.printCaption(`PUT ${routes.WITH_ID}`), () => {
     const forCreateUser = {
       login: 'login1',
       email: 'email1',
@@ -168,7 +168,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
         const elementId = create.dataValues.id;
         chai
           .request(server)
-          .put(routes.BASE_URL + elementId)
+          .put(routes.BASE_URL + '/' + elementId)
           .send(forEditUser)
           .end((err, res) => {
             res.should.have.status(HSC.OK);
@@ -183,7 +183,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
       usersModel.create(forCreateUser).then(
         chai
           .request(server)
-          .put(routes.BASE_URL + nonexistentId)
+          .put(routes.BASE_URL + '/' + nonexistentId)
           .send(forEditUser)
           .end((err, res) => {
             res.should.have.status(HSC.BAD_REQUEST);
@@ -194,7 +194,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
   });
 
   //-----------------------------------------------------------------------------------------------
-  describe(testUtil.printCaption('DELETE  ' + routes.WITH_ID), () => {
+  describe(testUtil.printCaption(`DELETE ${routes.WITH_ID}`), () => {
     const forCreateUser = {
       login: 'login',
       email: 'email',
@@ -206,7 +206,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
         const elementId = create.dataValues.id;
         chai
           .request(server)
-          .delete(routes.BASE_URL + elementId)
+          .delete(routes.BASE_URL + '/' + elementId)
           .end((err, res) => {
             res.should.have.status(HSC.OK);
             done();
@@ -219,7 +219,7 @@ describe(testUtil.printCaptionX2('Users routers tests:'), () => {
 
       chai
         .request(server)
-        .delete(routes.BASE_URL + nonexistentId)
+        .delete(routes.BASE_URL + '/' + nonexistentId)
         .end((err, res) => {
           res.should.have.status(HSC.BAD_REQUEST);
           done();

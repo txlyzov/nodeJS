@@ -15,7 +15,6 @@ router.post(
     await userImagesController.addNewImage(req, res, next);
   }),
 );
-
 router.get(
   routes.BASE_URL,
   authMiddleware,
@@ -36,6 +35,13 @@ router.put(
   authMiddleware,
   asyncMiddleware(async (req, res, next) => {
     await userImagesController.updateUserImage(req, res, next);
+  }),
+);
+router.delete(
+  routes.WITH_ID,
+  authMiddleware,
+  asyncMiddleware(async (req, res) => {
+    await userImagesController.deleteUserImage(req, res);
   }),
 );
 
