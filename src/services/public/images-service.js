@@ -31,6 +31,7 @@ module.exports = {
     let where = {
       isPrivate: false,
     };
+
     if (searchGoal) {
       where = {
         ...where,
@@ -45,7 +46,7 @@ module.exports = {
     return imagesModel.findAndCountAll({
       where,
       offset: (page - 1) * limit,
-      limit: limit,
+      limit,
     });
   },
 
@@ -62,6 +63,7 @@ module.exports = {
     let where = {
       userId,
     };
+
     if (searchGoal) {
       where = {
         ...where,
@@ -76,7 +78,7 @@ module.exports = {
     return imagesModel.findAndCountAll({
       where,
       offset: (page - 1) * limit,
-      limit: limit,
+      limit,
     });
   },
 

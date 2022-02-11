@@ -8,19 +8,19 @@ const { asyncMiddleware } = require('../../utils/error-catcher');
 router.post(
   routes.BASE_URL,
   asyncMiddleware(async (req, res) => {
-    await imagesController.createImage(req, res);
+    return imagesController.createImage(req, res);
   }),
 );
 router.get(
   routes.BASE_URL,
   asyncMiddleware(async (req, res, next) => {
-    await imagesController.getPublicImages(req, res, next);
+    return imagesController.getPublicImages(req, res, next);
   }),
 );
 router.put(
   routes.WITH_ID,
   asyncMiddleware(async (req, res) => {
-    await imagesController.updateImage(req, res);
+    return imagesController.updateImage(req, res);
   }),
 );
 

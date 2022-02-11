@@ -8,31 +8,31 @@ const { asyncMiddleware } = require('../../utils/error-catcher');
 router.post(
   routes.BASE_URL,
   asyncMiddleware(async (req, res) => {
-    await usersController.createUser(req, res);
+    return usersController.createUser(req, res);
   }),
 );
 router.get(
   routes.BASE_URL,
   asyncMiddleware(async (req, res, next) => {
-    await usersController.getUsers(req, res, next);
+    return usersController.getUsers(req, res, next);
   }),
 );
 router.get(
   routes.WITH_ID,
   asyncMiddleware(async (req, res, next) => {
-    await usersController.getOneUser(req, res, next);
+    return usersController.getOneUser(req, res, next);
   }),
 );
 router.put(
   routes.WITH_ID,
   asyncMiddleware(async (req, res) => {
-    await usersController.updateUser(req, res);
+    return usersController.updateUser(req, res);
   }),
 );
 router.delete(
   routes.WITH_ID,
   asyncMiddleware(async (req, res) => {
-    await usersController.deleteUser(req, res);
+    return usersController.deleteUser(req, res);
   }),
 );
 
