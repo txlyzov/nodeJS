@@ -8,21 +8,21 @@ const { asyncMiddleware } = require('../../utils/error-catcher');
 router.post(
   routes.SIGN_UP,
   asyncMiddleware(async (req, res) => {
-    await authorizationController.signUp(req, res);
+    return authorizationController.signUp(req, res);
   }),
 );
 
 router.post(
   routes.LOGIN,
   asyncMiddleware(async (req, res) => {
-    await authorizationController.login(req, res);
+    return authorizationController.login(req, res);
   }),
 );
 
 router.post(
   routes.PASSWORD_CHANGING,
   asyncMiddleware(async (req, res) => {
-    await authorizationController.changePassword(req, res);
+    return authorizationController.changePassword(req, res);
   }),
 );
 

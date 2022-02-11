@@ -1,3 +1,4 @@
+const Sequelize = require('sequelize');
 const imagesModel = require('../../models').images;
 
 module.exports = {
@@ -19,37 +20,65 @@ module.exports = {
   },
 
   /**
-   * Gets all Image object records in the Images table.
+   * Gets all relevant public Image object records in the Images table.
    * @param {Request} req Request entity for getting data from it.
    * @returns {Array|Object}} Returns the responce with all Image objects from the Images table and number of records.
    **/
   async getPublic(req) {
     const { page, limit } = req.query;
+    const searchGoal = req.query.searchGoal;
+
+    let where = {
+      isPrivate: false,
+    };
+
+    if (searchGoal) {
+      where = {
+        ...where,
+        name: Sequelize.where(
+          Sequelize.fn('LOWER', Sequelize.col('name')),
+          'LIKE',
+          '%' + searchGoal.toLowerCase() + '%',
+        ),
+      };
+    }
 
     return imagesModel.findAndCountAll({
-      where: {
-        isPrivate: false,
-      },
+      where,
       offset: (page - 1) * limit,
-      limit: limit,
+      limit,
     });
   },
 
   /**
-   * Gets all Image object records in the Images table with one owner.
+   * Gets all relevant user Image object records in the Images table.
    * @param {Request} req Request entity for getting data from it.
    * @returns {Array|Object} Returns the responce with all Image objects from the Images table.
    **/
-  async getAllByUserId(req) {
+  async getByUserId(req) {
     const userId = req.body.userId;
     const { page, limit } = req.query;
+    const searchGoal = req.query.searchGoal;
+
+    let where = {
+      userId,
+    };
+
+    if (searchGoal) {
+      where = {
+        ...where,
+        name: Sequelize.where(
+          Sequelize.fn('LOWER', Sequelize.col('name')),
+          'LIKE',
+          '%' + searchGoal.toLowerCase() + '%',
+        ),
+      };
+    }
 
     return imagesModel.findAndCountAll({
-      where: {
-        userId,
-      },
+      where,
       offset: (page - 1) * limit,
-      limit: limit,
+      limit,
     });
   },
 
