@@ -5,8 +5,8 @@ module.exports = {
   async createImage(req, res) {
     return res.json(await imagesService.create(req));
   },
-  async searchPublicImages(req, res, next) {
-    const result = await imagesService.searchPublic(req);
+  async getPublicImages(req, res, next) {
+    const result = await imagesService.getPublic(req);
 
     if (result.count === 0) return next();
 

@@ -24,7 +24,7 @@ module.exports = {
    * @param {Request} req Request entity for getting data from it.
    * @returns {Array|Object}} Returns the responce with all Image objects from the Images table and number of records.
    **/
-  async searchPublic(req) {
+  async getPublic(req) {
     const { page, limit } = req.query;
     const searchGoal = req.query.searchGoal;
 
@@ -54,7 +54,7 @@ module.exports = {
    * @param {Request} req Request entity for getting data from it.
    * @returns {Array|Object} Returns the responce with all Image objects from the Images table.
    **/
-  async searchByUserId(req) {
+  async getByUserId(req) {
     const userId = req.body.userId;
     const { page, limit } = req.query;
     const searchGoal = req.query.searchGoal;
