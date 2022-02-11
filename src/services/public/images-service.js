@@ -20,58 +20,30 @@ module.exports = {
   },
 
   /**
-   * Gets all Image object records in the Images table.
-   * @param {Request} req Request entity for getting data from it.
-   * @returns {Array|Object}} Returns the responce with all Image objects from the Images table and number of records.
-   **/
-  async getPublic(req) {
-    const { page, limit } = req.query;
-
-    return imagesModel.findAndCountAll({
-      where: {
-        isPrivate: false,
-      },
-      offset: (page - 1) * limit,
-      limit: limit,
-    });
-  },
-
-  /**
    * Gets all relevant public Image object records in the Images table.
    * @param {Request} req Request entity for getting data from it.
    * @returns {Array|Object}} Returns the responce with all Image objects from the Images table and number of records.
    **/
   async searchPublic(req) {
     const { page, limit } = req.query;
-    const searchGoal = req.query.searchGoal.toLowerCase();
+    const searchGoal = req.query.searchGoal;
 
-    return imagesModel.findAndCountAll({
-      where: {
+    let where = {
+      isPrivate: false,
+    };
+    if (searchGoal) {
+      where = {
+        ...where,
         name: Sequelize.where(
           Sequelize.fn('LOWER', Sequelize.col('name')),
           'LIKE',
-          '%' + searchGoal + '%',
+          '%' + searchGoal.toLowerCase() + '%',
         ),
-        isPrivate: false,
-      },
-      offset: (page - 1) * limit,
-      limit: limit,
-    });
-  },
-
-  /**
-   * Gets all Image object records in the Images table with one owner.
-   * @param {Request} req Request entity for getting data from it.
-   * @returns {Array|Object} Returns the responce with all Image objects from the Images table.
-   **/
-  async getAllByUserId(req) {
-    const userId = req.body.userId;
-    const { page, limit } = req.query;
+      };
+    }
 
     return imagesModel.findAndCountAll({
-      where: {
-        userId,
-      },
+      where,
       offset: (page - 1) * limit,
       limit: limit,
     });
@@ -85,17 +57,24 @@ module.exports = {
   async searchByUserId(req) {
     const userId = req.body.userId;
     const { page, limit } = req.query;
-    const searchGoal = req.query.searchGoal.toLowerCase();
+    const searchGoal = req.query.searchGoal;
 
-    return imagesModel.findAndCountAll({
-      where: {
+    let where = {
+      userId,
+    };
+    if (searchGoal) {
+      where = {
+        ...where,
         name: Sequelize.where(
           Sequelize.fn('LOWER', Sequelize.col('name')),
           'LIKE',
-          '%' + searchGoal + '%',
+          '%' + searchGoal.toLowerCase() + '%',
         ),
-        userId,
-      },
+      };
+    }
+
+    return imagesModel.findAndCountAll({
+      where,
       offset: (page - 1) * limit,
       limit: limit,
     });

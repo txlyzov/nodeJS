@@ -22,6 +22,7 @@ describe(testUtil.printCaptionX2('Images routers tests:'), () => {
       email: 'email2',
       password: 'password2',
     };
+
     usersModel.create(forCreateUser1);
     usersModel.create(forCreateUser2);
   });
@@ -125,6 +126,7 @@ describe(testUtil.printCaptionX2('Images routers tests:'), () => {
         it('It should get public images for page', (done) => {
           const page = 2;
           const limit = 2;
+
           chai
             .request(server)
             .get(`${routes.BASE_URL}?page=${page}&limit=${limit}`)
@@ -157,6 +159,7 @@ describe(testUtil.printCaptionX2('Images routers tests:'), () => {
       it('It should not get any images', (done) => {
         const page = 2;
         const limit = 2;
+
         chai
           .request(server)
           .get(`${routes.BASE_URL}?page=${page}&limit=${limit}`)
@@ -220,6 +223,7 @@ describe(testUtil.printCaptionX2('Images routers tests:'), () => {
           const page = 1;
           const limit = 2;
           const searchGoal = 'image';
+
           chai
             .request(server)
             .get(
@@ -258,6 +262,7 @@ describe(testUtil.printCaptionX2('Images routers tests:'), () => {
       it('It should not get any images', (done) => {
         const page = 2;
         const limit = 2;
+
         chai
           .request(server)
           .get(`${routes.BASE_URL}?page=${page}&limit=${limit}`)

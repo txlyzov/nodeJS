@@ -26,6 +26,7 @@ describe(testUtil.printCaptionX2('User images routers tests:'), () => {
       email: 'email2',
       password: 'password2',
     };
+
     this.createdUser1 = await usersModel.create(forCreateUser1);
     this.createdUser2 = await usersModel.create(forCreateUser2);
   });
@@ -142,6 +143,7 @@ describe(testUtil.printCaptionX2('User images routers tests:'), () => {
         it('It should get user images by user id', (done) => {
           const page = 2;
           const limit = 2;
+
           chai
             .request(server)
             .get(`${routes.BASE_URL}?page=${page}&limit=${limit}`)
@@ -163,6 +165,7 @@ describe(testUtil.printCaptionX2('User images routers tests:'), () => {
       it('It should not get any images', (done) => {
         const page = 2;
         const limit = 2;
+
         chai
           .request(server)
           .get(`${routes.BASE_URL}?page=${page}&limit=${limit}`)
@@ -232,6 +235,7 @@ describe(testUtil.printCaptionX2('User images routers tests:'), () => {
           const page = 1;
           const limit = 2;
           const searchGoal = 'image';
+
           chai
             .request(server)
             .get(
@@ -255,6 +259,7 @@ describe(testUtil.printCaptionX2('User images routers tests:'), () => {
       it('It should not get any images', (done) => {
         const page = 2;
         const limit = 2;
+
         chai
           .request(server)
           .get(`${routes.BASE_URL}?page=${page}&limit=${limit}`)
@@ -362,6 +367,7 @@ describe(testUtil.printCaptionX2('User images routers tests:'), () => {
 
       it('It should not get image by user id and image id because of wrong user id for image', (done) => {
         const imageId = this.createdImage2.dataValues.id;
+
         chai
           .request(server)
           .get(routes.BASE_URL + imageId)
@@ -409,6 +415,7 @@ describe(testUtil.printCaptionX2('User images routers tests:'), () => {
 
       it('It should not get image by user id and image id because of nonexistent image id', (done) => {
         const nonexistentId = -1;
+
         chai
           .request(server)
           .get(routes.BASE_URL + nonexistentId)
@@ -446,6 +453,7 @@ describe(testUtil.printCaptionX2('User images routers tests:'), () => {
     it('It should edit the image by id and user id', (done) => {
       imagesModel.create(forCreateImage).then((create) => {
         const imageId = create.dataValues.id;
+
         chai
           .request(server)
           .put(routes.BASE_URL)
@@ -487,6 +495,7 @@ describe(testUtil.printCaptionX2('User images routers tests:'), () => {
     it('It should not edit any image with nonexistent user id', (done) => {
       imagesModel.create(forCreateImage).then((create) => {
         const imageId = create.dataValues.id;
+
         chai
           .request(server)
           .put(routes.BASE_URL)
@@ -515,6 +524,7 @@ describe(testUtil.printCaptionX2('User images routers tests:'), () => {
     it('It should delete the image by id and user id', (done) => {
       imagesModel.create(forCreateImage).then((create) => {
         const imageId = create.dataValues.id;
+
         chai
           .request(server)
           .delete(routes.BASE_URL + '/' + imageId)
@@ -554,6 +564,7 @@ describe(testUtil.printCaptionX2('User images routers tests:'), () => {
     it('It should not delete any image with nonexistent user id', (done) => {
       imagesModel.create(forCreateImage).then((create) => {
         const imageId = create.dataValues.id;
+
         chai
           .request(server)
           .delete(routes.BASE_URL + '/' + imageId)

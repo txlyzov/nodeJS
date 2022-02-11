@@ -101,7 +101,7 @@ describe(testUtil.printCaptionX2('Images services tests:'), () => {
       const create2 = await imagesModel.create(forCreateImage2);
       const create3 = await imagesModel.create(forCreateImage3);
       await imagesModel.create(forCreateImage1);
-      const result = await imagesService.getPublic({
+      const result = await imagesService.searchPublic({
         query: {
           page: 2,
           limit: 2,
@@ -127,7 +127,7 @@ describe(testUtil.printCaptionX2('Images services tests:'), () => {
         userId: 1,
       };
       await imagesModel.create(forCreateImage1);
-      const result = await imagesService.getPublic({
+      const result = await imagesService.searchPublic({
         query: {
           page: 2,
           limit: 2,
@@ -265,7 +265,7 @@ describe(testUtil.printCaptionX2('Images services tests:'), () => {
       const create2 = await imagesModel.create(forCreateImage2);
       const create3 = await imagesModel.create(forCreateImage3);
       await imagesModel.create(forCreateImage1);
-      const result = await imagesService.getAllByUserId({
+      const result = await imagesService.searchByUserId({
         body: { userId: 2 },
         query: {
           page: 2,
@@ -292,7 +292,7 @@ describe(testUtil.printCaptionX2('Images services tests:'), () => {
         userId: 1,
       };
       await imagesModel.create(forCreateImage1);
-      const result = await imagesService.getAllByUserId({
+      const result = await imagesService.searchByUserId({
         body: { userId: 2 },
         query: {
           page: 2,

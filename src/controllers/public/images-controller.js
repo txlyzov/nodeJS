@@ -5,17 +5,6 @@ module.exports = {
   async createImage(req, res) {
     return res.json(await imagesService.create(req));
   },
-  async getPublicImages(req, res, next) {
-    const result = await imagesService.getPublic(req);
-
-    if (result.count === 0) return next();
-
-    return res.json({
-      meta: { count: result.count },
-      data: { rows: result.rows },
-    });
-  },
-
   async searchPublicImages(req, res, next) {
     const result = await imagesService.searchPublic(req);
 
@@ -26,7 +15,6 @@ module.exports = {
       data: { rows: result.rows },
     });
   },
-
   async updateImage(req, res) {
     const result = await imagesService.update(req);
 
