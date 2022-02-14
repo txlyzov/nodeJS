@@ -101,7 +101,7 @@ describe(testUtil.printCaptionX2('Images services tests:'), () => {
       const create2 = await imagesModel.create(forCreateImage2);
       const create3 = await imagesModel.create(forCreateImage3);
       await imagesModel.create(forCreateImage1);
-      const result = await imagesService.searchPublic({
+      const result = await imagesService.getPublic({
         query: {
           page: 2,
           limit: 2,
@@ -127,7 +127,7 @@ describe(testUtil.printCaptionX2('Images services tests:'), () => {
         userId: 1,
       };
       await imagesModel.create(forCreateImage1);
-      const result = await imagesService.searchPublic({
+      const result = await imagesService.getPublic({
         query: {
           page: 2,
           limit: 2,
@@ -140,7 +140,7 @@ describe(testUtil.printCaptionX2('Images services tests:'), () => {
   });
 
   //-----------------------------------------------------------------------------------------------
-  describe(testUtil.printCaption('- searchPublic(req)'), () => {
+  describe(testUtil.printCaption('- getPublic(req)'), () => {
     const forCreateImage1 = {
       url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
       name: 'image1',
@@ -179,7 +179,7 @@ describe(testUtil.printCaptionX2('Images services tests:'), () => {
       const create3 = await imagesModel.create(forCreateImage3);
       const create2 = await imagesModel.create(forCreateImage2);
       await imagesModel.create(forCreateImage1);
-      const result = await imagesService.searchPublic({
+      const result = await imagesService.getPublic({
         query: {
           page: 2,
           limit: 2,
@@ -214,7 +214,7 @@ describe(testUtil.printCaptionX2('Images services tests:'), () => {
       };
       await imagesModel.create(forCreateImage1);
       await imagesModel.create(forCreateImage2);
-      const result = await imagesService.searchPublic({
+      const result = await imagesService.getPublic({
         query: {
           page: 2,
           limit: 2,
@@ -265,7 +265,7 @@ describe(testUtil.printCaptionX2('Images services tests:'), () => {
       const create2 = await imagesModel.create(forCreateImage2);
       const create3 = await imagesModel.create(forCreateImage3);
       await imagesModel.create(forCreateImage1);
-      const result = await imagesService.searchByUserId({
+      const result = await imagesService.getByUserId({
         body: { userId: 2 },
         query: {
           page: 2,
@@ -292,7 +292,7 @@ describe(testUtil.printCaptionX2('Images services tests:'), () => {
         userId: 1,
       };
       await imagesModel.create(forCreateImage1);
-      const result = await imagesService.searchByUserId({
+      const result = await imagesService.getByUserId({
         body: { userId: 2 },
         query: {
           page: 2,
@@ -306,7 +306,7 @@ describe(testUtil.printCaptionX2('Images services tests:'), () => {
   });
 
   //-----------------------------------------------------------------------------------------------
-  describe(testUtil.printCaption('- searchByUserId(req)'), () => {
+  describe(testUtil.printCaption('- getByUserId(req)'), () => {
     const forCreateImage1 = {
       url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
       name: 'image1',
@@ -332,11 +332,11 @@ describe(testUtil.printCaptionX2('Images services tests:'), () => {
       url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
       name: 'imag34',
       description: 'description4',
-      isPrivate: false,
+      isPrivate: true,
       userId: 2,
     };
 
-    it('should return array with relevant private user image objects for sigle page and total number of records', async () => {
+    it('should return array with relevant user image objects for sigle page and total number of records', async () => {
       await imagesModel.create(forCreateImage4);
       await imagesModel.create(forCreateImage4);
       await imagesModel.create(forCreateImage2);
@@ -345,12 +345,63 @@ describe(testUtil.printCaptionX2('Images services tests:'), () => {
       const create3 = await imagesModel.create(forCreateImage3);
       const create2 = await imagesModel.create(forCreateImage2);
       await imagesModel.create(forCreateImage1);
-      const result = await imagesService.searchByUserId({
+      const result = await imagesService.getByUserId({
         body: { userId: 2 },
         query: {
           page: 2,
           limit: 2,
           searchGoal: 'image',
+        },
+      });
+      const createValues3 = create3.dataValues;
+      const createValues2 = create2.dataValues;
+      const resultValues3 = result.rows[0].dataValues;
+      const resultValues2 = result.rows[1].dataValues;
+
+      expect(result.count).to.eq(4);
+      expect(result.rows.length).to.eq(2);
+      expect(resultValues2).to.deep.eq(createValues2);
+      expect(resultValues3).to.deep.eq(createValues3);
+    });
+
+    it('should return array with relevant user image objects with public setting for sigle page and total number of records', async () => {
+      await imagesModel.create(forCreateImage4);
+      await imagesModel.create(forCreateImage4);
+      await imagesModel.create(forCreateImage2);
+      await imagesModel.create(forCreateImage2);
+      await imagesModel.create(forCreateImage1);
+      await imagesModel.create(forCreateImage3);
+      await imagesModel.create(forCreateImage2);
+      await imagesModel.create(forCreateImage1);
+      const result = await imagesService.getByUserId({
+        body: { userId: 2 },
+        query: {
+          page: 2,
+          limit: 2,
+          searchGoal: 'imag3',
+          privacyFilter: 'private',
+        },
+      });
+
+      expect(result.count).to.eq(2);
+      expect(result.rows.length).to.eq(0);
+    });
+
+    it('should return array of user image objects with public setting for sigle page and total number of records', async () => {
+      await imagesModel.create(forCreateImage4);
+      await imagesModel.create(forCreateImage4);
+      await imagesModel.create(forCreateImage2);
+      await imagesModel.create(forCreateImage2);
+      await imagesModel.create(forCreateImage1);
+      const create3 = await imagesModel.create(forCreateImage3);
+      const create2 = await imagesModel.create(forCreateImage2);
+      await imagesModel.create(forCreateImage1);
+      const result = await imagesService.getByUserId({
+        body: { userId: 2 },
+        query: {
+          page: 2,
+          limit: 2,
+          privacyFilter: 'public',
         },
       });
       const createValues3 = create3.dataValues;
@@ -381,7 +432,7 @@ describe(testUtil.printCaptionX2('Images services tests:'), () => {
       };
       await imagesModel.create(forCreateImage1);
       await imagesModel.create(forCreateImage2);
-      const result = await imagesService.searchByUserId({
+      const result = await imagesService.getByUserId({
         body: { userId: 2 },
         query: {
           page: 2,
