@@ -4,6 +4,9 @@ const imagesModel = require('../../../src/models').images;
 const usersModel = require('../../../src/models').users;
 const testUtil = require('../../util.test');
 
+const USER_1_ID = 1;
+const USER_2_ID = 2;
+
 describe(testUtil.printCaptionX2('Images services tests:'), () => {
   //-----------------------------------------------------------------------------------------------
   before(async () => {
@@ -36,7 +39,7 @@ describe(testUtil.printCaptionX2('Images services tests:'), () => {
       name: 'image',
       description: 'description',
       isPrivate: false,
-      userId: 1,
+      userId: USER_1_ID,
     };
 
     it('should create one image object', async () => {
@@ -70,28 +73,28 @@ describe(testUtil.printCaptionX2('Images services tests:'), () => {
       name: 'image1',
       description: 'description1',
       isPrivate: true,
-      userId: 1,
+      userId: USER_1_ID,
     };
     const forCreateImage2 = {
       url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
       name: 'image2',
       description: 'description2',
       isPrivate: false,
-      userId: 2,
+      userId: USER_2_ID,
     };
     const forCreateImage3 = {
       url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
       name: 'image3',
       description: 'description3',
       isPrivate: false,
-      userId: 2,
+      userId: USER_2_ID,
     };
     const forCreateImage4 = {
       url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
       name: 'image4',
       description: 'description4',
       isPrivate: false,
-      userId: 2,
+      userId: USER_2_ID,
     };
 
     it('should return array with public image objects for sigle page and total number of records', async () => {
@@ -124,7 +127,7 @@ describe(testUtil.printCaptionX2('Images services tests:'), () => {
         name: 'image1',
         description: 'description1',
         isPrivate: true,
-        userId: 1,
+        userId: USER_1_ID,
       };
       await imagesModel.create(forCreateImage1);
       const result = await imagesService.getPublic({
@@ -146,28 +149,28 @@ describe(testUtil.printCaptionX2('Images services tests:'), () => {
       name: 'image1',
       description: 'description1',
       isPrivate: true,
-      userId: 1,
+      userId: USER_1_ID,
     };
     const forCreateImage2 = {
       url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
       name: 'image2',
       description: 'description2',
       isPrivate: false,
-      userId: 2,
+      userId: USER_2_ID,
     };
     const forCreateImage3 = {
       url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
       name: 'image3',
       description: 'description3',
       isPrivate: false,
-      userId: 2,
+      userId: USER_2_ID,
     };
     const forCreateImage4 = {
       url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
       name: 'imag34',
       description: 'description4',
       isPrivate: false,
-      userId: 2,
+      userId: USER_2_ID,
     };
 
     it('should return array with relevant public image objects for sigle page and total number of records', async () => {
@@ -203,14 +206,14 @@ describe(testUtil.printCaptionX2('Images services tests:'), () => {
         name: 'image1',
         description: 'description1',
         isPrivate: true,
-        userId: 1,
+        userId: USER_1_ID,
       };
       const forCreateImage2 = {
         url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
         name: 'imag32',
         description: 'description2',
         isPrivate: false,
-        userId: 2,
+        userId: USER_2_ID,
       };
       await imagesModel.create(forCreateImage1);
       await imagesModel.create(forCreateImage2);
@@ -234,28 +237,28 @@ describe(testUtil.printCaptionX2('Images services tests:'), () => {
       name: 'image1',
       description: 'description1',
       isPrivate: true,
-      userId: 1,
+      userId: USER_1_ID,
     };
     const forCreateImage2 = {
       url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
       name: 'image2',
       description: 'description2',
       isPrivate: false,
-      userId: 2,
+      userId: USER_2_ID,
     };
     const forCreateImage3 = {
       url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
       name: 'image3',
       description: 'description3',
       isPrivate: false,
-      userId: 2,
+      userId: USER_2_ID,
     };
     const forCreateImage4 = {
       url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
       name: 'image4',
       description: 'description4',
       isPrivate: false,
-      userId: 2,
+      userId: USER_2_ID,
     };
 
     it('should return array with private user image objects for sigle page and total number of records', async () => {
@@ -266,7 +269,7 @@ describe(testUtil.printCaptionX2('Images services tests:'), () => {
       const create3 = await imagesModel.create(forCreateImage3);
       await imagesModel.create(forCreateImage1);
       const result = await imagesService.getByUserId({
-        body: { userId: 2 },
+        body: { userId: USER_2_ID },
         query: {
           page: 2,
           limit: 2,
@@ -289,11 +292,11 @@ describe(testUtil.printCaptionX2('Images services tests:'), () => {
         name: 'image1',
         description: 'description1',
         isPrivate: true,
-        userId: 1,
+        userId: USER_1_ID,
       };
       await imagesModel.create(forCreateImage1);
       const result = await imagesService.getByUserId({
-        body: { userId: 2 },
+        body: { userId: USER_2_ID },
         query: {
           page: 2,
           limit: 2,
@@ -312,28 +315,28 @@ describe(testUtil.printCaptionX2('Images services tests:'), () => {
       name: 'image1',
       description: 'description1',
       isPrivate: true,
-      userId: 1,
+      userId: USER_1_ID,
     };
     const forCreateImage2 = {
       url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
       name: 'image2',
       description: 'description2',
       isPrivate: false,
-      userId: 2,
+      userId: USER_2_ID,
     };
     const forCreateImage3 = {
       url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
       name: 'image3',
       description: 'description3',
       isPrivate: false,
-      userId: 2,
+      userId: USER_2_ID,
     };
     const forCreateImage4 = {
       url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
       name: 'imag34',
       description: 'description4',
       isPrivate: true,
-      userId: 2,
+      userId: USER_2_ID,
     };
 
     it('should return array with relevant user image objects for sigle page and total number of records', async () => {
@@ -346,7 +349,7 @@ describe(testUtil.printCaptionX2('Images services tests:'), () => {
       const create2 = await imagesModel.create(forCreateImage2);
       await imagesModel.create(forCreateImage1);
       const result = await imagesService.getByUserId({
-        body: { userId: 2 },
+        body: { userId: USER_2_ID },
         query: {
           page: 2,
           limit: 2,
@@ -374,7 +377,7 @@ describe(testUtil.printCaptionX2('Images services tests:'), () => {
       await imagesModel.create(forCreateImage2);
       await imagesModel.create(forCreateImage1);
       const result = await imagesService.getByUserId({
-        body: { userId: 2 },
+        body: { userId: USER_2_ID },
         query: {
           page: 2,
           limit: 2,
@@ -397,7 +400,7 @@ describe(testUtil.printCaptionX2('Images services tests:'), () => {
       const create2 = await imagesModel.create(forCreateImage2);
       await imagesModel.create(forCreateImage1);
       const result = await imagesService.getByUserId({
-        body: { userId: 2 },
+        body: { userId: USER_2_ID },
         query: {
           page: 2,
           limit: 2,
@@ -421,19 +424,19 @@ describe(testUtil.printCaptionX2('Images services tests:'), () => {
         name: 'image1',
         description: 'description1',
         isPrivate: true,
-        userId: 1,
+        userId: USER_1_ID,
       };
       const forCreateImage2 = {
         url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
         name: 'imag32',
         description: 'description2',
         isPrivate: false,
-        userId: 2,
+        userId: USER_2_ID,
       };
       await imagesModel.create(forCreateImage1);
       await imagesModel.create(forCreateImage2);
       const result = await imagesService.getByUserId({
-        body: { userId: 2 },
+        body: { userId: USER_2_ID },
         query: {
           page: 2,
           limit: 2,
@@ -453,21 +456,21 @@ describe(testUtil.printCaptionX2('Images services tests:'), () => {
       name: 'image1',
       description: 'description1',
       isPrivate: true,
-      userId: 1,
+      userId: USER_1_ID,
     };
     const forCreateImage2 = {
       url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
       name: 'image2',
       description: 'description2',
       isPrivate: false,
-      userId: 2,
+      userId: USER_2_ID,
     };
     const forCreateImage3 = {
       url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
       name: 'image3',
       description: 'description3',
       isPrivate: false,
-      userId: 2,
+      userId: USER_2_ID,
     };
 
     it('should return private user image object', async () => {
@@ -475,7 +478,7 @@ describe(testUtil.printCaptionX2('Images services tests:'), () => {
       await imagesModel.create(forCreateImage2);
       const create3 = await imagesModel.create(forCreateImage3);
       const result = await imagesService.getOneByIdAndUserId({
-        body: { userId: 2 },
+        body: { userId: USER_2_ID },
         params: {
           id: create3.dataValues.id,
         },
@@ -508,14 +511,14 @@ describe(testUtil.printCaptionX2('Images services tests:'), () => {
       name: 'image1',
       description: 'description1',
       isPrivate: true,
-      userId: 1,
+      userId: USER_1_ID,
     };
     const forEditImage = {
       url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
       name: 'image2',
       description: 'description2',
       isPrivate: false,
-      userId: 1,
+      userId: USER_1_ID,
     };
 
     it('should return 1 (success)', async () => {
@@ -547,7 +550,7 @@ describe(testUtil.printCaptionX2('Images services tests:'), () => {
       const result = await imagesService.updateByIdAndUserId({
         body: {
           ...forEditImage,
-          userId: 2,
+          userId: USER_2_ID,
           id: create.dataValues.id,
         },
       });
@@ -563,7 +566,7 @@ describe(testUtil.printCaptionX2('Images services tests:'), () => {
       name: 'image1',
       description: 'description1',
       isPrivate: true,
-      userId: 1,
+      userId: USER_1_ID,
     };
 
     it('should return 1 (success)', async () => {
@@ -573,7 +576,7 @@ describe(testUtil.printCaptionX2('Images services tests:'), () => {
           id: create.dataValues.id,
         },
         body: {
-          userId: 1,
+          userId: USER_1_ID,
         },
       });
 
@@ -587,7 +590,7 @@ describe(testUtil.printCaptionX2('Images services tests:'), () => {
           id: nonexistentId,
         },
         body: {
-          userId: 1,
+          userId: USER_1_ID,
         },
       });
 
@@ -601,7 +604,7 @@ describe(testUtil.printCaptionX2('Images services tests:'), () => {
           id: create.dataValues.id,
         },
         body: {
-          userId: 2,
+          userId: USER_2_ID,
         },
       });
 
