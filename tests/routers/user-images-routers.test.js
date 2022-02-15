@@ -9,6 +9,8 @@ const { errorTexts } = require('../../src/utils/consts');
 
 const testUtil = require('../util.test');
 
+const USER_1_ID = 1;
+const USER_2_ID = 2;
 let createdUser1; // eslint-disable-line
 let createdUser2; // eslint-disable-line
 
@@ -104,28 +106,28 @@ describe(testUtil.printCaptionX2('User images routers tests:'), () => {
           name: 'image1',
           description: 'description1',
           isPrivate: true,
-          userId: 1,
+          userId: USER_1_ID,
         };
         const forCreateImage2 = {
           url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
           name: 'image2',
           description: 'description2',
           isPrivate: false,
-          userId: 2,
+          userId: USER_2_ID,
         };
         const forCreateImage3 = {
           url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
           name: 'image3',
           description: 'description3',
           isPrivate: false,
-          userId: 2,
+          userId: USER_2_ID,
         };
         const forCreateImage4 = {
           url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
           name: 'image4',
           description: 'description4',
           isPrivate: false,
-          userId: 2,
+          userId: USER_2_ID,
         };
 
         before(async () => {
@@ -195,28 +197,28 @@ describe(testUtil.printCaptionX2('User images routers tests:'), () => {
           name: 'image1',
           description: 'description1',
           isPrivate: true,
-          userId: 1,
+          userId: USER_1_ID,
         };
         const forCreateImage2 = {
           url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
           name: 'image2',
           description: 'description2',
           isPrivate: true,
-          userId: 2,
+          userId: USER_2_ID,
         };
         const forCreateImage3 = {
           url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
           name: 'imag33',
           description: 'description3',
           isPrivate: false,
-          userId: 2,
+          userId: USER_2_ID,
         };
         const forCreateImage4 = {
           url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
           name: 'image4',
           description: 'description4',
           isPrivate: false,
-          userId: 2,
+          userId: USER_2_ID,
         };
 
         before(async () => {
@@ -286,21 +288,21 @@ describe(testUtil.printCaptionX2('User images routers tests:'), () => {
         name: 'image1',
         description: 'description1',
         isPrivate: true,
-        userId: 1,
+        userId: USER_1_ID,
       };
       const forCreateImage2 = {
         url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
         name: 'image2',
         description: 'description2',
         isPrivate: false,
-        userId: 2,
+        userId: USER_2_ID,
       };
       const forCreateImage3 = {
         url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
         name: 'image3',
         description: 'description3',
         isPrivate: false,
-        userId: 2,
+        userId: USER_2_ID,
       };
 
       before(async () => {
@@ -342,21 +344,21 @@ describe(testUtil.printCaptionX2('User images routers tests:'), () => {
         name: 'image1',
         description: 'description1',
         isPrivate: true,
-        userId: 1,
+        userId: USER_1_ID,
       };
       const forCreateImage2 = {
         url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
         name: 'image2',
         description: 'description2',
         isPrivate: false,
-        userId: 2,
+        userId: USER_2_ID,
       };
       const forCreateImage3 = {
         url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
         name: 'image3',
         description: 'description3',
         isPrivate: false,
-        userId: 2,
+        userId: USER_2_ID,
       };
 
       before(async () => {
@@ -390,21 +392,21 @@ describe(testUtil.printCaptionX2('User images routers tests:'), () => {
         name: 'image1',
         description: 'description1',
         isPrivate: true,
-        userId: 1,
+        userId: USER_1_ID,
       };
       const forCreateImage2 = {
         url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
         name: 'image2',
         description: 'description2',
         isPrivate: false,
-        userId: 2,
+        userId: USER_2_ID,
       };
       const forCreateImage3 = {
         url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
         name: 'image3',
         description: 'description3',
         isPrivate: false,
-        userId: 2,
+        userId: USER_2_ID,
       };
 
       before(async () => {
@@ -440,14 +442,14 @@ describe(testUtil.printCaptionX2('User images routers tests:'), () => {
       name: 'image',
       description: 'description',
       isPrivate: false,
-      userId: 1,
+      userId: USER_1_ID,
     };
     const forEditImage = {
       url: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
       name: 'image2',
       description: 'description2',
       isPrivate: true,
-      userId: 1,
+      userId: USER_1_ID,
     };
 
     it('It should edit the image by id and user id', (done) => {
@@ -518,7 +520,7 @@ describe(testUtil.printCaptionX2('User images routers tests:'), () => {
       name: 'image',
       description: 'description',
       isPrivate: false,
-      userId: 1,
+      userId: USER_1_ID,
     };
 
     it('It should delete the image by id and user id', (done) => {

@@ -1,6 +1,8 @@
 const Sequelize = require('sequelize');
 const imagesModel = require('../../models').images;
 
+const PRIVACY_FILTER_IS_PRIVATE = 'private';
+
 module.exports = {
   /**
    * Creates Image object record in Images table.
@@ -57,7 +59,7 @@ module.exports = {
    **/
   async getByUserId(req) {
     const userId = req.body.userId;
-    const { page, limit } = req.query;
+    const { page, limit, privacyFilter } = req.query;
     const searchGoal = req.query.searchGoal;
 
     let where = {
@@ -65,6 +67,7 @@ module.exports = {
     };
 
     if (searchGoal) {
+      console.log(`sg: ${searchGoal}`);
       where = {
         ...where,
         name: Sequelize.where(
@@ -72,6 +75,13 @@ module.exports = {
           'LIKE',
           '%' + searchGoal.toLowerCase() + '%',
         ),
+      };
+    }
+
+    if (privacyFilter) {
+      where = {
+        ...where,
+        isPrivate: privacyFilter === PRIVACY_FILTER_IS_PRIVATE,
       };
     }
 
