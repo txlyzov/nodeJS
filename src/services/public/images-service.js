@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const imagesModel = require('../../models').images;
 
-const PRIVACY_FILTER_TRUE = 'private';
+const PRIVACY_FILTER_IS_PRIVATE = 'private';
 
 module.exports = {
   /**
@@ -81,7 +81,7 @@ module.exports = {
     if (privacyFilter) {
       where = {
         ...where,
-        isPrivate: privacyFilter === PRIVACY_FILTER_TRUE ? true : false,
+        isPrivate: privacyFilter === PRIVACY_FILTER_IS_PRIVATE,
       };
     }
 
