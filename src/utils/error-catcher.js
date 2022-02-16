@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const HSC = require('http-status-codes');
 const createError = require('http-errors');
+const { validationResult } = require('express-validator');
 const { errorTexts } = require('./consts');
 
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -21,4 +22,18 @@ module.exports.authMiddleware = (req, res, next) => {
     const error = createError(HSC.FORBIDDEN, errorTexts.AUTH_ERROR);
     throw error;
   }
+};
+
+module.exports.validateMiddleware = (validations) => {
+  return async (req, res, next) => {
+    await Promise.all(validations.map((validation) => validation.run(req)));
+
+    const errors = validationResult(req);
+    if (errors.isEmpty()) {
+      console.log(222);
+
+      return next();
+    }
+    console.log(333);
+  };
 };

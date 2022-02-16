@@ -3,11 +3,13 @@ const express = require('express');
 const router = express.Router();
 const { authorizationController } = require('../../controllers/index');
 const routes = require('../../utils/routes-values').AUTH_ROUTS;
-const { asyncMiddleware } = require('../../utils/error-catcher');
+const { asyncMiddleware, validateMiddleware } = require('../../utils/error-catcher');
 
 router.post(
   routes.SIGN_UP,
+  validateMiddleware(),
   asyncMiddleware(async (req, res) => {
+    console.log(req.body);
     return authorizationController.signUp(req, res);
   }),
 );

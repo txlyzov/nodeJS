@@ -1,11 +1,13 @@
 var express = require('express');
 
 var router = express.Router();
+const { header } = require('express-validator');
 const { userImagesController } = require('../../controllers/index');
 const routes = require('../../utils/routes-values').USER_IMAGES_ROUTS;
 const {
   asyncMiddleware,
   authMiddleware,
+  validateMiddleware,
 } = require('../../utils/error-catcher');
 
 router.post(
@@ -25,6 +27,11 @@ router.get(
 
 router.get(
   routes.WITH_ID,
+  validateMiddleware([
+    header('AuthToken').isLength({
+      min: 699,
+    }),
+  ]),
   authMiddleware,
   asyncMiddleware(async (req, res, next) => {
     return userImagesController.getUserImage(req, res, next);
